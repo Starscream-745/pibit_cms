@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import './animations.css';
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /* Primary Brand Colors */
+  --tech-blue: #0684F0;
+  --celestial-blue: #29A0F3;
+  
+  /* Neutral Colors */
+  --jet-black: #383838;
+  --charcoal-gray: #6B7280;
+  --cloud-white: #FFFFFF;
+  --soft-gray: #F4F4F4;
+  --border-gray: #E1E1E1;
+  
+  /* Accent Colors */
+  --signal-purple: #7C5CFF;
+  --soft-green: #22C55E;
+  --amber-yellow: #EBA43B;
+  --coral-red: #E58888;
+  
+  /* Typography */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #f8fafc 0%, #e8f0f8 50%, #f0f4f8 100%);
+  color: var(--jet-black);
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated mesh gradient background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(6, 132, 240, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(41, 160, 243, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(124, 92, 255, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: meshMove 20s ease-in-out infinite;
+}
+
+/* Geometric pattern overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(90deg, rgba(6, 132, 240, 0.02) 1px, transparent 1px),
+    linear-gradient(rgba(6, 132, 240, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+@keyframes meshMove {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--jet-black);
+}
+
+h1 {
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 64px;
+}
+
+h2 {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 48px;
+}
+
+h3 {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 36px;
+}
+
+h4 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+p {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--jet-black);
+}
+
+button {
+  font-family: var(--font-heading);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

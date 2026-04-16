@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API</title>
+</head>
+<body>
+    <h1>Test Asset Creation</h1>
+    <button onclick="testCreate()">Test Create Asset</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testCreate() {
+            const data = {
+                name: "Test Logo",
+                url: "http://localhost:3000/api/files/67d958473a07958547d5d393455",
+                category: "Logos",
+                description: "Test logo"
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/assets', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+                
+                if (response.ok) {
+                    alert('SUCCESS! Asset created');
+                } else {
+                    alert('FAILED: ' + JSON.stringify(result));
+                }
+            } catch (error) {
+                document.getElementById('result').textContent = 'Error: ' + error.message;
+                alert('ERROR: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+/* SortDropdown.css - Modern Sort Dropdown */
+
+.sort-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: slideInRight 0.5s ease-out;
+}
+
+.sort-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.sort-select {
+  padding: 0.625rem 2.5rem 0.625rem 1rem;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  color: #383838;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.sort-select:hover {
+  border-color: #0684F0;
+  box-shadow: 0 4px 12px rgba(6, 132, 240, 0.15);
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: #0684F0;
+  box-shadow: 0 0 0 3px rgba(6, 132, 240, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sort-dropdown {
+    width: 100%;
+  }
+
+  .sort-select {
+    flex: 1;
+  }
+}

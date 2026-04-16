@@ -1,0 +1,98 @@
+/* AssetPreview.css - Beautiful Asset Previews */
+
+.asset-preview {
+  width: 100%;
+  height: 160px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Image Preview */
+.asset-preview-image {
+  background: #f3f4f6;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.preview-image.loaded {
+  opacity: 1;
+}
+
+/* Video Preview */
+.asset-preview-video {
+  background: #000;
+  padding: 0;
+}
+
+.preview-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Skeleton Loader for Images */
+.preview-skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-shimmer {
+  width: 100%;
+  height: 100%;
+}
+
+/* Icon Preview */
+.asset-preview-icon {
+  flex-direction: column;
+  gap: 0.75rem;
+  border: 2px solid;
+  background: white;
+}
+
+.preview-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+}
+
+.preview-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.preview-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
