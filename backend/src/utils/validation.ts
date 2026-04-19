@@ -1,5 +1,3 @@
-import validator from 'validator';
-
 export class ValidationError extends Error {
   constructor(public code: string, message: string) {
     super(message);

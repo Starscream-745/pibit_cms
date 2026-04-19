@@ -1,0 +1,48 @@
+.empty-state-modern {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  background: #ffffff;
+  border: 2px dashed #e5e7eb;
+  border-radius: 12px;
+  margin: 2rem 0;
+  transition: all 0.3s ease;
+}
+
+.empty-state-modern:hover {
+  border-color: #0684F0;
+  background: #f8fafc;
+}
+
+.empty-state-icon {
+  color: #9ca3af;
+  margin-bottom: 1.5rem;
+  background: #f3f4f6;
+  padding: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state-modern h3 {
+  color: #1f2937;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-modern p {
+  color: #6b7280;
+  font-family: 'Inter', sans-serif;
+  max-width: 400px;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.empty-state-action {
+  margin-top: 1rem;
+}

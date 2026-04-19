@@ -1,16 +1,34 @@
 .asset-card {
   background: var(--cloud-white);
   border: 1px solid var(--border-gray);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   gap: 0;
   opacity: 0;
   animation: fadeIn 0.5s ease-out forwards;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
   overflow: hidden;
+  position: relative;
+}
+
+/* Premium gradient overlay on hover */
+.asset-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--tech-blue), var(--celestial-blue), var(--soft-green));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.asset-card:hover::before {
+  opacity: 1;
 }
 
 /* Preview section padding */
@@ -20,9 +38,9 @@
 }
 
 .asset-card:hover {
-  box-shadow: 0 8px 24px rgba(6, 132, 240, 0.15);
-  transform: translateY(-4px);
-  border-color: rgba(6, 132, 240, 0.2);
+  box-shadow: 0 12px 32px rgba(6, 132, 240, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-6px);
+  border-color: rgba(6, 132, 240, 0.3);
 }
 
 .asset-card-header {
@@ -44,14 +62,17 @@
 }
 
 .asset-category {
-  background-color: var(--celestial-blue);
+  background: linear-gradient(135deg, var(--celestial-blue), var(--tech-blue));
   color: var(--cloud-white);
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 700;
   font-family: var(--font-heading);
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(6, 132, 240, 0.25);
 }
 
 .asset-card-body {
@@ -181,38 +202,34 @@
   font-size: 16px;
 }
 
-.btn-open {
-  background-color: var(--tech-blue);
-  color: var(--cloud-white);
+/* Premium Action Bar (Ghost Buttons) */
+.btn-action-ghost {
   flex: 1;
-}
-
-.btn-open:hover {
-  background-color: var(--celestial-blue);
-  transform: translateY(-1px);
-}
-
-.btn-open-full {
-  background-color: var(--tech-blue);
-  color: var(--cloud-white);
-  width: 100%;
+  background: rgba(243, 244, 246, 0.5); /* subtle frosted glass */
+  backdrop-filter: blur(8px);
+  color: var(--jet-black);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-.btn-open-full:hover {
-  background-color: var(--celestial-blue);
-  transform: translateY(-1px);
+.btn-action-ghost:hover {
+  background: var(--cloud-white);
+  color: var(--tech-blue);
+  border-color: rgba(6, 132, 240, 0.2);
+  box-shadow: 0 4px 12px rgba(6, 132, 240, 0.1);
 }
 
-.btn-download {
-  background-color: var(--soft-green);
-  color: var(--cloud-white);
-  flex: 1;
-}
-
-.btn-download:hover {
-  background-color: #1ea851;
-  transform: translateY(-1px);
+.btn-action-ghost.downloading {
+  color: var(--soft-green);
+  border-color: rgba(34, 197, 94, 0.3);
+  background: rgba(34, 197, 94, 0.05);
 }
 
 .btn-secondary {
@@ -237,4 +254,17 @@
 .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

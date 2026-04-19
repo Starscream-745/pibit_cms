@@ -29,21 +29,27 @@ const LogosPage: React.FC = () => {
 
   const handleDownload = (logo: Asset) => {
     // For Google Drive or external URLs, we need to handle CORS
-    // If it's a Google Drive link, just open it (it will trigger download)
     if (logo.url.includes('drive.google.com') || logo.url.includes('drive.usercontent.google.com')) {
-      // Google Drive links work best with window.location
       window.location.href = logo.url;
     } else {
-      // For other URLs (like MongoDB files), try download attribute
-      const link = document.createElement('a');
-      link.href = logo.url;
-      link.download = logo.name || 'logo';
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
+      // Check if this is a backend file
+      const isMongoFile = logo.url.includes('/api/files/');
       
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      if (isMongoFile) {
+        const separator = logo.url.includes('?') ? '&' : '?';
+        const downloadUrl = `${logo.url}${separator}download=true`;
+        window.location.href = downloadUrl;
+      } else {
+        const link = document.createElement('a');
+        link.href = logo.url;
+        link.download = logo.name || 'logo';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     }
   };
 

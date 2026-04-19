@@ -11,7 +11,7 @@ const upload = multer({
   limits: {
     fileSize: 200 * 1024 * 1024, // 200MB limit for videos
   },
-  fileFilter: (req, file, cb) => {
+  fileFilter: (_req, file, cb) => {
     // Accept images, videos, documents, and common file types
     const allowedMimes = [
       // Images

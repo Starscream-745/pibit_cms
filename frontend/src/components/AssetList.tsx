@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Asset } from '../types/asset';
 import assetService from '../services/assetService';
 import AssetCard from './AssetCard';
@@ -6,6 +7,7 @@ import CategoryFilter from './CategoryFilter';
 import LoadingSkeleton from './LoadingSkeleton';
 import SearchBar from './SearchBar';
 import SortDropdown, { SortOption } from './SortDropdown';
+import EmptyState from './EmptyState';
 import { useToast } from '../contexts/ToastContext';
 import '../styles/AssetList.css';
 
@@ -163,34 +165,45 @@ const AssetList: React.FC = () => {
       </div>
 
       {filteredAssets.length === 0 ? (
-        <div className="empty-state">
-          {searchQuery ? (
-            <>
-              <p>No assets found for "{searchQuery}"</p>
-              <p>Try a different search term or clear the search.</p>
-            </>
-          ) : (
-            <>
-              <p>No assets found.</p>
-              <p>Start by adding your first asset!</p>
-            </>
-          )}
-        </div>
+        searchQuery ? (
+          <EmptyState 
+            type="search"
+            title="No assets found"
+            description={`We couldn't find anything matching "${searchQuery}". Try adjusting your filters or search term.`}
+            action={<button className="btn btn-secondary" onClick={() => handleSearch('')}>Clear Search</button>}
+          />
+        ) : (
+          <EmptyState 
+            type="empty"
+            title="No assets available"
+            description="It looks like this category is empty. Start by adding your first digital asset."
+            action={<a href="/create" className="btn btn-primary">Upload Asset</a>}
+          />
+        )
       ) : (
         <div className="categories-container">
           {Object.entries(groupedAssets).map(([category, categoryAssets]) => (
             <div key={category} className="category-section">
               <h3 className="category-title">{category}</h3>
-              <div className="assets-grid">
-                {categoryAssets.map((asset, index) => (
-                  <div key={asset.id} style={{ animationDelay: `${index * 0.1}s` }}>
+              <motion.div layout className="assets-grid">
+                <AnimatePresence>
+                {categoryAssets.map((asset) => (
+                  <motion.div 
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.2 }}
+                    key={asset.id}
+                  >
                     <AssetCard 
                       asset={asset} 
                       onDelete={handleDelete} 
                     />
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+                </AnimatePresence>
+              </motion.div>
             </div>
           ))}
         </div>

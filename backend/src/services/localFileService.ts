@@ -53,7 +53,7 @@ class LocalFileService {
   async uploadFile(
     fileBuffer: Buffer,
     originalName: string,
-    mimeType: string
+    _mimeType: string
   ): Promise<UploadResult> {
     try {
       await this.ensureUploadDir();

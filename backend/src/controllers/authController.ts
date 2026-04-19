@@ -39,7 +39,7 @@ class AuthController {
   /**
    * Check auth status
    */
-  async status(req: Request, res: Response): Promise<void> {
+  async status(_req: Request, res: Response): Promise<void> {
     res.status(200).json({
       authEnabled: authService.isAuthEnabled(),
       message: authService.isAuthEnabled() 

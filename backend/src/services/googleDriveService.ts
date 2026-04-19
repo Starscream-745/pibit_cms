@@ -1,7 +1,5 @@
 import { google } from 'googleapis';
 import { Readable } from 'stream';
-import fs from 'fs';
-import path from 'path';
 
 interface UploadResult {
   fileId: string;

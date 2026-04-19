@@ -87,6 +87,29 @@ class AssetService {
     }
     return response.json();
   }
+
+  async downloadAsset(id: string): Promise<{ url: string; name: string; category: string }> {
+    const sessionId = this.getOrCreateSessionId();
+    const response = await fetch(`${this.baseUrl}/${id}/download`, {
+      headers: {
+        'X-Session-Id': sessionId,
+        ...this.getHeaders()
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to download asset: ${response.statusText}`);
+    }
+    return response.json();
+  }
+
+  private getOrCreateSessionId(): string {
+    let sessionId = localStorage.getItem('sessionId');
+    if (!sessionId) {
+      sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem('sessionId', sessionId);
+    }
+    return sessionId;
+  }
 }
 
 export default new AssetService();

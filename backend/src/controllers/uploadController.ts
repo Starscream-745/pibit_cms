@@ -1,11 +1,16 @@
 import { Request, Response } from 'express';
 import mongoFileService from '../services/mongoFileService';
 
+// Extend Express Request type to include file from multer
+interface MulterRequest extends Request {
+  file?: Express.Multer.File;
+}
+
 class UploadController {
   /**
    * Upload file to MongoDB GridFS and return download URL
    */
-  async uploadFile(req: Request, res: Response): Promise<void> {
+  async uploadFile(req: MulterRequest, res: Response): Promise<void> {
     try {
       // Check if file exists
       if (!req.file) {
@@ -46,12 +51,22 @@ class UploadController {
   async downloadFile(req: Request, res: Response): Promise<void> {
     try {
       const { fileId } = req.params;
+      const forceDownload = req.query.download === 'true';
 
       const { stream, fileName, contentType } = await mongoFileService.downloadFile(fileId);
 
       // Set headers
       res.setHeader('Content-Type', contentType);
-      res.setHeader('Content-Disposition', `inline; filename="${fileName}"`);
+      
+      // Use 'attachment' to force download, 'inline' to display in browser
+      const disposition = forceDownload ? 'attachment' : 'inline';
+      
+      // Properly encode filename to prevent header parsing errors in browsers
+      const encodedFileName = encodeURIComponent(fileName);
+      res.setHeader(
+        'Content-Disposition', 
+        `${disposition}; filename="${encodedFileName}"; filename*=UTF-8''${encodedFileName}`
+      );
 
       // Pipe the stream to response
       stream.pipe(res);
@@ -67,7 +82,7 @@ class UploadController {
   /**
    * Check if upload service is available
    */
-  async checkStatus(req: Request, res: Response): Promise<void> {
+  async checkStatus(_req: Request, res: Response): Promise<void> {
     const mongoAvailable = await mongoFileService.isAvailable();
 
     res.status(200).json({

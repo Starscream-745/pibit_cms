@@ -5,6 +5,7 @@ import database from './config/database';
 import assetRoutes from './routes/assetRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 import authRoutes from './routes/authRoutes';
+import analyticsRoutes from './routes/analyticsRoutes';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 // Load environment variables
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: '*', // Allow all origins for LAN access
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id']
 }));
 
 // Health check endpoint
@@ -38,6 +39,7 @@ app.get('/health', (_req, res) => {
 app.use('/api', assetRoutes);
 app.use('/api', uploadRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api', analyticsRoutes);
 
 // 404 handler
 app.use(notFoundHandler);

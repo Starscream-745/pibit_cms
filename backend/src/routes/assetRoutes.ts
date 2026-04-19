@@ -2,6 +2,8 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { AssetController } from '../controllers/assetController';
 import { AssetService } from '../services/assetService';
 import { AssetRepository } from '../repositories/assetRepository';
+import { AnalyticsService } from '../services/analyticsService';
+import { AnalyticsRepository } from '../repositories/analyticsRepository';
 import database from '../config/database';
 import { authenticate, optionalAuth } from '../middleware/authMiddleware';
 
@@ -15,7 +17,9 @@ function getController(): AssetController {
     const db = database.getDb();
     const assetRepository = new AssetRepository(db);
     const assetService = new AssetService(assetRepository);
-    assetController = new AssetController(assetService);
+    const analyticsRepository = new AnalyticsRepository(db);
+    const analyticsService = new AnalyticsService(analyticsRepository);
+    assetController = new AssetController(assetService, analyticsService);
   }
   return assetController;
 }
@@ -33,6 +37,7 @@ router.get('/assets', optionalAuth, withController(c => c.getAllAssets));
 router.get('/assets/:id', optionalAuth, withController(c => c.getAssetById));
 router.get('/assets/category/:category', optionalAuth, withController(c => c.getAssetsByCategory));
 router.get('/categories', optionalAuth, withController(c => c.getAllCategories));
+router.get('/assets/:id/download', optionalAuth, withController(c => c.downloadAsset));
 
 // Protected routes (require authentication)
 router.post('/assets', authenticate, withController(c => c.createAsset));

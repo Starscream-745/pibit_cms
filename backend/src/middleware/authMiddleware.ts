@@ -41,7 +41,7 @@ export const authenticate = (req: AuthRequest, res: Response, next: NextFunction
 /**
  * Optional authentication - doesn't block if no token
  */
-export const optionalAuth = (req: AuthRequest, res: Response, next: NextFunction): void => {
+export const optionalAuth = (req: AuthRequest, _res: Response, next: NextFunction): void => {
   if (!authService.isAuthEnabled()) {
     next();
     return;

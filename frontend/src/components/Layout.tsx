@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { ShieldCheck, User } from 'lucide-react';
 import '../styles/Layout.css';
 
 interface LayoutProps {
@@ -29,6 +30,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Link to="/" className="nav-link">Assets</Link>
             <Link to="/logos" className="nav-link">Logos</Link>
             <Link to="/brand-guidelines" className="nav-link">Brand Guidelines</Link>
+            {isAuthenticated && isAdmin && (
+              <Link to="/analytics" className="nav-link">Analytics</Link>
+            )}
             {isAuthenticated ? (
               <>
                 {isAdmin && (
@@ -39,19 +43,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <span className="user-role-badge">
                       {userRole === 'admin' ? (
                         <>
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
+                          <ShieldCheck size={16} />
                           <span>Admin</span>
                         </>
                       ) : (
                         <>
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
+                          <User size={16} />
                           <span>User</span>
                         </>
                       )}

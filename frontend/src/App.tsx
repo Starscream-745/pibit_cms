@@ -10,6 +10,7 @@ import EditAssetPage from './pages/EditAssetPage';
 import LogosPage from './pages/LogosPage';
 import BrandGuidelinesPage from './pages/BrandGuidelinesPage';
 import LoginPage from './pages/LoginPage';
+import AnalyticsDashboard from './pages/AnalyticsDashboard';
 
 const App: React.FC = () => {
   return (
@@ -27,9 +28,7 @@ const App: React.FC = () => {
           } />
 
           <Route path="/brand-guidelines" element={
-            <Layout>
-              <BrandGuidelinesPage />
-            </Layout>
+            <BrandGuidelinesPage />
           } />
 
           <Route path="/" element={
@@ -51,6 +50,14 @@ const App: React.FC = () => {
             <ProtectedRoute>
               <Layout>
                 <EditAssetPage />
+              </Layout>
+            </ProtectedRoute>
+          } />
+
+          <Route path="/analytics" element={
+            <ProtectedRoute>
+              <Layout>
+                <AnalyticsDashboard />
               </Layout>
             </ProtectedRoute>
           } />
