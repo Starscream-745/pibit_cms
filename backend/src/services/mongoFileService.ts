@@ -15,8 +15,9 @@ class MongoFileService {
 
   constructor() {
     const dbUrl = process.env.DATABASE_URL || 'mongodb://localhost:27017/pibit-cms';
-    // Extract database name from URL
-    this.dbName = dbUrl.split('/').pop() || 'pibit-cms';
+    // Extract database name from URL and remove query params
+    const dbNameWithQuery = dbUrl.split('/').pop() || 'pibit-cms';
+    this.dbName = dbNameWithQuery.split('?')[0];
   }
 
   /**
@@ -32,6 +33,7 @@ class MongoFileService {
     await this.client.connect();
 
     const db = this.client.db(this.dbName);
+    console.log('GridFS initialized on DB:', db.databaseName);
     this.bucket = new GridFSBucket(db, {
       bucketName: 'uploads',
     });

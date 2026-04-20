@@ -14,7 +14,8 @@
     "lint:fix": "eslint src --ext .ts --fix",
     "generate-dummy": "tsx src/scripts/generateDummyData.ts",
     "load-test": "tsx src/scripts/loadTest.ts",
-    "test-analytics": "tsx src/scripts/testAnalytics.ts"
+    "test-analytics": "tsx src/scripts/testAnalytics.ts",
+    "migrate": "tsx src/scripts/migrateDatabase.ts"
   },
   "dependencies": {
     "axios": "^1.6.7",
