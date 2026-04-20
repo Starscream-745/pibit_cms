@@ -17,7 +17,7 @@ class MongoFileService {
     const dbUrl = process.env.DATABASE_URL || 'mongodb://localhost:27017/pibit-cms';
     // Extract database name from URL and remove query params
     const dbNameWithQuery = dbUrl.split('/').pop() || 'pibit-cms';
-    this.dbName = dbNameWithQuery.split('?')[0];
+    this.dbName = dbNameWithQuery.split('?')[0] || 'pibit-cms';
   }
 
   /**
