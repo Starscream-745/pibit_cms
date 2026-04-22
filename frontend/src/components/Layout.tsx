@@ -31,7 +31,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Link to="/logos" className="nav-link">Logos</Link>
             <Link to="/brand-guidelines" className="nav-link">Brand Guidelines</Link>
             {isAuthenticated && isAdmin && (
-              <Link to="/analytics" className="nav-link">Analytics</Link>
+              <>
+                <Link to="/analytics" className="nav-link">Analytics</Link>
+                <Link to="/users" className="nav-link">Users</Link>
+              </>
             )}
             {isAuthenticated ? (
               <>

@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import User from '../models/user';
 
 interface LoginCredentials {
   username: string;
@@ -11,27 +12,40 @@ interface AuthToken {
   token: string;
   expiresIn: string;
   role: 'admin' | 'user';
+  userId: string;
 }
 
 class AuthService {
   private jwtSecret: string;
-  private adminUsername: string;
-  private adminPasswordHash: string;
-  private userUsername: string;
-  private userPasswordHash: string;
 
   constructor() {
     this.jwtSecret = process.env.JWT_SECRET || 'pibit-cms-secret-key-change-in-production';
-    
-    // Admin credentials
-    this.adminUsername = process.env.ADMIN_USERNAME || 'admin';
-    const adminPassword = process.env.ADMIN_PASSWORD || 'pibit2026';
-    this.adminPasswordHash = bcrypt.hashSync(adminPassword, 10);
-    
-    // User credentials
-    this.userUsername = process.env.USER_USERNAME || 'user';
-    const userPassword = process.env.USER_PASSWORD || 'user123';
-    this.userPasswordHash = bcrypt.hashSync(userPassword, 10);
+  }
+
+  /**
+   * Initialize initial admin user if no users exist
+   */
+  async initializeAdmin(): Promise<void> {
+    try {
+      const userCount = await User.countDocuments();
+      if (userCount === 0) {
+        console.log('No users found in database. Seeding initial admin from environment variables...');
+        const adminUsername = process.env.ADMIN_USERNAME || 'admin';
+        const adminPassword = process.env.ADMIN_PASSWORD || 'pibit2026';
+        
+        const passwordHash = await bcrypt.hash(adminPassword, 10);
+        
+        await User.create({
+          username: adminUsername,
+          passwordHash,
+          role: 'admin',
+        });
+        
+        console.log(`Initial admin user '${adminUsername}' created successfully.`);
+      }
+    } catch (error) {
+      console.error('Failed to initialize admin user:', error);
+    }
   }
 
   /**
@@ -40,29 +54,19 @@ class AuthService {
   async login(credentials: LoginCredentials): Promise<AuthToken> {
     const { username, password, role } = credentials;
 
-    let isValid = false;
-    let passwordHash = '';
-
-    // Check based on role
-    if (role === 'admin') {
-      if (username === this.adminUsername) {
-        passwordHash = this.adminPasswordHash;
-        isValid = await bcrypt.compare(password, passwordHash);
-      }
-    } else if (role === 'user') {
-      if (username === this.userUsername) {
-        passwordHash = this.userPasswordHash;
-        isValid = await bcrypt.compare(password, passwordHash);
-      }
+    const user = await User.findOne({ username, role });
+    if (!user) {
+      throw new Error('Invalid credentials');
     }
 
+    const isValid = await bcrypt.compare(password, user.passwordHash);
     if (!isValid) {
       throw new Error('Invalid credentials');
     }
 
-    // Generate JWT token with role
+    // Generate JWT token with role and userId
     const token = jwt.sign(
-      { username, role },
+      { userId: user._id, username: user.username, role: user.role },
       this.jwtSecret,
       { expiresIn: '24h' }
     );
@@ -70,7 +74,8 @@ class AuthService {
     return {
       token,
       expiresIn: '24h',
-      role,
+      role: user.role,
+      userId: user._id.toString(),
     };
   }
 

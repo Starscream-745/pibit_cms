@@ -37,6 +37,14 @@ export class AnalyticsRepository {
     return activity;
   }
 
+  async getRecentActivities(limit: number = 50): Promise<UserActivity[]> {
+    return await this.activityCollection
+      .find({})
+      .sort({ timestamp: -1 })
+      .limit(limit)
+      .toArray();
+  }
+
   async logDownload(assetId: string, assetName: string, sessionId: string, userId?: string, ipAddress?: string): Promise<DownloadEvent> {
     const download: DownloadEvent = {
       id: uuidv4(),

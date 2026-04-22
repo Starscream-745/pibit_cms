@@ -6,6 +6,7 @@ import assetRoutes from './routes/assetRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 import authRoutes from './routes/authRoutes';
 import analyticsRoutes from './routes/analyticsRoutes';
+import userRoutes from './routes/userRoutes';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 // Load environment variables
@@ -40,6 +41,7 @@ app.use('/api', assetRoutes);
 app.use('/api', uploadRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', analyticsRoutes);
+app.use('/api', userRoutes);
 
 // 404 handler
 app.use(notFoundHandler);
@@ -47,11 +49,16 @@ app.use(notFoundHandler);
 // Error handler (must be last)
 app.use(errorHandler);
 
+import authService from './services/authService';
+
 // Start server
 async function startServer() {
   try {
     // Connect to database
     await database.connect();
+    
+    // Initialize admin user if database is empty
+    await authService.initializeAdmin();
     
     // Start listening
     const server = app.listen(PORT, () => {

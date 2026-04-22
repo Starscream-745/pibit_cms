@@ -58,4 +58,8 @@ export class AnalyticsService {
   async getDownloadsByAsset(assetId: string): Promise<number> {
     return await this.repository.getDownloadsByAsset(assetId);
   }
+
+  async getRecentActivities(limit: number = 50): Promise<any[]> {
+    return await this.repository.getRecentActivities(limit);
+  }
 }

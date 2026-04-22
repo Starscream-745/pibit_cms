@@ -22,4 +22,14 @@ export class AnalyticsController {
       next(error);
     }
   };
+
+  getRecentActivities = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 50;
+      const activities = await this.analyticsService.getRecentActivities(limit);
+      res.status(200).json(activities);
+    } catch (error) {
+      next(error);
+    }
+  };
 }

@@ -3,7 +3,7 @@ import { AnalyticsController } from '../controllers/analyticsController';
 import { AnalyticsService } from '../services/analyticsService';
 import { AnalyticsRepository } from '../repositories/analyticsRepository';
 import database from '../config/database';
-import { authenticate } from '../middleware/authMiddleware';
+import { authenticate, requireAdmin } from '../middleware/authMiddleware';
 
 const router = Router();
 
@@ -27,7 +27,8 @@ const withController = (handler: (controller: AnalyticsController) => (req: Requ
 };
 
 // Protected routes - require authentication (admin only)
-router.get('/analytics/summary', authenticate, withController(c => c.getSummary));
-router.get('/analytics/downloads/:assetId', authenticate, withController(c => c.getDownloadsByAsset));
+router.get('/analytics/summary', authenticate, requireAdmin, withController(c => c.getSummary));
+router.get('/analytics/downloads/:assetId', authenticate, requireAdmin, withController(c => c.getDownloadsByAsset));
+router.get('/analytics/activity', authenticate, requireAdmin, withController(c => c.getRecentActivities));
 
 export default router;

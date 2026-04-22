@@ -11,6 +11,7 @@ import LogosPage from './pages/LogosPage';
 import BrandGuidelinesPage from './pages/BrandGuidelinesPage';
 import LoginPage from './pages/LoginPage';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
+import UsersPage from './pages/UsersPage';
 
 const App: React.FC = () => {
   return (
@@ -58,6 +59,14 @@ const App: React.FC = () => {
             <ProtectedRoute>
               <Layout>
                 <AnalyticsDashboard />
+              </Layout>
+            </ProtectedRoute>
+          } />
+
+          <Route path="/users" element={
+            <ProtectedRoute>
+              <Layout>
+                <UsersPage />
               </Layout>
             </ProtectedRoute>
           } />

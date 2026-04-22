@@ -2,11 +2,12 @@ export interface UserActivity {
   id: string;
   userId?: string; // Optional for anonymous users
   sessionId: string;
-  activityType: 'view' | 'download' | 'login';
+  activityType: 'view' | 'download' | 'login' | 'create_user' | 'delete_user' | 'upload_asset' | 'delete_asset' | 'edit_asset';
   assetId?: string; // For download/view tracking
   timestamp: Date;
   ipAddress?: string;
   userAgent?: string;
+  details?: Record<string, any>; // Flexible field for extra info like created username, asset name, etc.
 }
 
 export interface DownloadEvent {
@@ -37,8 +38,9 @@ export interface AnalyticsSummary {
 export interface CreateUserActivityDTO {
   userId?: string;
   sessionId: string;
-  activityType: 'view' | 'download' | 'login';
+  activityType: 'view' | 'download' | 'login' | 'create_user' | 'delete_user' | 'upload_asset' | 'delete_asset' | 'edit_asset';
   assetId?: string;
   ipAddress?: string;
   userAgent?: string;
+  details?: Record<string, any>;
 }

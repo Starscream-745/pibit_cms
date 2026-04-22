@@ -19,10 +19,22 @@ interface AnalyticsSummary {
   }>;
 }
 
+interface ActivityEvent {
+  id: string;
+  userId?: string;
+  sessionId: string;
+  activityType: string;
+  timestamp: string;
+  ipAddress?: string;
+  userAgent?: string;
+  details?: any;
+}
+
 const AnalyticsDashboard: React.FC = () => {
   const { isAuthenticated, userRole } = useAuth();
   const navigate = useNavigate();
   const [analytics, setAnalytics] = useState<AnalyticsSummary | null>(null);
+  const [activities, setActivities] = useState<ActivityEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -41,20 +53,27 @@ const AnalyticsDashboard: React.FC = () => {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
       const token = localStorage.getItem('authToken');
       
-      const response = await fetch(`${apiUrl}/api/analytics/summary`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const [summaryRes, activityRes] = await Promise.all([
+        fetch(`${apiUrl}/api/analytics/summary`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }),
+        fetch(`${apiUrl}/api/analytics/activity?limit=50`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+      ]);
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch analytics');
-      }
+      if (!summaryRes.ok) throw new Error('Failed to fetch summary');
+      if (!activityRes.ok) throw new Error('Failed to fetch activities');
 
-      const data = await response.json();
-      setAnalytics(data);
+      const [summaryData, activityData] = await Promise.all([
+        summaryRes.json(),
+        activityRes.json()
+      ]);
+
+      setAnalytics(summaryData);
+      setActivities(activityData);
     } catch (err) {
-      setError((err as Error).message);
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
@@ -184,6 +203,41 @@ const AnalyticsDashboard: React.FC = () => {
                 </div>
               </div>
             ))
+          )}
+        </div>
+      <div className="recent-activity-section">
+        <h2>Audit Log / Recent Activity</h2>
+        <div className="recent-activity-list">
+          {activities.length === 0 ? (
+            <p className="no-data">No activity data available yet</p>
+          ) : (
+            <table className="activity-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Action</th>
+                  <th>User / Session</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                {activities.map((activity) => (
+                  <tr key={activity.id}>
+                    <td>{new Date(activity.timestamp).toLocaleString()}</td>
+                    <td>
+                      <span className={`activity-type type-${activity.activityType}`}>
+                        {activity.activityType.replace('_', ' ')}
+                      </span>
+                    </td>
+                    <td>{activity.userId ? `User ID: ${activity.userId.substring(0, 8)}...` : `Session: ${activity.sessionId.substring(0, 8)}...`}</td>
+                    <td className="activity-details">
+                      {activity.activityType === 'download' && activity.assetId ? `Asset: ${activity.assetId}` : ''}
+                      {activity.details ? JSON.stringify(activity.details) : ''}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </div>

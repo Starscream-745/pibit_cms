@@ -59,3 +59,21 @@ export const optionalAuth = (req: AuthRequest, _res: Response, next: NextFunctio
 
   next();
 };
+
+/**
+ * Middleware to require Admin role
+ */
+export const requireAdmin = (req: AuthRequest, res: Response, next: NextFunction): void => {
+  if (!authService.isAuthEnabled()) {
+    next();
+    return;
+  }
+
+  // authenticate middleware should be called before this
+  if (!req.user || req.user.role !== 'admin') {
+    res.status(403).json({ error: 'Forbidden: Admin access required' });
+    return;
+  }
+
+  next();
+};
