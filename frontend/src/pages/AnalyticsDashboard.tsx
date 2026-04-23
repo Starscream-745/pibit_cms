@@ -24,6 +24,7 @@ interface ActivityEvent {
   userId?: string;
   sessionId: string;
   activityType: string;
+  assetId?: string;
   timestamp: string;
   ipAddress?: string;
   userAgent?: string;

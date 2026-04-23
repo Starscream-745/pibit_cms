@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Shield, User, Trash2, Plus, UserPlus } from 'lucide-react';
+import { Shield, User, Trash2, UserPlus } from 'lucide-react';
 import '../styles/UsersPage.css';
 
 interface UserData {
