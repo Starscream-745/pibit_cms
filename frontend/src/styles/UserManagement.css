@@ -1,0 +1,124 @@
+.user-management-container {
+  width: 100%;
+}
+
+.user-management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.user-management-card {
+  background: var(--cloud-white);
+  border: 1px solid var(--border-gray);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.user-management-card h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.add-user-form {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.form-field-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.form-action-group {
+  min-width: 120px;
+}
+
+.btn-full-width {
+  width: 100%;
+}
+
+.users-table-container {
+  overflow-x: auto;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th {
+  padding: 0.75rem;
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.users-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.role-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.role-badge.admin {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.role-badge.user {
+  background-color: #e0e7ff;
+  color: #3730a3;
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.btn-delete:hover:not(:disabled) {
+  background-color: #fee2e2;
+}
+
+.btn-delete:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .user-management-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .add-user-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-field-group {
+    min-width: 100%;
+  }
+
+  .users-table th, .users-table td {
+    padding: 0.5rem;
+  }
+}

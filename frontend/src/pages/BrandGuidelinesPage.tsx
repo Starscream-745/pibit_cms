@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import '../styles/BrandGuidelinesPage.css';
 
