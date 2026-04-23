@@ -7,11 +7,12 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import CreateAssetPage from './pages/CreateAssetPage';
 import EditAssetPage from './pages/EditAssetPage';
-import LogosPage from './pages/LogosPage';
+import IconographyPage from './pages/IconographyPage';
+import ImagesPage from './pages/ImagesPage';
 import BrandGuidelinesPage from './pages/BrandGuidelinesPage';
 import LoginPage from './pages/LoginPage';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
-import UsersPage from './pages/UsersPage';
+import UserManagement from './pages/UserManagement';
 
 const App: React.FC = () => {
   return (
@@ -22,15 +23,20 @@ const App: React.FC = () => {
           {/* Public routes - No login required */}
           <Route path="/login" element={<LoginPage />} />
           
-          <Route path="/logos" element={
+          <Route path="/iconography" element={
             <Layout>
-              <LogosPage />
+              <IconographyPage />
             </Layout>
           } />
 
-          <Route path="/brand-guidelines" element={
-            <BrandGuidelinesPage />
+          <Route path="/images" element={
+            <Layout>
+              <ImagesPage />
+            </Layout>
           } />
+
+          {/* Standalone Brand Guidelines Experience */}
+          <Route path="/brand-guidelines" element={<BrandGuidelinesPage />} />
 
           <Route path="/" element={
             <Layout>
@@ -46,7 +52,7 @@ const App: React.FC = () => {
               </Layout>
             </ProtectedRoute>
           } />
-          
+
           <Route path="/edit/:id" element={
             <ProtectedRoute>
               <Layout>
@@ -66,12 +72,12 @@ const App: React.FC = () => {
           <Route path="/users" element={
             <ProtectedRoute>
               <Layout>
-                <UsersPage />
+                <UserManagement />
               </Layout>
             </ProtectedRoute>
           } />
         </Routes>
-      </Router>
+        </Router>
       </ToastProvider>
     </AuthProvider>
   );

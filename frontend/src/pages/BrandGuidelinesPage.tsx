@@ -1,270 +1,304 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, Variants } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
+import { motion, useScroll, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import '../styles/BrandGuidelinesPage.css';
 
+const sections = [
+  { id: 'hero', label: 'Intro' },
+  { id: 'colors', label: 'Colors' },
+  { id: 'typography', label: 'Typography' },
+  { id: 'logo', label: 'Logo' },
+  { id: 'spacing', label: 'Layout' },
+  { id: 'voice', label: 'Voice' },
+  { id: 'download', label: 'Assets' }
+];
+
+const SectionHeader: React.FC<{ title: string; subtitle?: string; dark?: boolean }> = ({ title, subtitle, dark }) => (
+  <motion.div 
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+    className="section-header"
+  >
+    <h2 style={{ color: dark ? 'white' : '#0a0a0a' }}>{title}</h2>
+    {subtitle && <p className="section-description">{subtitle}</p>}
+  </motion.div>
+);
+
+const Section: React.FC<{ 
+  id: string; 
+  className?: string; 
+  onInView: (id: string) => void;
+  children: React.ReactNode;
+}> = ({ id, className, onInView, children }) => {
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+  });
+
+  useEffect(() => {
+    if (inView) onInView(id);
+  }, [inView, id, onInView]);
+
+  return (
+    <section id={id} ref={ref} className={`guideline-section ${className || ''}`}>
+      {children}
+    </section>
+  );
+};
+
 const BrandGuidelinesPage: React.FC = () => {
-  const sectionVariants: Variants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6 }
-    }
+  const [activeSection, setActiveSection] = useState('hero');
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  const scrollTo = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="brand-guidelines-page">
-      <Link to="/" className="floating-back-btn">
-        <ArrowLeft size={20} />
-        Back to Dashboard
+    <div className="brand-guidelines-container">
+      <Link to="/" className="back-to-dashboard">
+        <span>←</span> Back to Dashboard
       </Link>
 
-      <section className="guidelines-hero">
-        <motion.div 
-          className="section-inner"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={sectionVariants}
+      <motion.div className="scroll-progress" style={{ scaleX }} />
+
+      <nav className="side-nav">
+        {sections.map((section) => (
+          <motion.div
+            key={section.id}
+            className={`nav-dot ${activeSection === section.id ? 'active' : ''}`}
+            onClick={() => scrollTo(section.id)}
+            whileHover={{ scale: 1.5 }}
+            title={section.label}
+          />
+        ))}
+      </nav>
+
+      <Section id="hero" onInView={setActiveSection}>
+        <div className="halo-bg" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h1>PIBIT.AI Brand Guidelines</h1>
-          <p className="hero-subtitle">Our visual identity and brand standards</p>
+          <h1 className="hero-title">PIBIT.AI</h1>
+          <p className="hero-subtitle">Visual Identity Standards 2026</p>
+          <motion.div 
+            className="scroll-indicator"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+          >
+            ↓ Scroll to Explore
+          </motion.div>
         </motion.div>
-      </section>
+      </Section>
 
-      <div className="guidelines-content">
-        {/* Brand Colors */}
-        <section className="guideline-section">
-          <motion.div 
-            className="section-inner"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
-            variants={sectionVariants}
-          >
-            <h2>Brand Colors</h2>
-            <p className="section-description">Our color palette reflects innovation, trust, and technology.</p>
-            
-            <div className="color-grid">
-              <div className="color-card">
-                <div className="color-swatch" style={{ background: '#0684F0' }}></div>
+      <Section id="colors" className="section-light" onInView={setActiveSection}>
+        <div className="guidelines-content">
+          <SectionHeader 
+            title="Core Palette" 
+            subtitle="Our colors reflect innovation, trust, and technology." 
+          />
+          <div className="color-grid">
+            {[
+              { name: 'Tech Blue', hex: '#0684F0', desc: 'Primary brand color' },
+              { name: 'Celestial', hex: '#29A0F3', desc: 'Accents & Highlights' },
+              { name: 'Jet Black', hex: '#383838', desc: 'Primary Typography' },
+              { name: 'Cloud White', hex: '#FFFFFF', desc: 'Canvas & Negative Space' }
+            ].map((color, i) => (
+              <motion.div 
+                key={color.hex}
+                className="color-card"
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.8 }}
+              >
+                <div className="color-swatch" style={{ background: color.hex, border: i === 3 ? '1px solid #eee' : 'none' }} />
                 <div className="color-info">
-                  <h3>Tech Blue</h3>
-                  <p className="color-hex">#0684F0</p>
-                  <p className="color-usage">Primary brand color, CTAs, links</p>
+                  <h3>{color.name}</h3>
+                  <p className="color-hex">{color.hex}</p>
+                  <p className="color-usage">{color.desc}</p>
                 </div>
-              </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </Section>
 
-              <div className="color-card">
-                <div className="color-swatch" style={{ background: '#29A0F3' }}></div>
-                <div className="color-info">
-                  <h3>Celestial Blue</h3>
-                  <p className="color-hex">#29A0F3</p>
-                  <p className="color-usage">Accents, highlights, gradients</p>
+      <Section id="typography" onInView={setActiveSection}>
+        <div className="halo-bg" style={{ left: '-10%', top: '20%' }} />
+        <div className="guidelines-content">
+          <SectionHeader title="Typography" subtitle="Modernity through geometric precision." dark />
+          <div className="typography-display">
+            <motion.div 
+              className="typography-card premium-hover-card"
+              initial="initial"
+              whileHover="hover"
+            >
+              <motion.div 
+                className="font-camouflage-title"
+                variants={{
+                  initial: { opacity: 0.15, scale: 1, y: 0 },
+                  hover: { opacity: 0, scale: 1.1, y: -20 }
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              >
+                <div>SPACE</div>
+                <div style={{ marginTop: '-2rem' }}>GROTESK</div>
+              </motion.div>
+              
+              <motion.div 
+                className="card-details-overlay"
+                variants={{
+                  initial: { opacity: 0, y: 30 },
+                  hover: { opacity: 1, y: 0 }
+                }}
+                transition={{ duration: 0.4 }}
+              >
+                <h3 className="font-title-small">Space Grotesk</h3>
+                <p className="font-subtitle">Headings, titles, navigation</p>
+                <div className="font-weights-list">
+                  <div className="weight-pill">Regular (400)</div>
+                  <div className="weight-pill">Medium (500)</div>
+                  <div className="weight-pill">Semi-Bold (600)</div>
+                  <div className="weight-pill">Bold (700)</div>
                 </div>
-              </div>
+              </motion.div>
+            </motion.div>
 
-              <div className="color-card">
-                <div className="color-swatch" style={{ background: '#383838' }}></div>
-                <div className="color-info">
-                  <h3>Jet Black</h3>
-                  <p className="color-hex">#383838</p>
-                  <p className="color-usage">Primary text, headings</p>
+            <motion.div 
+              className="typography-card premium-hover-card"
+              initial="initial"
+              whileHover="hover"
+            >
+              <motion.div 
+                className="font-camouflage-title"
+                variants={{
+                  initial: { opacity: 0.15, scale: 1, y: 0 },
+                  hover: { opacity: 0, scale: 1.1, y: -20 }
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              >
+                INTER
+              </motion.div>
+              
+              <motion.div 
+                className="card-details-overlay"
+                variants={{
+                  initial: { opacity: 0, y: 30 },
+                  hover: { opacity: 1, y: 0 }
+                }}
+                transition={{ duration: 0.4 }}
+              >
+                <h3 className="font-title-small">Inter</h3>
+                <p className="font-subtitle">Body text, descriptions, UI elements</p>
+                <div className="font-weights-list">
+                  <div className="weight-pill">Regular (400)</div>
+                  <div className="weight-pill">Medium (500)</div>
+                  <div className="weight-pill">Semi-Bold (600)</div>
                 </div>
-              </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </Section>
 
-              <div className="color-card">
-                <div className="color-swatch" style={{ background: '#FFFFFF', border: '1px solid #e5e7eb' }}></div>
-                <div className="color-info">
-                  <h3>Cloud White</h3>
-                  <p className="color-hex">#FFFFFF</p>
-                  <p className="color-usage">Backgrounds, cards, contrast</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </section>
+      <Section id="logo" className="section-light" onInView={setActiveSection}>
+        <div className="guidelines-content">
+          <SectionHeader title="Logo Integrity" subtitle="Maintaining visual consistency." />
+          <div className="logo-rules">
+            <motion.div 
+              className="rule-card do"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="rule-icon">✓</div>
+              <h3>Do</h3>
+              <ul>
+                <li>Maintain clear space</li>
+                <li>Use brand colors</li>
+                <li>Keep proportions</li>
+              </ul>
+            </motion.div>
+            <motion.div 
+              className="rule-card dont"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="rule-icon">✗</div>
+              <h3>Don't</h3>
+              <ul>
+                <li>Stretch or distort</li>
+                <li>Add drop shadows</li>
+                <li>Modify geometry</li>
+              </ul>
+            </motion.div>
+          </div>
+        </div>
+      </Section>
 
-        {/* Typography */}
-        <section className="guideline-section">
-          <motion.div 
-            className="section-inner"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
-            variants={sectionVariants}
-          >
-            <h2>Typography</h2>
-            <p className="section-description">Our font choices convey modernity and professionalism.</p>
-            
-            <div className="typography-grid">
-              <div className="typography-card">
-                <h3 className="font-display" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Space Grotesk</h3>
-                <p className="font-usage">Headings, titles, navigation</p>
-                <div className="font-weights">
-                  <span style={{ fontWeight: 400 }}>Regular (400)</span>
-                  <span style={{ fontWeight: 500 }}>Medium (500)</span>
-                  <span style={{ fontWeight: 600 }}>Semi-Bold (600)</span>
-                  <span style={{ fontWeight: 700 }}>Bold (700)</span>
-                </div>
-              </div>
+      <Section id="spacing" onInView={setActiveSection}>
+        <div className="halo-bg" style={{ right: '-10%', bottom: '10%' }} />
+        <div className="guidelines-content">
+          <SectionHeader title="Grid System" subtitle="The 8px foundation of our interface." dark />
+          <div className="spacing-info">
+            {['8px Base', '24px Gutter', '1400px Max'].map((item, i) => (
+              <motion.div 
+                key={item}
+                className="spacing-item"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <h3>{item.split(' ')[1]}</h3>
+                <p>{item.split(' ')[0]}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </Section>
 
-              <div className="typography-card">
-                <h3 className="font-display" style={{ fontFamily: 'Inter, sans-serif' }}>Inter</h3>
-                <p className="font-usage">Body text, descriptions, UI elements</p>
-                <div className="font-weights">
-                  <span style={{ fontWeight: 400 }}>Regular (400)</span>
-                  <span style={{ fontWeight: 500 }}>Medium (500)</span>
-                  <span style={{ fontWeight: 600 }}>Semi-Bold (600)</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </section>
+      <Section id="voice" className="section-light" onInView={setActiveSection}>
+        <div className="guidelines-content">
+          <SectionHeader title="Brand Voice" subtitle="How we communicate our vision." />
+          <div className="voice-grid">
+            {['Innovative', 'Trustworthy', 'Accessible', 'Precise'].map((voice, i) => (
+              <motion.div 
+                key={voice}
+                className="voice-card"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <h3>{voice}</h3>
+                <p>Establishing our position as a leader in AI asset management.</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </Section>
 
-        {/* Logo Usage */}
-        <section className="guideline-section">
-          <motion.div 
-            className="section-inner"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
-            variants={sectionVariants}
-          >
-            <h2>Logo Usage</h2>
-            <p className="section-description">Guidelines for using the PIBIT.AI logo correctly.</p>
-            
-            <div className="logo-rules">
-              <div className="rule-card do">
-                <div className="rule-icon">✓</div>
-                <h3>Do</h3>
-                <ul>
-                  <li>Use the logo on solid backgrounds</li>
-                  <li>Maintain minimum clear space around logo</li>
-                  <li>Use approved color variations only</li>
-                  <li>Keep proportions intact when resizing</li>
-                  <li>Use high-resolution versions for print</li>
-                </ul>
-              </div>
-
-              <div className="rule-card dont">
-                <div className="rule-icon">✗</div>
-                <h3>Don't</h3>
-                <ul>
-                  <li>Stretch or distort the logo</li>
-                  <li>Change logo colors</li>
-                  <li>Add effects (shadows, gradients, etc.)</li>
-                  <li>Place on busy backgrounds</li>
-                  <li>Rotate or flip the logo</li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Spacing & Layout */}
-        <section className="guideline-section">
-          <motion.div 
-            className="section-inner"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
-            variants={sectionVariants}
-          >
-            <h2>Spacing & Layout</h2>
-            <p className="section-description">Consistent spacing creates visual harmony.</p>
-            
-            <div className="spacing-info">
-              <div className="spacing-item">
-                <h3>Base Unit</h3>
-                <p>8px grid system</p>
-              </div>
-              <div className="spacing-item">
-                <h3>Section Spacing</h3>
-                <p>48px - 64px between sections</p>
-              </div>
-              <div className="spacing-item">
-                <h3>Element Spacing</h3>
-                <p>16px - 24px between elements</p>
-              </div>
-              <div className="spacing-item">
-                <h3>Content Width</h3>
-                <p>Max 1200px for readability</p>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Voice & Tone */}
-        <section className="guideline-section">
-          <motion.div 
-            className="section-inner"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
-            variants={sectionVariants}
-          >
-            <h2>Voice & Tone</h2>
-            <p className="section-description">How we communicate with our audience.</p>
-            
-            <div className="voice-grid">
-              <div className="voice-card">
-                <h3>Professional</h3>
-                <p>We maintain expertise and credibility in AI technology</p>
-              </div>
-              <div className="voice-card">
-                <h3>Innovative</h3>
-                <p>We embrace cutting-edge solutions and forward thinking</p>
-              </div>
-              <div className="voice-card">
-                <h3>Accessible</h3>
-                <p>We make complex technology understandable for everyone</p>
-              </div>
-              <div className="voice-card">
-                <h3>Trustworthy</h3>
-                <p>We build confidence through transparency and reliability</p>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Download Assets */}
-        <section className="guideline-section download-section">
-          <motion.div 
-            className="section-inner"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
-            variants={sectionVariants}
-          >
-            <h2>Download Brand Assets</h2>
-            <p className="section-description">Get our official logos and brand materials.</p>
-            
-            <div className="download-cta">
-              <Link to="/logos" className="btn btn-primary-large">
-                <span className="btn-icon">📦</span>
-                View All Logos
-              </Link>
-              <p className="download-note">All logos available in PNG format</p>
-            </div>
-          </motion.div>
-        </section>
-      </div>
-
-      <section className="guidelines-footer">
-        <motion.div 
-          className="section-inner"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={sectionVariants}
-        >
-          <p>For questions about brand usage, please contact the PIBIT.AI team.</p>
-          <p className="footer-copyright">© 2026 PIBIT.AI - All rights reserved</p>
-        </motion.div>
-      </section>
+      <Section id="download" onInView={setActiveSection}>
+        <div className="guidelines-content">
+          <SectionHeader title="Ready to Build?" subtitle="Access the official PIBIT.AI asset library." dark />
+          <div className="premium-cta-group">
+            <Link to="/iconography" className="btn-premium btn-premium-primary">
+              View Iconography
+            </Link>
+            <Link to="/images" className="btn-premium btn-premium-secondary">
+              Explore Image Gallery
+            </Link>
+          </div>
+        </div>
+        <footer className="premium-footer">
+          <p>© 2026 PIBIT.AI - All rights reserved</p>
+        </footer>
+      </Section>
     </div>
   );
 };
