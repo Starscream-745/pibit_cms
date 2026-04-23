@@ -205,6 +205,8 @@ const AnalyticsDashboard: React.FC = () => {
             ))
           )}
         </div>
+      </div>
+
       <div className="recent-activity-section">
         <h2>Audit Log / Recent Activity</h2>
         <div className="recent-activity-list">
