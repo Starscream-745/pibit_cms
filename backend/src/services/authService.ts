@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
+import { User } from '../models/user';
+import database from '../config/database';
 
 interface LoginCredentials {
   username: string;
@@ -22,12 +23,17 @@ class AuthService {
     this.jwtSecret = process.env.JWT_SECRET || 'pibit-cms-secret-key-change-in-production';
   }
 
+  private getUsersCollection() {
+    return database.getDb().collection<User>('users');
+  }
+
   /**
    * Initialize initial admin user if no users exist
    */
   async initializeAdmin(): Promise<void> {
     try {
-      const userCount = await User.countDocuments();
+      const collection = this.getUsersCollection();
+      const userCount = await collection.countDocuments();
       if (userCount === 0) {
         console.log('No users found in database. Seeding initial admin from environment variables...');
         const adminUsername = process.env.ADMIN_USERNAME || 'admin';
@@ -35,10 +41,11 @@ class AuthService {
         
         const passwordHash = await bcrypt.hash(adminPassword, 10);
         
-        await User.create({
+        await collection.insertOne({
           username: adminUsername,
           passwordHash,
           role: 'admin',
+          createdAt: new Date()
         });
         
         console.log(`Initial admin user '${adminUsername}' created successfully.`);
@@ -54,7 +61,8 @@ class AuthService {
   async login(credentials: LoginCredentials): Promise<AuthToken> {
     const { username, password, role } = credentials;
 
-    const user = await User.findOne({ username, role });
+    const collection = this.getUsersCollection();
+    const user = await collection.findOne({ username, role });
     if (!user) {
       throw new Error('Invalid credentials');
     }
@@ -75,7 +83,7 @@ class AuthService {
       token,
       expiresIn: '24h',
       role: user.role,
-      userId: user._id.toString(),
+      userId: user._id!.toString(),
     };
   }
 

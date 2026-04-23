@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
-import User from '../models/user';
+import { User } from '../models/user';
 import { AuthRequest } from '../middleware/authMiddleware';
 import { AnalyticsService } from '../services/analyticsService';
 import { AnalyticsRepository } from '../repositories/analyticsRepository';
 import database from '../config/database';
+import { ObjectId } from 'mongodb';
 
 // Initialize AnalyticsService for logging
 let analyticsService: AnalyticsService;
@@ -16,13 +17,18 @@ function getAnalyticsService(): AnalyticsService {
   return analyticsService;
 }
 
+function getUsersCollection() {
+  return database.getDb().collection<User>('users');
+}
+
 export class UserController {
   /**
    * Get all users (Admin only)
    */
-  async getAllUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getAllUsers(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const users = await User.find({}, { passwordHash: 0 }).sort({ createdAt: -1 });
+      const collection = getUsersCollection();
+      const users = await collection.find({}, { projection: { passwordHash: 0 } }).sort({ createdAt: -1 }).toArray();
       res.status(200).json(users);
     } catch (error) {
       next(error);
@@ -46,8 +52,10 @@ export class UserController {
         return;
       }
 
+      const collection = getUsersCollection();
+
       // Check if user already exists
-      const existingUser = await User.findOne({ username });
+      const existingUser = await collection.findOne({ username });
       if (existingUser) {
         res.status(409).json({ error: 'Username already exists' });
         return;
@@ -55,11 +63,15 @@ export class UserController {
 
       const passwordHash = await bcrypt.hash(password, 10);
 
-      const newUser = await User.create({
+      const newUser: User = {
         username,
         passwordHash,
         role,
-      });
+        createdAt: new Date()
+      };
+      
+      const insertResult = await collection.insertOne(newUser);
+      newUser._id = insertResult.insertedId;
 
       // Log activity
       const authUser = req.user;
@@ -76,7 +88,7 @@ export class UserController {
       }
 
       // Return user without password hash
-      const userResponse = newUser.toObject();
+      const userResponse = { ...newUser } as any;
       delete userResponse.passwordHash;
 
       res.status(201).json(userResponse);
@@ -92,7 +104,14 @@ export class UserController {
     try {
       const { id } = req.params;
 
-      const userToDelete = await User.findById(id);
+      if (!ObjectId.isValid(id)) {
+        res.status(400).json({ error: 'Invalid user ID' });
+        return;
+      }
+
+      const collection = getUsersCollection();
+      const userToDelete = await collection.findOne({ _id: new ObjectId(id) });
+      
       if (!userToDelete) {
         res.status(404).json({ error: 'User not found' });
         return;
@@ -104,7 +123,7 @@ export class UserController {
         return;
       }
 
-      await User.findByIdAndDelete(id);
+      await collection.deleteOne({ _id: new ObjectId(id) });
 
       // Log activity
       const authUser = req.user;
