@@ -29,6 +29,7 @@
 .guideline-section {
   min-height: 100vh;
   width: 100%;
+  color: white;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
@@ -162,7 +163,8 @@
 
 .section-description {
   font-size: 1.25rem;
-  opacity: 0.6;
+  color: #ffffff;
+  opacity: 0.9;
 }
 
 /* Color Grid */
@@ -320,15 +322,28 @@
   flex: 1;
 }
 
-.rule-card.do { background: #ecfdf5; border: 1px solid #10b981; color: #065f46; }
-.rule-card.dont { background: #fef2f2; border: 1px solid #ef4444; color: #991b1b; }
+.rule-card.do {
+  background: #ecfdf5;
+  border: 1px solid #10b981;
+  color: #065f46;
+}
 
-.rule-icon { font-size: 3rem; margin-bottom: 1.5rem; }
+.rule-card.dont {
+  background: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+}
+
+.rule-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
 
 /* Spacing Items */
 .spacing-info {
   display: flex;
   gap: 3rem;
+  color: white;
   width: 100%;
 }
 
@@ -341,8 +356,18 @@
   flex: 1;
 }
 
-.spacing-item h3 { font-size: 1.2rem; opacity: 0.5; margin-bottom: 1rem; }
-.spacing-item p { font-size: 3rem; font-weight: 700; color: var(--tech-blue); }
+.spacing-item h3 {
+  font-size: 1.2rem;
+  color: #ffffff;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+
+.spacing-item p {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--tech-blue);
+}
 
 /* Voice Cards */
 .voice-grid {
@@ -429,10 +454,30 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .hero-title { font-size: 5rem; }
-  .color-grid { flex-direction: column; overflow-y: auto; height: auto; }
-  .typography-display { flex-direction: column; align-items: center; }
-  .voice-grid { grid-template-columns: 1fr; }
-  .logo-rules { flex-direction: column; }
-  .spacing-info { flex-direction: column; }
+  .hero-title {
+    font-size: 5rem;
+  }
+
+  .color-grid {
+    flex-direction: column;
+    overflow-y: auto;
+    height: auto;
+  }
+
+  .typography-display {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .voice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .logo-rules {
+    flex-direction: column;
+  }
+
+  .spacing-info {
+    flex-direction: column;
+  }
 }

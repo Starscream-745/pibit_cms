@@ -15,7 +15,7 @@ const sections = [
 ];
 
 const SectionHeader: React.FC<{ title: string; subtitle?: string; dark?: boolean }> = ({ title, subtitle, dark }) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 50 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -26,9 +26,9 @@ const SectionHeader: React.FC<{ title: string; subtitle?: string; dark?: boolean
   </motion.div>
 );
 
-const Section: React.FC<{ 
-  id: string; 
-  className?: string; 
+const Section: React.FC<{
+  id: string;
+  className?: string;
   onInView: (id: string) => void;
   children: React.ReactNode;
 }> = ({ id, className, onInView, children }) => {
@@ -90,7 +90,7 @@ const BrandGuidelinesPage: React.FC = () => {
         >
           <h1 className="hero-title">PIBIT.AI</h1>
           <p className="hero-subtitle">Visual Identity Standards 2026</p>
-          <motion.div 
+          <motion.div
             className="scroll-indicator"
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
@@ -102,9 +102,9 @@ const BrandGuidelinesPage: React.FC = () => {
 
       <Section id="colors" className="section-light" onInView={setActiveSection}>
         <div className="guidelines-content">
-          <SectionHeader 
-            title="Core Palette" 
-            subtitle="Our colors reflect innovation, trust, and technology." 
+          <SectionHeader
+            title="Core Palette"
+            subtitle="Our colors reflect innovation, trust, and technology."
           />
           <div className="color-grid">
             {[
@@ -113,7 +113,7 @@ const BrandGuidelinesPage: React.FC = () => {
               { name: 'Jet Black', hex: '#383838', desc: 'Primary Typography' },
               { name: 'Cloud White', hex: '#FFFFFF', desc: 'Canvas & Negative Space' }
             ].map((color, i) => (
-              <motion.div 
+              <motion.div
                 key={color.hex}
                 className="color-card"
                 initial={{ opacity: 0, x: 50 }}
@@ -137,12 +137,12 @@ const BrandGuidelinesPage: React.FC = () => {
         <div className="guidelines-content">
           <SectionHeader title="Typography" subtitle="Modernity through geometric precision." dark />
           <div className="typography-display">
-            <motion.div 
+            <motion.div
               className="typography-card premium-hover-card"
               initial="initial"
               whileHover="hover"
             >
-              <motion.div 
+              <motion.div
                 className="font-camouflage-title"
                 variants={{
                   initial: { opacity: 0.15, scale: 1, y: 0 },
@@ -153,8 +153,8 @@ const BrandGuidelinesPage: React.FC = () => {
                 <div>SPACE</div>
                 <div style={{ marginTop: '-2rem' }}>GROTESK</div>
               </motion.div>
-              
-              <motion.div 
+
+              <motion.div
                 className="card-details-overlay"
                 variants={{
                   initial: { opacity: 0, y: 30 },
@@ -173,12 +173,12 @@ const BrandGuidelinesPage: React.FC = () => {
               </motion.div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="typography-card premium-hover-card"
               initial="initial"
               whileHover="hover"
             >
-              <motion.div 
+              <motion.div
                 className="font-camouflage-title"
                 variants={{
                   initial: { opacity: 0.15, scale: 1, y: 0 },
@@ -188,8 +188,8 @@ const BrandGuidelinesPage: React.FC = () => {
               >
                 INTER
               </motion.div>
-              
-              <motion.div 
+
+              <motion.div
                 className="card-details-overlay"
                 variants={{
                   initial: { opacity: 0, y: 30 },
@@ -214,7 +214,7 @@ const BrandGuidelinesPage: React.FC = () => {
         <div className="guidelines-content">
           <SectionHeader title="Logo Integrity" subtitle="Maintaining visual consistency." />
           <div className="logo-rules">
-            <motion.div 
+            <motion.div
               className="rule-card do"
               whileHover={{ scale: 1.02 }}
             >
@@ -226,7 +226,7 @@ const BrandGuidelinesPage: React.FC = () => {
                 <li>Keep proportions</li>
               </ul>
             </motion.div>
-            <motion.div 
+            <motion.div
               className="rule-card dont"
               whileHover={{ scale: 1.02 }}
             >
@@ -248,7 +248,7 @@ const BrandGuidelinesPage: React.FC = () => {
           <SectionHeader title="Grid System" subtitle="The 8px foundation of our interface." dark />
           <div className="spacing-info">
             {['8px Base', '24px Gutter', '1400px Max'].map((item, i) => (
-              <motion.div 
+              <motion.div
                 key={item}
                 className="spacing-item"
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -268,7 +268,7 @@ const BrandGuidelinesPage: React.FC = () => {
           <SectionHeader title="Brand Voice" subtitle="How we communicate our vision." />
           <div className="voice-grid">
             {['Innovative', 'Trustworthy', 'Accessible', 'Precise'].map((voice, i) => (
-              <motion.div 
+              <motion.div
                 key={voice}
                 className="voice-card"
                 initial={{ opacity: 0, y: 30 }}
