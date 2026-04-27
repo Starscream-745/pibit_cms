@@ -60,39 +60,53 @@ const App: React.FC = () => {
           {/* Public routes - No login required */}
           <Route path="/login" element={<LoginPage />} />
           
+          {/* All routes are now protected except for /login */}
           <Route path="/iconography" element={
-            <Layout>
-              <IconographyPage />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <IconographyPage />
+              </Layout>
+            </ProtectedRoute>
           } />
 
           <Route path="/images" element={
-            <Layout>
-              <ImagesPage />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <ImagesPage />
+              </Layout>
+            </ProtectedRoute>
           } />
 
           <Route path="/pitch-decks" element={
-            <Layout>
-              <PitchDeckPage />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <PitchDeckPage />
+              </Layout>
+            </ProtectedRoute>
           } />
           
           <Route path="/pitch-deck" element={<Navigate to="/pitch-decks" replace />} />
 
-          {/* Standalone Brand Guidelines Experience */}
-          <Route path="/brand-guidelines" element={<BrandGuidelinesPage />} />
+          <Route path="/brand-guidelines" element={
+            <ProtectedRoute>
+              <BrandGuidelinesPage />
+            </ProtectedRoute>
+          } />
 
           <Route path="/contact" element={
-            <Layout>
-              <ContactPage />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <ContactPage />
+              </Layout>
+            </ProtectedRoute>
           } />
 
           <Route path="/" element={
-            <Layout>
-              <HomePage />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <HomePage />
+              </Layout>
+            </ProtectedRoute>
           } />
 
           {/* Protected routes - Login required */}
