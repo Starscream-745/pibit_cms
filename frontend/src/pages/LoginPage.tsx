@@ -35,95 +35,74 @@ const LoginPage: React.FC = () => {
         <div className="bg-shape bg-shape-3"></div>
       </div>
       <div className="login-container">
-        <div className="login-header">
-          <h1>PIBIT.AI CMS</h1>
-          <p>Content Management System</p>
+        <div className="login-visual-side">
+          <div className="login-visual-content">
+            <h1>PIBIT.AI</h1>
+            <p>ADVANCED CONTENT MANAGEMENT</p>
+            <div className="visual-badge">2026 EDITION</div>
+          </div>
         </div>
 
-        <form className="login-form" onSubmit={handleSubmit}>
-          <h2>Login</h2>
+        <div className="login-form-side">
+          <form className="login-form" onSubmit={handleSubmit}>
+            <h2>Welcome Back</h2>
+            <p className="form-subtitle">Please enter your details to continue</p>
 
-          {error && <div className="error-banner">{error}</div>}
+            {error && <div className="error-banner">{error}</div>}
 
-          {/* Role Selection */}
-          <div className="form-group">
-            <label>Login As</label>
-            <div className="role-selector">
-              <button
-                type="button"
-                className={`role-btn ${role === 'user' ? 'active' : ''}`}
-                onClick={() => setRole('user')}
-              >
-                <span className="role-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </span>
-                <span className="role-label">User</span>
-                <span className="role-description">View only access</span>
-              </button>
-              <button
-                type="button"
-                className={`role-btn ${role === 'admin' ? 'active' : ''}`}
-                onClick={() => setRole('admin')}
-              >
-                <span className="role-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </span>
-                <span className="role-label">Admin</span>
-                <span className="role-description">Full access</span>
-              </button>
+            {/* Role Selection */}
+            <div className="form-group">
+              <label>Login As</label>
+              <div className="role-selector">
+                <button
+                  type="button"
+                  className={`role-btn ${role === 'user' ? 'active' : ''}`}
+                  onClick={() => setRole('user')}
+                >
+                  <span className="role-label">User</span>
+                </button>
+                <button
+                  type="button"
+                  className={`role-btn ${role === 'admin' ? 'active' : ''}`}
+                  onClick={() => setRole('admin')}
+                >
+                  <span className="role-label">Admin</span>
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder={role === 'admin' ? 'Enter admin username' : 'Enter username'}
-              required
-              autoFocus
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
-              required
-            />
-          </div>
-
-          {role === 'user' && (
-            <div className="info-banner">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '0.5rem' }}>
-                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M12 16V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M12 8H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <strong>User Access:</strong> You can view and download assets but cannot create, edit, or delete.
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                required
+                autoFocus
+              />
             </div>
-          )}
 
-          <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Logging in...' : `Login as ${role === 'admin' ? 'Admin' : 'User'}`}
-          </button>
-        </form>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+              />
+            </div>
 
-        <div className="login-footer">
-          <p>© 2026 PIBIT.AI</p>
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? 'Authenticating...' : 'Sign In'}
+            </button>
+          </form>
+          <div className="login-footer">
+            <p>© 2026 PIBIT.AI • SECURE ACCESS</p>
+          </div>
         </div>
       </div>
     </div>
