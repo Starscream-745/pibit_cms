@@ -84,6 +84,42 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.deck-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(47, 107, 254, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(4px);
+}
+
+.deck-item:hover .deck-hover-overlay {
+  opacity: 1;
+}
+
+.download-btn-pill {
+  background: var(--tech-blue);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 14px;
+  transform: translateY(10px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 25px rgba(47, 107, 254, 0.4);
+}
+
+.deck-item:hover .download-btn-pill {
+  transform: translateY(0);
 }
 
 .deck-icon {

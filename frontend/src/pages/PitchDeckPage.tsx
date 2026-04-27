@@ -3,7 +3,7 @@ import assetService from '../services/assetService';
 import { Asset } from '../types/asset';
 import Preloader from '../components/Preloader';
 import SearchBar from '../components/SearchBar';
-import { Presentation } from 'lucide-react';
+import { Presentation, Download } from 'lucide-react';
 import '../styles/PitchDeckPage.css';
 
 const PitchDeckPage: React.FC = () => {
@@ -111,6 +111,12 @@ const PitchDeckPage: React.FC = () => {
             >
               <div className="deck-wrapper">
                 <Presentation className="deck-icon" />
+                <div className="deck-hover-overlay">
+                  <div className="download-btn-pill">
+                    <Download size={18} />
+                    <span>Download Deck</span>
+                  </div>
+                </div>
               </div>
               <div className="deck-info">
                 <h4>{deck.name}</h4>
