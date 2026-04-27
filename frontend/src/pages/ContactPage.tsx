@@ -8,7 +8,7 @@ import '../styles/ContactPage.css';
 // 3. Create email template → copy Template ID below
 // 4. Go to Account → copy Public Key below
 const EMAILJS_SERVICE_ID  = 'service_d4q346k';
-const EMAILJS_TEMPLATE_ID = 'template_r06pt73';
+const EMAILJS_TEMPLATE_ID = 'template_o7d7zfl';
 const EMAILJS_PUBLIC_KEY  = 'fnu-D3cstGn_DBUWf';
 // ──────────────────────────────────────────────────────────────────────────────
 
@@ -82,9 +82,10 @@ const ContactPage: React.FC = () => {
       setCooldown(COOLDOWN_SECONDS);
       setSubmitted(true);
 
-    } catch (err) {
+    } catch (err: any) {
       console.error('EmailJS error:', err);
-      setError('Something went wrong. Please try emailing us directly at kushargatyagi31@gmail.com');
+      const detail = err?.text || err?.message || JSON.stringify(err);
+      setError(`Failed: ${detail}`);
     } finally {
       setSending(false);
     }
