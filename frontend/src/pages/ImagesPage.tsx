@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import assetService from '../services/assetService';
 import { Asset } from '../types/asset';
+import Preloader from '../components/Preloader';
 import SearchBar from '../components/SearchBar';
 import '../styles/ImagesPage.css';
 
@@ -62,7 +63,9 @@ const ImagesPage: React.FC = () => {
   if (loading) {
     return (
       <div className="images-page">
-        <div className="loading">Loading images...</div>
+        <div style={{ position: 'relative', height: '400px' }}>
+          <Preloader isLoading={true} fullScreen={false} />
+        </div>
       </div>
     );
   }

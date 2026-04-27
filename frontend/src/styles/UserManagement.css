@@ -6,26 +6,40 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.user-management-header .page-title {
+  font-size: 36px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .user-management-card {
   background: var(--cloud-white);
-  border: 1px solid var(--border-gray);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  border-radius: 32px;
+  padding: 2.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 32px rgba(47, 107, 254, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-management-card:hover {
+  box-shadow: 0 16px 40px rgba(47, 107, 254, 0.08);
 }
 
 .user-management-card h2 {
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
 }
 
 .add-user-form {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
   align-items: flex-end;
 }
@@ -35,12 +49,51 @@
   min-width: 200px;
 }
 
+.form-field-group .form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--charcoal-gray);
+  font-size: 14px;
+}
+
+.form-field-group .form-input {
+  width: 100%;
+  padding: 0.8rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-gray);
+  background-color: var(--soft-gray);
+  font-family: var(--font-body);
+  transition: all 0.3s ease;
+}
+
+.form-field-group .form-input:focus {
+  outline: none;
+  border-color: var(--tech-blue);
+  background-color: var(--cloud-white);
+  box-shadow: 0 0 0 4px rgba(47, 107, 254, 0.1);
+}
+
 .form-action-group {
-  min-width: 120px;
+  min-width: 150px;
 }
 
 .btn-full-width {
   width: 100%;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  background-color: var(--tech-blue);
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-full-width:hover {
+  background-color: var(--celestial-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(47, 107, 254, 0.25);
 }
 
 .users-table-container {
@@ -49,51 +102,80 @@
 
 .users-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+  text-align: left;
 }
 
 .users-table th {
-  padding: 0.75rem;
+  padding: 0 1.5rem 1rem 1.5rem;
   font-weight: 600;
-  text-align: left;
-  border-bottom: 2px solid #e5e7eb;
+  color: var(--charcoal-gray);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  border: none;
 }
 
 .users-table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  background: var(--soft-gray);
+  border: none;
+}
+
+.users-table tr td:first-child {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  font-weight: 600;
+}
+
+.users-table tr td:last-child {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.users-table tr {
+  transition: all 0.3s;
+}
+
+.users-table tr:hover td {
+  background: #f1f5fa;
+  transform: scale(1.005);
 }
 
 .role-badge {
-  padding: 0.25rem 0.75rem;
+  padding: 0.4rem 1rem;
   border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .role-badge.admin {
-  background-color: #fee2e2;
-  color: #991b1b;
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--coral-red);
 }
 
 .role-badge.user {
-  background-color: #e0e7ff;
-  color: #3730a3;
+  background-color: rgba(47, 107, 254, 0.1);
+  color: var(--tech-blue);
 }
 
 .btn-delete {
-  background: none;
-  border: none;
-  color: #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid transparent;
+  color: var(--coral-red);
   cursor: pointer;
-  font-weight: 500;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  transition: background-color 0.2s;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  transition: all 0.3s;
 }
 
 .btn-delete:hover:not(:disabled) {
-  background-color: #fee2e2;
+  background-color: var(--coral-red);
+  color: white;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
 
 .btn-delete:disabled {
@@ -119,6 +201,6 @@
   }
 
   .users-table th, .users-table td {
-    padding: 0.5rem;
+    padding: 1rem;
   }
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import userService, { User, CreateUserData } from '../services/userService';
+import Preloader from '../components/Preloader';
 import '../styles/UserManagement.css';
 
 const UserManagement: React.FC = () => {
@@ -145,7 +146,9 @@ const UserManagement: React.FC = () => {
       <div className="user-management-card">
         <h2>Existing Users</h2>
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '2rem' }}>Loading users...</div>
+          <div style={{ position: 'relative', height: '200px' }}>
+            <Preloader isLoading={true} fullScreen={false} />
+          </div>
         ) : users.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '2rem', color: '#6b7280' }}>No users found</div>
         ) : (

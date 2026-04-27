@@ -1,162 +1,110 @@
-.asset-form {
-  max-width: 600px;
-  margin: 0 auto;
+.asset-form-container {
   background: var(--cloud-white);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(6, 132, 240, 0.08);
+  border-radius: 32px;
+  padding: 3rem;
+  box-shadow: 0 12px 32px rgba(47, 107, 254, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  margin-top: 2rem;
 }
 
-.asset-form h2 {
-  margin: 0 0 2rem 0;
-  color: var(--jet-black);
-  font-size: 28px;
-  font-family: var(--font-heading);
-  font-weight: 500;
+.asset-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--jet-black);
-  font-weight: 500;
-  font-size: 14px;
   font-family: var(--font-heading);
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid var(--border-gray);
-  border-radius: 8px;
-  font-size: 14px;
-  font-family: var(--font-body);
-  transition: border-color 0.3s, box-shadow 0.3s;
+  font-weight: 600;
   color: var(--jet-black);
+  font-size: 15px;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-gray);
+  border-radius: 12px;
+  background-color: var(--soft-gray);
+  color: var(--jet-black);
+  font-family: var(--font-body);
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
   outline: none;
   border-color: var(--tech-blue);
-  box-shadow: 0 0 0 3px rgba(6, 132, 240, 0.1);
+  background-color: var(--cloud-white);
+  box-shadow: 0 0 0 4px rgba(47, 107, 254, 0.1);
 }
 
-.form-group input.error,
-.form-group textarea.error {
-  border-color: var(--coral-red);
-}
-
-.form-group input.error:focus,
-.form-group textarea.error:focus {
-  box-shadow: 0 0 0 3px rgba(229, 136, 136, 0.2);
-}
-
-.form-group textarea {
+.form-textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 120px;
 }
 
-.error-message {
-  display: block;
+.form-error {
   color: var(--coral-red);
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 0.25rem;
   font-weight: 500;
 }
 
 .form-actions {
   display: flex;
-  gap: 1rem;
   justify-content: flex-end;
-  margin-top: 2rem;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.page-container {
-  width: 100%;
-}
-
-@media (max-width: 768px) {
-  .asset-form {
-    padding: 1.5rem;
-  }
-  
-  .asset-form h2 {
-    font-size: 24px;
-  }
-  
-  .form-actions {
-    flex-direction: column-reverse;
-  }
-  
-  .form-actions button {
-    width: 100%;
-  }
-}
-
-/* URL Mode Toggle */
-.url-mode-toggle {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  background: #f3f4f6;
-  padding: 0.25rem;
-  border-radius: 8px;
-}
-
-.toggle-btn {
-  flex: 1;
-  padding: 0.5rem 1rem;
-  background: transparent;
-  border: none;
-  border-radius: 6px;
+.btn-secondary,
+.btn-primary {
+  padding: 0.75rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
   font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
-  color: #6b7280;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s;
 }
 
-.toggle-btn:hover {
-  color: var(--tech-blue);
+.btn-secondary {
+  background: var(--soft-gray);
+  border: 1px solid var(--border-gray);
+  color: var(--jet-black);
 }
 
-.toggle-btn.active {
-  background: white;
-  color: var(--tech-blue);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.btn-secondary:hover {
+  background: var(--border-gray);
 }
 
-/* Success Message */
-.success-message {
-  display: block;
-  color: #10b981;
-  font-size: 14px;
-  margin-top: 0.5rem;
-  padding: 0.75rem;
-  background: #d1fae5;
-  border-radius: 6px;
-  font-weight: 500;
+.btn-primary {
+  background: var(--tech-blue);
+  border: none;
+  color: white;
 }
 
-/* Uploaded URL Display */
-.uploaded-url {
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  background: #f0f9ff;
-  border-radius: 6px;
-  border-left: 3px solid var(--tech-blue);
+.btn-primary:hover {
+  background: var(--celestial-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(47, 107, 254, 0.25);
 }
 
-.uploaded-url small {
-  font-family: var(--font-body);
-  font-size: 12px;
-  color: #6b7280;
-  word-break: break-all;
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }

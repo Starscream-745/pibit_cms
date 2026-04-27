@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { RefreshCw, Users, Activity, TrendingUp, DownloadCloud } from 'lucide-react';
+import Preloader from '../components/Preloader';
 import '../styles/AnalyticsDashboard.css';
 
 interface AnalyticsSummary {
@@ -83,9 +84,8 @@ const AnalyticsDashboard: React.FC = () => {
   if (loading) {
     return (
       <div className="analytics-dashboard">
-        <div className="analytics-loading">
-          <div className="spinner"></div>
-          <p>Loading analytics...</p>
+        <div className="analytics-loading" style={{ position: 'relative' }}>
+          <Preloader isLoading={true} fullScreen={false} />
         </div>
       </div>
     );

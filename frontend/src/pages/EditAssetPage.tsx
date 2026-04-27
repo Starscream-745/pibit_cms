@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AssetForm from '../components/AssetForm';
 import assetService from '../services/assetService';
 import { Asset, CreateAssetDTO } from '../types/asset';
+import Preloader from '../components/Preloader';
 
 const EditAssetPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -46,7 +47,13 @@ const EditAssetPage: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="page-container">Loading asset...</div>;
+    return (
+      <div className="page-container">
+        <div style={{ position: 'relative', height: '400px' }}>
+          <Preloader isLoading={true} fullScreen={false} />
+        </div>
+      </div>
+    );
   }
 
   if (error || !asset) {

@@ -1,86 +1,38 @@
-/* SearchBar.css - Modern Search Bar */
-
-.search-bar {
-  width: 100%;
-  animation: slideInRight 0.5s ease-out;
-}
-
-.search-input-wrapper {
+.search-bar-container {
   position: relative;
-  display: flex;
-  align-items: center;
-  background: white;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.search-input-wrapper:focus-within {
-  border-color: #0684F0;
-  box-shadow: 0 4px 12px rgba(6, 132, 240, 0.15);
-  transform: translateY(-1px);
-}
-
-.search-icon {
-  font-size: 1.25rem;
-  margin-right: 0.75rem;
-  color: #6b7280;
-  transition: color 0.3s;
-}
-
-.search-input-wrapper:focus-within .search-icon {
-  color: #0684F0;
+  width: 100%;
 }
 
 .search-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  color: #383838;
-  background: transparent;
+  width: 100%;
+  padding: 1.25rem 1.5rem 1.25rem 3.5rem;
+  font-size: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 9999px; /* full pill shape */
+  background-color: var(--cloud-white);
+  color: var(--jet-black);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 24px rgba(47, 107, 254, 0.04);
+  font-family: var(--font-body);
 }
 
 .search-input::placeholder {
   color: #9ca3af;
 }
 
-.search-clear {
-  background: #f3f4f6;
-  border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: #6b7280;
-  font-size: 0.875rem;
-  transition: all 0.2s;
-  margin-left: 0.5rem;
+.search-input:focus {
+  outline: none;
+  border-color: var(--tech-blue);
+  box-shadow: 0 0 0 4px rgba(47, 107, 254, 0.1), 0 12px 32px rgba(47, 107, 254, 0.08);
+  transform: translateY(-2px);
 }
 
-.search-clear:hover {
-  background: #e5e7eb;
-  color: #383838;
-  transform: scale(1.1);
-}
-
-.search-clear:active {
-  transform: scale(0.95);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .search-input-wrapper {
-    padding: 0.625rem 0.875rem;
-  }
-
-  .search-input {
-    font-size: 0.9375rem;
-  }
+.search-icon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tech-blue);
+  pointer-events: none;
+  opacity: 0.8;
 }

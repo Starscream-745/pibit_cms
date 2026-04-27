@@ -5,46 +5,16 @@
 }
 
 .header {
-  background: linear-gradient(135deg, var(--tech-blue) 0%, var(--celestial-blue) 100%);
-  color: var(--cloud-white);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--jet-black);
   padding: 1rem 2rem;
-  box-shadow: 0 4px 20px rgba(6, 132, 240, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Animated background shapes */
-.header::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: floatShape 15s ease-in-out infinite;
-}
-
-.header::after {
-  content: '';
-  position: absolute;
-  bottom: -30%;
-  left: -5%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: floatShape 12s ease-in-out infinite reverse;
-}
-
-@keyframes floatShape {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-20px, 20px) scale(1.1);
-  }
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
 }
 
 .header-content {
@@ -58,17 +28,16 @@
 }
 
 .logo a {
-  color: var(--cloud-white);
+  color: var(--tech-blue);
   text-decoration: none;
   font-size: 1.5rem;
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 .logo a:hover {
-  color: var(--cloud-white);
-  opacity: 0.9;
+  color: var(--celestial-blue);
 }
 
 .nav {
@@ -78,29 +47,88 @@
 }
 
 .nav-link {
-  color: var(--cloud-white);
+  color: var(--charcoal-gray);
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  transition: background-color 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: var(--font-heading);
   font-weight: 500;
   font-size: 14px;
 }
 
 .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(47, 107, 254, 0.08);
+  color: var(--tech-blue);
 }
 
 .nav-link-primary {
-  background-color: var(--celestial-blue);
+  background-color: var(--tech-blue);
   color: var(--cloud-white);
   font-weight: 600;
+  box-shadow: 0 4px 12px rgba(47, 107, 254, 0.2);
 }
 
 .nav-link-primary:hover {
-  background-color: var(--tech-blue);
-  filter: brightness(1.1);
+  background-color: var(--celestial-blue);
+  color: var(--cloud-white);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(47, 107, 254, 0.3);
+}
+
+/* Dropdown Menu Styles */
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--cloud-white);
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 12px;
+  padding: 0.5rem;
+  min-width: 160px;
+  box-shadow: 0 12px 32px rgba(47, 107, 254, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--charcoal-gray);
+  text-decoration: none;
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(47, 107, 254, 0.08);
+  color: var(--tech-blue);
 }
 
 .main-content {
@@ -113,88 +141,44 @@
   z-index: 1;
 }
 
-/* Floating decorative shapes */
-.main-content::before {
-  content: '';
-  position: absolute;
-  top: 10%;
-  right: -100px;
-  width: 200px;
-  height: 200px;
-  background: linear-gradient(135deg, rgba(6, 132, 240, 0.05) 0%, rgba(41, 160, 243, 0.03) 100%);
-  border-radius: 50%;
-  z-index: -1;
-  animation: floatSlow 20s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.main-content::after {
-  content: '';
-  position: absolute;
-  bottom: 20%;
-  left: -80px;
-  width: 150px;
-  height: 150px;
-  background: linear-gradient(135deg, rgba(124, 92, 255, 0.04) 0%, rgba(41, 160, 243, 0.02) 100%);
-  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  z-index: -1;
-  animation: floatSlow 15s ease-in-out infinite reverse;
-  pointer-events: none;
-}
-
-@keyframes floatSlow {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  33% {
-    transform: translate(30px, -30px) rotate(120deg);
-  }
-  66% {
-    transform: translate(-20px, 20px) rotate(240deg);
-  }
-}
-
 .footer {
-  background: linear-gradient(135deg, var(--jet-black) 0%, #2a2a2a 100%);
+  background: transparent;
   padding: 1.5rem 2rem;
   text-align: center;
-  color: var(--cloud-white);
+  color: var(--charcoal-gray);
   margin-top: auto;
   position: relative;
-  overflow: hidden;
-}
-
-.footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, var(--tech-blue) 50%, transparent 100%);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .footer p {
   margin: 0;
   font-size: 14px;
-  color: var(--charcoal-gray);
 }
 
 /* Logout Button */
 .nav-link-logout,
 .nav-link-login {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-gray);
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s;
+  color: var(--charcoal-gray);
 }
 
 .nav-link-logout:hover,
 .nav-link-login:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: var(--coral-red);
+}
+
+.nav-link-login:hover {
+  background: rgba(47, 107, 254, 0.1);
+  border-color: rgba(47, 107, 254, 0.2);
+  color: var(--tech-blue);
 }
 
 /* User Info */
@@ -205,17 +189,18 @@
 }
 
 .user-role-badge {
-  background: rgba(255, 255, 255, 0.2);
-  color: var(--cloud-white);
+  background: var(--cloud-white);
+  color: var(--tech-blue);
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 13px;
   font-weight: 600;
   font-family: var(--font-heading);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-gray);
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
 }
 
 .user-role-badge svg {

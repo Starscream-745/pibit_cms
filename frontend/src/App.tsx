@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ToastProvider } from './contexts/ToastContext';
@@ -13,11 +13,48 @@ import BrandGuidelinesPage from './pages/BrandGuidelinesPage';
 import LoginPage from './pages/LoginPage';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
 import UserManagement from './pages/UserManagement';
+import Preloader from './components/Preloader';
 
 const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); 
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      // Calculate normalized mouse position (-1 to 1)
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      setMousePos({ x, y });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
   return (
     <AuthProvider>
       <ToastProvider>
+        <div 
+          className="bg-orb bg-orb-1" 
+          style={{ transform: `translate(${mousePos.x * -30}px, ${mousePos.y * -30}px)` }}
+        />
+        <div 
+          className="bg-orb bg-orb-2" 
+          style={{ transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px)` }}
+        />
+        <div 
+          className="bg-orb bg-orb-3" 
+          style={{ transform: `translate(${mousePos.x * -15}px, ${mousePos.y * -15}px)` }}
+        />
+        <Preloader isLoading={isLoading} />
         <Router>
         <Routes>
           {/* Public routes - No login required */}

@@ -4,7 +4,7 @@ import { Asset } from '../types/asset';
 import assetService from '../services/assetService';
 import AssetCard from './AssetCard';
 import CategoryFilter from './CategoryFilter';
-import LoadingSkeleton from './LoadingSkeleton';
+import Preloader from './Preloader';
 import SearchBar from './SearchBar';
 import SortDropdown, { SortOption } from './SortDropdown';
 import EmptyState from './EmptyState';
@@ -134,7 +134,9 @@ const AssetList: React.FC = () => {
         <div className="asset-list-header">
           <h2>Digital Assets</h2>
         </div>
-        <LoadingSkeleton type="card" count={6} />
+        <div style={{ position: 'relative', height: '400px' }}>
+          <Preloader isLoading={true} fullScreen={false} />
+        </div>
       </div>
     );
   }

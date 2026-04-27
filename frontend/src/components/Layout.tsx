@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { ShieldCheck, User } from 'lucide-react';
+import { ShieldCheck, User, ChevronDown } from 'lucide-react';
 import '../styles/Layout.css';
 
 interface LayoutProps {
@@ -28,7 +28,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </h1>
           <nav className="nav">
             <Link to="/" className="nav-link">Assets</Link>
-            <Link to="/logos" className="nav-link">Logos</Link>
+            <div className="nav-dropdown">
+              <button className="nav-link dropdown-toggle">
+                Categories <ChevronDown size={14} />
+              </button>
+              <div className="dropdown-menu">
+                <Link to="/iconography" className="dropdown-item">Iconography</Link>
+                <Link to="/images" className="dropdown-item">Images</Link>
+              </div>
+            </div>
             <Link to="/brand-guidelines" className="nav-link">Brand Guidelines</Link>
             {isAuthenticated && isAdmin && (
               <>

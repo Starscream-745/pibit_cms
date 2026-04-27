@@ -7,21 +7,21 @@
 
 :root {
   /* Primary Brand Colors */
-  --tech-blue: #0684F0;
-  --celestial-blue: #29A0F3;
+  --tech-blue: #2F6BFE;
+  --celestial-blue: #5C8BFF;
   
   /* Neutral Colors */
-  --jet-black: #383838;
-  --charcoal-gray: #6B7280;
+  --jet-black: #1A1A1A;
+  --charcoal-gray: #4A5568;
   --cloud-white: #FFFFFF;
-  --soft-gray: #F4F4F4;
-  --border-gray: #E1E1E1;
+  --soft-gray: #FAFAFC;
+  --border-gray: #E2E8F0;
   
   /* Accent Colors */
-  --signal-purple: #7C5CFF;
-  --soft-green: #22C55E;
-  --amber-yellow: #EBA43B;
-  --coral-red: #E58888;
+  --signal-purple: #8B5CF6;
+  --soft-green: #10B981;
+  --amber-yellow: #F59E0B;
+  --coral-red: #EF4444;
   
   /* Typography */
   --font-heading: 'Space Grotesk', sans-serif;
@@ -33,7 +33,7 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #f8fafc 0%, #e8f0f8 50%, #f0f4f8 100%);
+  background-color: var(--soft-gray);
   color: var(--jet-black);
   font-size: 16px;
   line-height: 1.5;
@@ -42,49 +42,38 @@ body {
   overflow-x: hidden;
 }
 
-/* Animated mesh gradient background */
-body::before {
-  content: '';
+/* Base floating orb styles for parallax background */
+.bg-orb {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(circle at 20% 30%, rgba(6, 132, 240, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(41, 160, 243, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(124, 92, 255, 0.04) 0%, transparent 50%);
+  border-radius: 50%;
   pointer-events: none;
   z-index: 0;
-  animation: meshMove 20s ease-in-out infinite;
+  filter: blur(80px);
+  opacity: 0.6;
 }
 
-/* Geometric pattern overlay */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    linear-gradient(90deg, rgba(6, 132, 240, 0.02) 1px, transparent 1px),
-    linear-gradient(rgba(6, 132, 240, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
+.bg-orb-1 {
+  top: -10%;
+  left: 10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(47, 107, 254, 0.2) 0%, transparent 70%);
 }
 
-@keyframes meshMove {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.1);
-  }
+.bg-orb-2 {
+  bottom: 10%;
+  right: -5%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(92, 139, 255, 0.15) 0%, transparent 70%);
+}
+
+.bg-orb-3 {
+  top: 40%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
 }
 
 #root {

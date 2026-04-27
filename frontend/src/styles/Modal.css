@@ -2,92 +2,75 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(15, 23, 42, 0.4);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(26, 26, 26, 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  animation: fadeIn 0.2s ease-out;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
 .modal-content {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 2rem;
+  background: var(--cloud-white);
+  border-radius: 32px;
   width: 90%;
-  max-width: 450px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+  transform: translateY(20px) scale(0.95);
+  opacity: 0;
+  animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.modal-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.modal-icon {
+.modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: var(--soft-gray);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  margin-right: 1rem;
-  flex-shrink: 0;
+  cursor: pointer;
+  color: var(--charcoal-gray);
+  transition: all 0.3s;
+  z-index: 10;
 }
 
-.modal-icon.danger {
-  background-color: #fef2f2;
-  color: #ef4444;
+.modal-close:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--coral-red);
+  transform: rotate(90deg);
 }
 
-.modal-icon.warning {
-  background-color: #fffbeb;
-  color: #f59e0b;
-}
-
-.modal-icon.info {
-  background-color: #eff6ff;
-  color: #0684F0;
-}
-
-.modal-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.25rem;
-  color: #111827;
-  margin: 0;
-}
-
-.modal-body {
-  color: #4b5563;
-  font-family: 'Inter', sans-serif;
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { 
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to { 
-    opacity: 1;
+@keyframes slideUpFade {
+  to {
     transform: translateY(0) scale(1);
+    opacity: 1;
   }
+}
+
+/* Custom scrollbar for modal */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: var(--border-gray);
+  border-radius: 4px;
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import assetService from '../services/assetService';
 import { Asset } from '../types/asset';
+import Preloader from '../components/Preloader';
 import '../styles/IconographyPage.css';
 
 const IconographyPage: React.FC = () => {
@@ -46,7 +47,9 @@ const IconographyPage: React.FC = () => {
   if (loading) {
     return (
       <div className="iconography-page">
-        <div className="loading">Loading icons...</div>
+        <div style={{ position: 'relative', height: '400px' }}>
+          <Preloader isLoading={true} fullScreen={false} />
+        </div>
       </div>
     );
   }
