@@ -24,6 +24,17 @@
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+[data-theme='dark'] .asset-card:hover {
+  border-color: var(--tech-blue);
+  box-shadow: 0 12px 40px rgba(47, 107, 254, 0.3), 0 0 20px rgba(47, 107, 254, 0.15);
+  background: rgba(13, 17, 23, 0.9);
+}
+
+[data-theme='dark'] .asset-card:hover .preview-icon-wrap::after {
+  opacity: 0.15;
+  filter: blur(20px);
+}
+
 /* Shine sweep on hover */
 .card-shine {
   pointer-events: none;
