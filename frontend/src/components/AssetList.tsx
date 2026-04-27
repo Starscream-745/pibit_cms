@@ -186,7 +186,10 @@ const AssetList: React.FC = () => {
         <div className="categories-container">
           {Object.entries(groupedAssets).map(([category, categoryAssets]) => (
             <div key={category} className="category-section">
-              <h3 className="category-title">{category}</h3>
+              <h3 className="category-title">
+                {category}
+                <span className="category-count">{categoryAssets.length}</span>
+              </h3>
               <motion.div layout className="assets-grid">
                 <AnimatePresence>
                 {categoryAssets.map((asset) => (

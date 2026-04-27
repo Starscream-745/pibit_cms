@@ -9,11 +9,14 @@ import CreateAssetPage from './pages/CreateAssetPage';
 import EditAssetPage from './pages/EditAssetPage';
 import IconographyPage from './pages/IconographyPage';
 import ImagesPage from './pages/ImagesPage';
+import PitchDeckPage from './pages/PitchDeckPage';
 import BrandGuidelinesPage from './pages/BrandGuidelinesPage';
+import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
 import UserManagement from './pages/UserManagement';
 import Preloader from './components/Preloader';
+import TrailingCursor from './components/GhostCursor';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -42,19 +45,14 @@ const App: React.FC = () => {
   return (
     <AuthProvider>
       <ToastProvider>
-        <div 
-          className="bg-orb bg-orb-1" 
-          style={{ transform: `translate(${mousePos.x * -30}px, ${mousePos.y * -30}px)` }}
-        />
-        <div 
-          className="bg-orb bg-orb-2" 
-          style={{ transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px)` }}
-        />
-        <div 
-          className="bg-orb bg-orb-3" 
-          style={{ transform: `translate(${mousePos.x * -15}px, ${mousePos.y * -15}px)` }}
-        />
+        <div className="bg-orb bg-orb-1" style={{ transform: `translate(${mousePos.x * -30}px, ${mousePos.y * -30}px)` }} />
+        <div className="bg-orb bg-orb-2" style={{ transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px)` }} />
+        <div className="bg-orb bg-orb-3" style={{ transform: `translate(${mousePos.x * -15}px, ${mousePos.y * -15}px)` }} />
+        <div className="bg-geo bg-geo-ring-1" />
+        <div className="bg-geo bg-geo-ring-2" />
+        <div className="bg-geo bg-geo-diamond" />
         <Preloader isLoading={isLoading} />
+        <TrailingCursor />
         <Router>
         <Routes>
           {/* Public routes - No login required */}
@@ -72,8 +70,20 @@ const App: React.FC = () => {
             </Layout>
           } />
 
+          <Route path="/pitch-decks" element={
+            <Layout>
+              <PitchDeckPage />
+            </Layout>
+          } />
+
           {/* Standalone Brand Guidelines Experience */}
           <Route path="/brand-guidelines" element={<BrandGuidelinesPage />} />
+
+          <Route path="/contact" element={
+            <Layout>
+              <ContactPage />
+            </Layout>
+          } />
 
           <Route path="/" element={
             <Layout>

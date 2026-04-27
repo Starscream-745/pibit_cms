@@ -34,6 +34,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--soft-gray);
+  /* Dot grid pattern */
+  background-image: radial-gradient(circle, #c7d2fe 1px, transparent 1px);
+  background-size: 32px 32px;
   color: var(--jet-black);
   font-size: 16px;
   line-height: 1.5;
@@ -74,6 +77,55 @@ body {
   width: 400px;
   height: 400px;
   background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+}
+
+/* Animated floating geometric shapes */
+.bg-geo {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.06;
+}
+
+.bg-geo-ring-1 {
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  right: -100px;
+  border: 80px solid var(--tech-blue);
+  border-radius: 50%;
+  animation: slowSpin 60s linear infinite;
+}
+
+.bg-geo-ring-2 {
+  width: 400px;
+  height: 400px;
+  bottom: -100px;
+  left: -120px;
+  border: 60px solid var(--signal-purple);
+  border-radius: 50%;
+  animation: slowSpin 45s linear infinite reverse;
+}
+
+.bg-geo-diamond {
+  width: 200px;
+  height: 200px;
+  top: 40%;
+  right: 8%;
+  border: 3px solid var(--tech-blue);
+  transform: rotate(45deg);
+  animation: floatDiamond 8s ease-in-out infinite;
+  opacity: 0.08;
+}
+
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes floatDiamond {
+  0%, 100% { transform: rotate(45deg) translateY(0px); }
+  50%       { transform: rotate(45deg) translateY(-20px); }
 }
 
 #root {

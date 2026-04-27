@@ -35,9 +35,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <div className="dropdown-menu">
                 <Link to="/iconography" className="dropdown-item">Iconography</Link>
                 <Link to="/images" className="dropdown-item">Images</Link>
+                <Link to="/pitch-decks" className="dropdown-item">Pitch Decks</Link>
               </div>
             </div>
             <Link to="/brand-guidelines" className="nav-link">Brand Guidelines</Link>
+            <Link to="/contact" className="nav-link">Contact Us</Link>
             {isAuthenticated && isAdmin && (
               <>
                 <Link to="/analytics" className="nav-link">Analytics</Link>
