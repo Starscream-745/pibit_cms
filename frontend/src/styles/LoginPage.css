@@ -13,50 +13,65 @@
 }
 
 [data-theme='dark'] .login-page {
-  background: linear-gradient(135deg, #05070A 0%, #0D1117 100%);
+  background: radial-gradient(circle at 50% 50%, #0D1117 0%, #05070A 100%);
 }
 
-/* Floating geometric shapes */
-.login-page::before {
-  content: '';
+.login-bg-shapes {
   position: absolute;
-  top: 10%;
-  left: 10%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: floatShape1 20s ease-in-out infinite;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
 }
 
-.login-page::after {
-  content: '';
+.bg-shape {
   position: absolute;
-  bottom: 10%;
-  right: 10%;
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  filter: blur(80px);
+  opacity: 0.4;
   border-radius: 50%;
-  animation: floatShape2 15s ease-in-out infinite;
+  animation: moveShape 25s linear infinite;
 }
 
-@keyframes floatShape1 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(50px, -50px) scale(1.2);
-  }
+[data-theme='dark'] .bg-shape {
+  opacity: 0.15;
 }
 
-@keyframes floatShape2 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-30px, 30px) scale(1.15);
-  }
+.bg-shape-1 {
+  width: 600px;
+  height: 600px;
+  background: var(--tech-blue);
+  top: -200px;
+  right: -100px;
+}
+
+.bg-shape-2 {
+  width: 500px;
+  height: 500px;
+  background: var(--celestial-blue);
+  bottom: -150px;
+  left: -100px;
+  animation-duration: 30s;
+  animation-delay: -5s;
+}
+
+.bg-shape-3 {
+  width: 400px;
+  height: 400px;
+  background: #6366f1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-duration: 20s;
+  animation-delay: -10s;
+}
+
+@keyframes moveShape {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(50px, 100px) rotate(120deg); }
+  66% { transform: translate(-80px, 40px) rotate(240deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
 }
 
 .login-container {

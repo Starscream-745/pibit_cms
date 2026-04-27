@@ -29,6 +29,11 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="login-page">
+      <div className="login-bg-shapes">
+        <div className="bg-shape bg-shape-1"></div>
+        <div className="bg-shape bg-shape-2"></div>
+        <div className="bg-shape bg-shape-3"></div>
+      </div>
       <div className="login-container">
         <div className="login-header">
           <h1>PIBIT.AI CMS</h1>
