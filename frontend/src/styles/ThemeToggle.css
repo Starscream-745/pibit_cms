@@ -1,0 +1,124 @@
+.theme-toggle-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 1rem;
+}
+
+#theme-checkbox {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.theme-toggle-label {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  width: 54px;
+  height: 28px;
+  background: #211042;
+  border-radius: 50px;
+  transition: 500ms;
+  overflow: hidden;
+}
+
+.toggle-planet {
+  position: absolute;
+  display: inline-block;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #FAEAF1;
+  overflow: hidden;
+  box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.4);
+  transition: all 500ms ease-out;
+  z-index: 2;
+}
+
+.crater {
+  position: absolute;
+  display: inline-block;
+  background: #E8D4DD;
+  border-radius: 50%;
+  transition: 500ms;
+}
+
+.crater-1 { width: 22px; height: 22px; left: 2px; bottom: 2px; background: #FAEAF1; }
+.crater-2 { width: 5px; height: 5px; top: -2px; left: 11px; }
+.crater-3 { width: 4px; height: 4px; top: 5px; right: -1px; }
+.crater-4 { width: 3px; height: 3px; top: 6px; left: 8px; }
+.crater-5 { width: 4px; height: 4px; top: 10px; left: 12px; }
+.crater-6 { width: 3px; height: 3px; top: 12px; left: 5px; }
+.crater-7 { width: 3px; height: 3px; bottom: 1px; left: 9px; }
+
+.star {
+  position: absolute;
+  display: inline-block;
+  border-radius: 50%;
+  background: #FFF;
+  box-shadow: 1px 0 2px 1px rgba(255, 255, 255, 0.5);
+}
+
+.star-1 { width: 2px; height: 2px; right: 24px; bottom: 11px; }
+.star-2 { width: 3px; height: 3px; right: 18px; top: 3px; }
+.star-3 { width: 1px; height: 1px; right: 15px; bottom: 4px; }
+.star-4 { width: 1px; height: 1px; right: 10px; bottom: 14px; }
+.star-5 { width: 1px; height: 1px; right: 3px; bottom: 9px; }
+
+.star-6, .star-7, .star-8 {
+  width: 3px;
+  height: 1px;
+  border-radius: 1px;
+  transform: rotate(-45deg);
+  box-shadow: 2px 0px 2px 0px #FFF;
+  animation-name: travel;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+.star-6 { right: 8px; bottom: 8px; animation-delay: -2s; }
+.star-7 { right: 13px; bottom: 16px; }
+.star-8 { right: 24px; top: 3px; animation-delay: -4s; }
+
+@keyframes travel {
+  0% { transform: rotate(-45deg) translateX(18px); }
+  50% { transform: rotate(-45deg) translateX(-5px); box-shadow: 2px 0px 3px 0px #FFF; }
+  100% { transform: rotate(-45deg) translateX(-8px); width: 1px; height: 1px; opacity: 0; box-shadow: none; }
+}
+
+#theme-checkbox:checked + .theme-toggle-label {
+  background: #24D7F7;
+}
+
+#theme-checkbox:checked + .theme-toggle-label .toggle-planet {
+  background: #F7FFFF;
+  transform: translateX(26px);
+  box-shadow: 0 0 10px 1px rgba(255, 255, 255, 0.4);
+}
+
+#theme-checkbox:checked + .theme-toggle-label .toggle-planet .crater {
+  transform: rotate(-45deg) translateX(18px);
+}
+
+#theme-checkbox:checked + .theme-toggle-label .star {
+  animation: move 2s infinite;
+  transform: none;
+  box-shadow: none;
+}
+
+#theme-checkbox:checked + .theme-toggle-label .star-1 { width: 11px; height: 3px; border-radius: 3px; left: 5px; top: 7px; }
+#theme-checkbox:checked + .theme-toggle-label .star-2 { width: 3px; height: 3px; left: 7px; top: 6px; }
+#theme-checkbox:checked + .theme-toggle-label .star-3 { width: 4px; height: 4px; left: 9px; top: 5px; }
+#theme-checkbox:checked + .theme-toggle-label .star-4 { width: 4px; height: 4px; left: 12px; top: 6px; }
+#theme-checkbox:checked + .theme-toggle-label .star-5 { width: 16px; height: 4px; border-radius: 4px; left: 8px; bottom: 5px; }
+#theme-checkbox:checked + .theme-toggle-label .star-6 { width: 5px; height: 5px; left: 10px; bottom: 5px; }
+#theme-checkbox:checked + .theme-toggle-label .star-7 { width: 7px; height: 7px; left: 14px; bottom: 5px; }
+#theme-checkbox:checked + .theme-toggle-label .star-8 { width: 6px; height: 6px; left: 19px; top: 16px; }
+
+@keyframes move {
+  0%, 100% { transform: none; }
+  50% { transform: translateX(1px); }
+}

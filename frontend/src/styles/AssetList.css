@@ -7,12 +7,12 @@
 .asset-list-header {
   margin-bottom: 3rem;
   padding: 2.5rem 3rem;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--glass-bg);
   border-radius: 28px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 8px 32px rgba(47, 107, 254, 0.05);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px var(--card-shadow);
   position: relative;
   overflow: hidden;
 }
@@ -30,7 +30,7 @@
 
 .asset-list-header h2 {
   margin: 0 0 1.75rem 0;
-  color: var(--jet-black);
+  color: var(--text-main);
   font-size: 42px;
   font-family: var(--font-heading);
   font-weight: 800;
@@ -89,7 +89,7 @@
   font-size: 22px;
   font-family: var(--font-heading);
   font-weight: 700;
-  color: var(--jet-black);
+  color: var(--text-main);
   margin-bottom: 1.75rem;
   letter-spacing: -0.01em;
 }
@@ -144,11 +144,11 @@
 .loading-state, .error, .empty-state {
   text-align: center;
   padding: 4rem 2rem;
-  color: var(--charcoal-gray);
+  color: var(--text-muted);
   font-size: 15px;
   border-radius: 24px;
-  background: rgba(255,255,255,0.7);
-  border: 1px dashed var(--border-gray);
+  background: var(--glass-bg);
+  border: 1px dashed var(--border-color);
 }
 
 .error { color: var(--coral-red); }

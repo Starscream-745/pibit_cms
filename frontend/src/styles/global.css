@@ -6,26 +6,40 @@
 }
 
 :root {
-  /* Primary Brand Colors */
+  /* Brand Constants (Same in both modes) */
   --tech-blue: #2F6BFE;
   --celestial-blue: #5C8BFF;
-  
-  /* Neutral Colors */
-  --jet-black: #1A1A1A;
-  --charcoal-gray: #4A5568;
-  --cloud-white: #FFFFFF;
-  --soft-gray: #FAFAFC;
-  --border-gray: #E2E8F0;
-  
-  /* Accent Colors */
   --signal-purple: #8B5CF6;
   --soft-green: #10B981;
   --amber-yellow: #F59E0B;
   --coral-red: #EF4444;
   
+  /* Light Mode Variables (Default) */
+  --bg-primary: #FAFAFC;
+  --bg-secondary: #FFFFFF;
+  --text-main: #1A1A1A;
+  --text-muted: #4A5568;
+  --border-color: #E2E8F0;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --card-shadow: rgba(47, 107, 254, 0.05);
+  --dot-color: #c7d2fe;
+
   /* Typography */
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
+}
+
+[data-theme='dark'] {
+  --bg-primary: #05070A;
+  --bg-secondary: #0D1117;
+  --text-main: #F0F6FC;
+  --text-muted: #8B949E;
+  --border-color: #30363D;
+  --glass-bg: rgba(13, 17, 23, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-shadow: rgba(0, 0, 0, 0.4);
+  --dot-color: #1e293b;
 }
 
 body {
@@ -33,11 +47,12 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--soft-gray);
+  background-color: var(--bg-primary);
   /* Dot grid pattern */
-  background-image: radial-gradient(circle, #c7d2fe 1px, transparent 1px);
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
   background-size: 32px 32px;
-  color: var(--jet-black);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
   font-size: 16px;
   line-height: 1.5;
   min-height: 100vh;
@@ -118,6 +133,20 @@ body {
   opacity: 0.08;
 }
 
+[data-theme='dark'] .bg-orb {
+  opacity: 0.12;
+  filter: blur(100px) saturate(1.5);
+}
+
+[data-theme='dark'] .bg-geo {
+  opacity: 0.04;
+}
+
+[data-theme='dark'] .bg-geo-diamond {
+  opacity: 0.15;
+  box-shadow: 0 0 40px rgba(47, 107, 254, 0.2);
+}
+
 @keyframes slowSpin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
@@ -138,7 +167,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-family: var(--font-heading);
   font-weight: 600;
-  color: var(--jet-black);
+  color: var(--text-main);
 }
 
 h1 {
@@ -168,7 +197,7 @@ h4 {
 p {
   margin: 0;
   font-family: var(--font-body);
-  color: var(--jet-black);
+  color: var(--text-main);
 }
 
 button {

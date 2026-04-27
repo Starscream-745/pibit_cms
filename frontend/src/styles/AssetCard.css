@@ -4,14 +4,14 @@
 
 .asset-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 24px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 24px var(--card-shadow);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   will-change: transform;
@@ -45,7 +45,7 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: var(--soft-gray);
+  background: var(--bg-primary);
   border-radius: 20px 20px 0 0;
 }
 
@@ -62,7 +62,7 @@
 .preview-skeleton {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--border-color) 25%, var(--bg-primary) 50%, var(--border-color) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 20px 20px 0 0;
@@ -159,7 +159,7 @@
   font-size: 17px;
   font-family: var(--font-heading);
   font-weight: 700;
-  color: var(--jet-black);
+  color: var(--text-main);
   line-height: 1.3;
   white-space: nowrap;
   overflow: hidden;
@@ -168,7 +168,7 @@
 
 .asset-description {
   font-size: 13px;
-  color: var(--charcoal-gray);
+  color: var(--text-muted);
   line-height: 1.5;
   margin: 0;
   display: -webkit-box;
@@ -201,13 +201,13 @@
 }
 
 .action-btn-open {
-  background: var(--soft-gray);
-  color: var(--charcoal-gray);
-  border: 1px solid rgba(0,0,0,0.05);
+  background: var(--bg-primary);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
 }
 .action-btn-open:hover {
-  background: var(--border-gray);
-  color: var(--jet-black);
+  background: var(--border-color);
+  color: var(--text-main);
   transform: translateY(-1px);
 }
 
@@ -240,8 +240,8 @@
   display: flex;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  border-top: 1px solid rgba(0,0,0,0.04);
-  background: rgba(248, 250, 252, 0.6);
+  border-top: 1px solid var(--border-color);
+  background: var(--glass-bg);
 }
 
 .admin-btn {
@@ -253,15 +253,15 @@
   padding: 0.5rem 0.75rem;
   font-size: 12px;
   font-weight: 600;
-  border: 1px solid rgba(0,0,0,0.07);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  background: white;
-  color: var(--charcoal-gray);
+  background: var(--bg-secondary);
+  color: var(--text-muted);
   cursor: pointer;
   transition: all 0.2s;
 }
 .admin-btn:hover {
-  background: var(--soft-gray);
+  background: var(--bg-primary);
   transform: translateY(-1px);
 }
 

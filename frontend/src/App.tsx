@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ToastProvider } from './contexts/ToastContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
@@ -43,9 +44,10 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <AuthProvider>
-      <ToastProvider>
-        <div className="bg-orb bg-orb-1" style={{ transform: `translate(${mousePos.x * -30}px, ${mousePos.y * -30}px)` }} />
+    <ThemeProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <div className="bg-orb bg-orb-1" style={{ transform: `translate(${mousePos.x * -30}px, ${mousePos.y * -30}px)` }} />
         <div className="bg-orb bg-orb-2" style={{ transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px)` }} />
         <div className="bg-orb bg-orb-3" style={{ transform: `translate(${mousePos.x * -15}px, ${mousePos.y * -15}px)` }} />
         <div className="bg-geo bg-geo-ring-1" />
@@ -127,6 +129,7 @@ const App: React.FC = () => {
         </Router>
       </ToastProvider>
     </AuthProvider>
+    </ThemeProvider>
   );
 };
 

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { ShieldCheck, User, ChevronDown } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
+import { useTheme } from '../contexts/ThemeContext';
 import '../styles/Layout.css';
 
 interface LayoutProps {
@@ -10,6 +12,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { isAuthenticated, isAuthEnabled, userRole, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const isAdmin = userRole === 'admin';
@@ -40,6 +43,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
             <Link to="/brand-guidelines" className="nav-link">Brand Guidelines</Link>
             <Link to="/contact" className="nav-link">Contact Us</Link>
+
             {isAuthenticated && isAdmin && (
               <>
                 <Link to="/analytics" className="nav-link">Analytics</Link>
@@ -69,15 +73,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <button onClick={handleLogout} className="nav-link nav-link-logout">
                       Logout
                     </button>
+                    <ThemeToggle />
                   </div>
                 )}
               </>
             ) : (
-              isAuthEnabled && (
-                <Link to="/login" className="nav-link nav-link-login">
-                  Login
-                </Link>
-              )
+              <div className="user-info">
+                {isAuthEnabled && (
+                  <Link to="/login" className="nav-link nav-link-login">
+                    Login
+                  </Link>
+                )}
+                <ThemeToggle />
+              </div>
             )}
           </nav>
         </div>

@@ -84,8 +84,7 @@ const ContactPage: React.FC = () => {
 
     } catch (err: any) {
       console.error('EmailJS error:', err);
-      const detail = err?.text || err?.message || JSON.stringify(err);
-      setError(`Failed: ${detail}`);
+      setError('Something went wrong. Please try emailing us directly at kushargatyagi31@gmail.com');
     } finally {
       setSending(false);
     }
