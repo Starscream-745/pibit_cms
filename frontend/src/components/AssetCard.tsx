@@ -192,10 +192,12 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
 
         {/* Actions */}
         <div className="asset-card-actions">
-          <button onClick={handleOpen} className="action-btn action-btn-open">
-            <ExternalLink size={15} />
-            Open
-          </button>
+          {asset.category !== 'Pitch Decks' && (
+            <button onClick={handleOpen} className="action-btn action-btn-open">
+              <ExternalLink size={15} />
+              Open
+            </button>
+          )}
           <button
             onClick={handleDownload}
             className={`action-btn action-btn-download ${isDownloading ? 'loading' : ''}`}
