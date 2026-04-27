@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { ShieldCheck, User, ChevronDown } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
-import { useTheme } from '../contexts/ThemeContext';
 import '../styles/Layout.css';
 
 interface LayoutProps {
@@ -12,9 +11,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { isAuthenticated, isAuthEnabled, userRole, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
-
   const isAdmin = userRole === 'admin';
 
   const handleLogout = () => {
