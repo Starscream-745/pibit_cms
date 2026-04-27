@@ -10,15 +10,15 @@
   text-align: center;
   margin-bottom: 3rem;
   padding: 3rem 2rem;
-  background: var(--cloud-white);
+  background: var(--bg-secondary);
   border-radius: 32px;
-  border: 1px solid rgba(0, 0, 0, 0.02);
-  box-shadow: 0 12px 32px rgba(47, 107, 254, 0.04);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 12px 32px var(--card-shadow);
   position: relative;
 }
 
 .pitch-deck-header h1 {
-  color: var(--jet-black);
+  color: var(--text-main);
   margin-bottom: 0.5rem;
   font-family: var(--font-heading);
   font-weight: 700;
@@ -27,7 +27,7 @@
 }
 
 .pitch-deck-subtitle {
-  color: var(--charcoal-gray);
+  color: var(--text-muted);
   font-size: 18px;
   margin-bottom: 2rem;
 }
@@ -55,27 +55,31 @@
 }
 
 .deck-item {
-  background: var(--cloud-white);
+  background: var(--bg-secondary);
   border-radius: 24px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 24px rgba(47, 107, 254, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.02);
+  box-shadow: 0 8px 24px var(--card-shadow);
+  border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
 }
 
 .deck-item:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(47, 107, 254, 0.12);
-  border-color: rgba(47, 107, 254, 0.1);
+  box-shadow: 0 16px 40px var(--card-shadow);
+  border-color: var(--tech-blue);
+}
+
+[data-theme='dark'] .deck-item:hover {
+  box-shadow: 0 16px 40px rgba(47, 107, 254, 0.25), 0 0 15px rgba(47, 107, 254, 0.1);
 }
 
 .deck-wrapper {
   aspect-ratio: 16/10;
   width: 100%;
-  background: var(--soft-gray);
+  background: var(--bg-primary);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -101,7 +105,7 @@
 .deck-info h4 {
   margin: 0;
   font-size: 16px;
-  color: var(--jet-black);
+  color: var(--text-main);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -111,18 +115,18 @@
 .deck-info p {
   margin: 0.25rem 0 0 0;
   font-size: 13px;
-  color: var(--charcoal-gray);
+  color: var(--text-muted);
 }
 
 .pitch-deck-footer {
   text-align: center;
   padding: 2rem;
-  background: var(--cloud-white);
+  background: var(--bg-secondary);
   border-radius: 20px;
-  color: var(--charcoal-gray);
+  color: var(--text-muted);
   font-size: 14px;
-  border: 1px solid rgba(0, 0, 0, 0.02);
-  box-shadow: 0 8px 24px rgba(47, 107, 254, 0.02);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 24px var(--card-shadow);
 }
 
 @media (max-width: 768px) {

@@ -19,6 +19,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     navigate('/login');
   };
 
+  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+
   return (
     <div className="layout">
       <header className="header">
@@ -28,14 +30,21 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </h1>
           <nav className="nav">
             <Link to="/" className="nav-link">Assets</Link>
-            <div className="nav-dropdown">
-              <button className="nav-link dropdown-toggle">
+            <div 
+              className={`nav-dropdown ${isDropdownOpen ? 'active' : ''}`}
+              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseLeave={() => setIsDropdownOpen(false)}
+            >
+              <button 
+                className="nav-link dropdown-toggle"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
                 Categories <ChevronDown size={14} />
               </button>
               <div className="dropdown-menu">
-                <Link to="/iconography" className="dropdown-item">Iconography</Link>
-                <Link to="/images" className="dropdown-item">Images</Link>
-                <Link to="/pitch-decks" className="dropdown-item">Pitch Decks</Link>
+                <Link to="/iconography" className="dropdown-item" onClick={() => setIsDropdownOpen(false)}>Iconography</Link>
+                <Link to="/images" className="dropdown-item" onClick={() => setIsDropdownOpen(false)}>Images</Link>
+                <Link to="/pitch-decks" className="dropdown-item" onClick={() => setIsDropdownOpen(false)}>Pitch Decks</Link>
               </div>
             </div>
             <Link to="/brand-guidelines" className="nav-link">Brand Guidelines</Link>
