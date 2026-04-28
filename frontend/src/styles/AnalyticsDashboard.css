@@ -225,7 +225,7 @@
   margin: 0.25rem 0 0 0;
   font-size: 13px;
   color: var(--text-muted);
-  font-family: monospace;
+  font-family: var(--font-mono);
 }
 
 .download-count {
@@ -329,7 +329,7 @@
 .type-delete_asset { background-color: rgba(239, 68, 68, 0.1); color: var(--coral-red); }
 
 .activity-details {
-  font-family: monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--text-muted);
 }

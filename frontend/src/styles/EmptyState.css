@@ -30,14 +30,14 @@
 
 .empty-state-modern h3 {
   color: #1f2937;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-heading);
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 .empty-state-modern p {
   color: #6b7280;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   max-width: 400px;
   margin-bottom: 1.5rem;
   line-height: 1.5;

@@ -155,8 +155,7 @@ const BrandGuidelinesPage: React.FC = () => {
                 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
-                <div>SPACE</div>
-                <div style={{ marginTop: '-2rem' }}>GROTESK</div>
+                INTER
               </motion.div>
 
               <motion.div
@@ -167,11 +166,10 @@ const BrandGuidelinesPage: React.FC = () => {
                 }}
                 transition={{ duration: 0.4 }}
               >
-                <h3 className="font-title-small">Space Grotesk</h3>
-                <p className="font-subtitle">Headings, titles, navigation</p>
+                <h3 className="font-title-small">Inter</h3>
+                <p className="font-subtitle">Headings, titles, body & UI</p>
                 <div className="font-weights-list">
                   <div className="weight-pill">Regular (400)</div>
-                  <div className="weight-pill">Medium (500)</div>
                   <div className="weight-pill">Semi-Bold (600)</div>
                   <div className="weight-pill">Bold (700)</div>
                 </div>
@@ -191,7 +189,7 @@ const BrandGuidelinesPage: React.FC = () => {
                 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
-                INTER
+                JETBRAINS MONO
               </motion.div>
 
               <motion.div
@@ -202,12 +200,11 @@ const BrandGuidelinesPage: React.FC = () => {
                 }}
                 transition={{ duration: 0.4 }}
               >
-                <h3 className="font-title-small">Inter</h3>
-                <p className="font-subtitle">Body text, descriptions, UI elements</p>
+                <h3 className="font-title-small">JetBrains Mono</h3>
+                <p className="font-subtitle">Telemetry, caps, micro-text & code</p>
                 <div className="font-weights-list">
                   <div className="weight-pill">Regular (400)</div>
                   <div className="weight-pill">Medium (500)</div>
-                  <div className="weight-pill">Semi-Bold (600)</div>
                 </div>
               </motion.div>
             </motion.div>

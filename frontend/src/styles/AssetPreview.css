@@ -81,7 +81,7 @@
 }
 
 .preview-label {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-heading);
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.05em;

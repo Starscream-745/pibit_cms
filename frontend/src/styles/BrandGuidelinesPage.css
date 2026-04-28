@@ -55,7 +55,7 @@
   border-radius: 50px;
   color: var(--text-main);
   text-decoration: none;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -144,7 +144,7 @@
 }
 
 .section-header h2 {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-heading);
   font-size: 4rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -189,7 +189,7 @@
 }
 
 .color-info h3 {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-heading);
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
@@ -242,7 +242,7 @@
   color: var(--text-main);
   opacity: 0.05;
   mix-blend-mode: normal;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-heading);
   letter-spacing: -0.5vw;
   line-height: 0.75;
   pointer-events: none;
@@ -427,7 +427,7 @@
 /* Scroll Indicator */
 .scroll-indicator {
   margin-top: 4rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 2px;

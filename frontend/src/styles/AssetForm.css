@@ -171,5 +171,5 @@
 
 .uploaded-url small {
   color: var(--text-muted);
-  font-family: monospace;
+  font-family: var(--font-mono);
 }
