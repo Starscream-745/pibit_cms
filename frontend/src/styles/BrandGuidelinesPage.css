@@ -10,6 +10,8 @@
   color: var(--text-main);
   position: relative;
   transition: background-color 0.5s ease;
+  background-image: radial-gradient(circle at 50% 50%, var(--halo-glow) 0%, transparent 100%);
+  background-attachment: fixed;
 }
 
 /* Hide Scrollbar */
@@ -99,12 +101,14 @@
   width: 60vw;
   height: 60vw;
   background: radial-gradient(circle, var(--halo-glow) 0%, transparent 70%);
-  filter: blur(100px);
+  filter: blur(120px);
   pointer-events: none;
   z-index: 0;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  opacity: 0.8;
+}
 }
 
 .guidelines-content {
@@ -118,16 +122,11 @@
 }
 
 /* Hero Typography */
-.hero-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 8rem;
-  font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -4px;
-  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.5) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.hero-logo {
+  height: 120px;
+  width: auto;
   margin-bottom: 2rem;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
 }
 
 .hero-subtitle {
@@ -167,8 +166,8 @@
 .color-card {
   flex: 1;
   height: 400px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
+  background: var(--glass-bg-accent);
+  backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 30px;
   padding: 2rem;
@@ -214,8 +213,8 @@
   flex: 1;
   min-height: 500px;
   padding: 4.5rem 4rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(30px);
+  background: var(--glass-bg-accent);
+  backdrop-filter: blur(40px);
   border-radius: 40px;
   border: 1px solid var(--glass-border);
   display: flex;
@@ -240,8 +239,9 @@
   text-align: center;
   font-size: 10vw;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.1);
-  mix-blend-mode: overlay;
+  color: var(--text-main);
+  opacity: 0.05;
+  mix-blend-mode: normal;
   font-family: 'Space Grotesk', sans-serif;
   letter-spacing: -0.5vw;
   line-height: 0.75;
@@ -333,7 +333,6 @@
 .spacing-info {
   display: flex;
   gap: 3rem;
-  color: white;
   width: 100%;
 }
 
@@ -409,8 +408,8 @@
 
 .btn-premium-secondary {
   background: transparent;
-  border-color: white;
-  color: white;
+  border-color: var(--text-main);
+  color: var(--text-main);
 }
 
 /* Scroll Progress Bar */
@@ -444,8 +443,8 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .hero-title {
-    font-size: 5rem;
+  .hero-logo {
+    height: 80px;
   }
 
   .color-grid {

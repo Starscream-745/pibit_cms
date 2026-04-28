@@ -14,14 +14,14 @@ const sections = [
   { id: 'download', label: 'Assets' }
 ];
 
-const SectionHeader: React.FC<{ title: string; subtitle?: string; dark?: boolean }> = ({ title, subtitle, dark }) => (
+const SectionHeader: React.FC<{ title: string; subtitle?: string }> = ({ title, subtitle }) => (
   <motion.div
     initial={{ opacity: 0, y: 50 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     className="section-header"
   >
-    <h2 style={{ color: dark ? 'white' : '#0a0a0a' }}>{title}</h2>
+    <h2>{title}</h2>
     {subtitle && <p className="section-description">{subtitle}</p>}
   </motion.div>
 );
@@ -88,7 +88,9 @@ const BrandGuidelinesPage: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h1 className="hero-title">PIBIT.AI</h1>
+          <div className="hero-content-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img src="/logo.png" alt="PIBIT.AI" className="hero-logo" />
+          </div>
           <p className="hero-subtitle">Visual Identity Standards 2026</p>
           <motion.div
             className="scroll-indicator"
@@ -135,7 +137,7 @@ const BrandGuidelinesPage: React.FC = () => {
       <Section id="typography" onInView={setActiveSection}>
         <div className="halo-bg" style={{ left: '-10%', top: '20%' }} />
         <div className="guidelines-content">
-          <SectionHeader title="Typography" subtitle="Modernity through geometric precision." dark />
+          <SectionHeader title="Typography" subtitle="Modernity through geometric precision." />
           <div className="typography-display">
             <motion.div
               className="typography-card premium-hover-card"
@@ -245,7 +247,7 @@ const BrandGuidelinesPage: React.FC = () => {
       <Section id="spacing" onInView={setActiveSection}>
         <div className="halo-bg" style={{ right: '-10%', bottom: '10%' }} />
         <div className="guidelines-content">
-          <SectionHeader title="Grid System" subtitle="The 8px foundation of our interface." dark />
+          <SectionHeader title="Grid System" subtitle="The 8px foundation of our interface." />
           <div className="spacing-info">
             {['8px Base', '24px Gutter', '1400px Max'].map((item, i) => (
               <motion.div
@@ -285,7 +287,7 @@ const BrandGuidelinesPage: React.FC = () => {
 
       <Section id="download" onInView={setActiveSection}>
         <div className="guidelines-content">
-          <SectionHeader title="Ready to Build?" subtitle="Access the official PIBIT.AI asset library." dark />
+          <SectionHeader title="Ready to Build?" subtitle="Access the official PIBIT.AI asset library." />
           <div className="premium-cta-group">
             <Link to="/iconography" className="btn-premium btn-premium-primary">
               View Iconography
