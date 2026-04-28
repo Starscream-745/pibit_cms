@@ -37,7 +37,7 @@ const LoginPage: React.FC = () => {
       <div className="login-container">
         <div className="login-visual-side">
           <div className="login-visual-content">
-            <h1>PIBIT.AI</h1>
+            <img src="/logo.png" alt="PIBIT.AI" style={{ height: '60px', width: 'auto', marginBottom: '1rem' }} />
             <p>ADVANCED CONTENT MANAGEMENT</p>
             <div className="visual-badge">2026 EDITION</div>
           </div>

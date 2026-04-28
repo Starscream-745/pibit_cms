@@ -26,7 +26,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <header className="header">
         <div className="header-content">
           <h1 className="logo">
-            <Link to="/">PIBIT.AI CMS</Link>
+            <Link to="/">
+              <img src="/logo.png" alt="PIBIT.AI CMS" style={{ height: '32px', width: 'auto' }} />
+            </Link>
           </h1>
           <nav className="nav">
             <Link to="/" className="nav-link">Assets</Link>
