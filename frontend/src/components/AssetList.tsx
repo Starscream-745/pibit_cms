@@ -46,11 +46,20 @@ const AssetList: React.FC = () => {
   const filterAssets = () => {
     let filtered = assets;
     
-    // Always exclude "Logos" category from main assets page
-    filtered = filtered.filter(asset => 
-      asset.category.toLowerCase() !== 'logos' && 
-      asset.category.toLowerCase() !== 'logo'
-    );
+    // Always exclude specific sections from main assets page
+    filtered = filtered.filter(asset => {
+      const cat = asset.category.toLowerCase();
+      return (
+        cat !== 'logos' && 
+        cat !== 'logo' &&
+        cat !== 'images' &&
+        cat !== 'image' &&
+        cat !== 'iconography' &&
+        cat !== 'icons' &&
+        cat !== 'pitch decks' &&
+        cat !== 'pitch deck'
+      );
+    });
     
     // Apply category filter if selected
     if (selectedCategory !== null) {
