@@ -88,9 +88,7 @@ const BrandGuidelinesPage: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h1 className="hero-title">
-            <img src="/logo.png" alt="PIBIT.AI" style={{ height: '80px', width: 'auto', verticalAlign: 'middle' }} />
-          </h1>
+          <h1 className="hero-title">PIBIT.AI</h1>
           <p className="hero-subtitle">Visual Identity Standards 2026</p>
           <motion.div
             className="scroll-indicator"
