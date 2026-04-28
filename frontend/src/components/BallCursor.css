@@ -1,0 +1,41 @@
+.custom-ball-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999999999;
+}
+
+.cursor__ball {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.cursor__ball circle {
+  fill: #f7f8fa;
+}
+
+[data-theme='dark'] .cursor__ball circle {
+  fill: #fff;
+}
+
+[data-theme='light'] .cursor__ball circle {
+  fill: #2F6BFE; /* Use tech blue in light mode for contrast if mix-blend-mode is not enough */
+}
+
+.cursor__ball--big {
+  width: 30px;
+  height: 30px;
+}
+
+.cursor__ball--small {
+  width: 10px;
+  height: 10px;
+  opacity: 0.8;
+}
+
+.cursor__ball circle {
+  transition: fill 0.3s ease;
+}

@@ -17,7 +17,7 @@ import LoginPage from './pages/LoginPage';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
 import UserManagement from './pages/UserManagement';
 import Preloader from './components/Preloader';
-import TrailingCursor from './components/GhostCursor';
+import CursorSwitcher from './components/CursorSwitcher';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,14 +48,14 @@ const App: React.FC = () => {
       <AuthProvider>
         <ToastProvider>
           <div className="bg-orb bg-orb-1" style={{ transform: `translate(${mousePos.x * -30}px, ${mousePos.y * -30}px)` }} />
-        <div className="bg-orb bg-orb-2" style={{ transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px)` }} />
-        <div className="bg-orb bg-orb-3" style={{ transform: `translate(${mousePos.x * -15}px, ${mousePos.y * -15}px)` }} />
-        <div className="bg-geo bg-geo-ring-1" />
-        <div className="bg-geo bg-geo-ring-2" />
-        <div className="bg-geo bg-geo-diamond" />
-        <Preloader isLoading={isLoading} />
-        <TrailingCursor />
-        <Router>
+          <div className="bg-orb bg-orb-2" style={{ transform: `translate(${mousePos.x * 20}px, ${mousePos.y * 20}px)` }} />
+          <div className="bg-orb bg-orb-3" style={{ transform: `translate(${mousePos.x * -15}px, ${mousePos.y * -15}px)` }} />
+          <div className="bg-geo bg-geo-ring-1" />
+          <div className="bg-geo bg-geo-ring-2" />
+          <div className="bg-geo bg-geo-diamond" />
+          <Preloader isLoading={isLoading} />
+          <CursorSwitcher />
+          <Router>
         <Routes>
           {/* Public routes - No login required */}
           <Route path="/login" element={<LoginPage />} />
