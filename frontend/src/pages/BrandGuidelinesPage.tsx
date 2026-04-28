@@ -48,8 +48,11 @@ const Section: React.FC<{
 };
 
 const BrandGuidelinesPage: React.FC = () => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState('hero');
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress } = useScroll({
+    container: containerRef
+  });
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
@@ -62,7 +65,7 @@ const BrandGuidelinesPage: React.FC = () => {
   };
 
   return (
-    <div className="brand-guidelines-container">
+    <div className="brand-guidelines-container" ref={containerRef}>
       <Link to="/" className="back-to-dashboard">
         <span>←</span> Back to Dashboard
       </Link>
