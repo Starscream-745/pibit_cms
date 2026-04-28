@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import Preloader from './Preloader';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -10,18 +11,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { isAuthenticated, isAuthEnabled, loading } = useAuth();
 
   if (loading) {
-    return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '100vh',
-        fontFamily: 'Inter, sans-serif',
-        color: '#6b7280'
-      }}>
-        Loading...
-      </div>
-    );
+    return <Preloader isLoading={true} />;
   }
 
   // If auth is disabled, allow access
