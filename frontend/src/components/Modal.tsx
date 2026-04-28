@@ -42,12 +42,12 @@ const Modal: React.FC<ModalProps> = ({
   const getIcon = () => {
     switch (type) {
       case 'danger':
-        return <XCircle size={24} />;
+        return <XCircle size={32} />;
       case 'warning':
-        return <AlertTriangle size={24} />;
+        return <AlertTriangle size={32} />;
       case 'info':
       default:
-        return <Info size={24} />;
+        return <Info size={32} />;
     }
   };
 
