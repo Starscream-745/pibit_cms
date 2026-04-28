@@ -4,7 +4,26 @@ import { validateUrl, validateRequiredFields } from '../utils/validation';
 import { sanitizeObject } from '../utils/sanitization';
 
 export class AssetService {
+  private cache: Map<string, { data: Asset[]; timestamp: number }> = new Map();
+  private CACHE_DURATION = 2 * 60 * 1000; // 2 minutes
+
   constructor(private repository: AssetRepository) {}
+
+  private getFromCache(key: string): Asset[] | null {
+    const cached = this.cache.get(key);
+    if (cached && (Date.now() - cached.timestamp < this.CACHE_DURATION)) {
+      return cached.data;
+    }
+    return null;
+  }
+
+  private setCache(key: string, data: Asset[]) {
+    this.cache.set(key, { data, timestamp: Date.now() });
+  }
+
+  private clearCache() {
+    this.cache.clear();
+  }
 
   async findAll(): Promise<Asset[]> {
     return await this.repository.findAll();
@@ -21,7 +40,13 @@ export class AssetService {
     if (!category || typeof category !== 'string') {
       return [];
     }
-    return await this.repository.findByCategory(category);
+    
+    const cached = this.getFromCache(`category_${category}`);
+    if (cached) return cached;
+
+    const data = await this.repository.findByCategory(category);
+    this.setCache(`category_${category}`, data);
+    return data;
   }
 
   async create(assetData: CreateAssetDTO): Promise<Asset> {
@@ -39,6 +64,7 @@ export class AssetService {
       sanitizedData.description = '';
     }
     
+    this.clearCache();
     return await this.repository.save(sanitizedData);
   }
 
@@ -61,6 +87,7 @@ export class AssetService {
     // Sanitize all input fields
     const sanitizedData = sanitizeObject(data);
 
+    this.clearCache();
     return await this.repository.update(id, sanitizedData);
   }
 
@@ -68,13 +95,11 @@ export class AssetService {
     if (!id || typeof id !== 'string' || !id.trim()) {
       return false;
     }
+    this.clearCache();
     return await this.repository.delete(id);
   }
 
   async getAllCategories(): Promise<string[]> {
-    const assets = await this.repository.findAll();
-    const categories = assets.map(asset => asset.category);
-    // Return unique categories
-    return [...new Set(categories)].sort();
+    return await this.repository.getDistinctCategories();
   }
 }

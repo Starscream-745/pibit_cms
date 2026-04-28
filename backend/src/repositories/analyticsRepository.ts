@@ -139,4 +139,84 @@ export class AnalyticsRepository {
   async getDownloadsByAsset(assetId: string): Promise<number> {
     return await this.downloadsCollection.countDocuments({ assetId });
   }
+
+  async getSummaryData(now: Date): Promise<any> {
+    const startOfDay = new Date(now);
+    startOfDay.setHours(0, 0, 0, 0);
+    
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - 7);
+    startOfWeek.setHours(0, 0, 0, 0);
+    
+    const startOfMonth = new Date(now);
+    startOfMonth.setDate(now.getDate() - 30);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    const activityPipeline = [
+      {
+        $facet: {
+          dau: [
+            { $match: { timestamp: { $gte: startOfDay, $lte: now } } },
+            { $group: { _id: '$sessionId' } },
+            { $count: 'count' }
+          ],
+          wau: [
+            { $match: { timestamp: { $gte: startOfWeek, $lte: now } } },
+            { $group: { _id: '$sessionId' } },
+            { $count: 'count' }
+          ],
+          mau: [
+            { $match: { timestamp: { $gte: startOfMonth, $lte: now } } },
+            { $group: { _id: '$sessionId' } },
+            { $count: 'count' }
+          ]
+        }
+      }
+    ];
+
+    const downloadsPipeline = [
+      {
+        $facet: {
+          total: [{ $count: 'count' }],
+          today: [
+            { $match: { timestamp: { $gte: startOfDay, $lte: now } } },
+            { $count: 'count' }
+          ],
+          week: [
+            { $match: { timestamp: { $gte: startOfWeek, $lte: now } } },
+            { $count: 'count' }
+          ],
+          month: [
+            { $match: { timestamp: { $gte: startOfMonth, $lte: now } } },
+            { $count: 'count' }
+          ],
+          topAssets: [
+            { $group: { _id: '$assetId', assetName: { $first: '$assetName' }, downloadCount: { $sum: 1 } } },
+            { $sort: { downloadCount: -1 } },
+            { $limit: 10 },
+            { $project: { _id: 0, assetId: '$_id', assetName: 1, downloadCount: 1 } }
+          ]
+        }
+      }
+    ];
+
+    const [activityResult, downloadResult] = await Promise.all([
+      this.activityCollection.aggregate(activityPipeline).toArray(),
+      this.downloadsCollection.aggregate(downloadsPipeline).toArray()
+    ]);
+
+    const act = activityResult[0];
+    const dwn = downloadResult[0];
+
+    return {
+      dau: act.dau[0]?.count || 0,
+      wau: act.wau[0]?.count || 0,
+      mau: act.mau[0]?.count || 0,
+      totalDownloads: dwn.total[0]?.count || 0,
+      downloadsToday: dwn.today[0]?.count || 0,
+      downloadsThisWeek: dwn.week[0]?.count || 0,
+      downloadsThisMonth: dwn.month[0]?.count || 0,
+      topDownloadedAssets: dwn.topAssets || []
+    };
+  }
 }

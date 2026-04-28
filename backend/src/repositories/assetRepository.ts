@@ -24,11 +24,16 @@ export class AssetRepository {
   }
 
   async findByCategory(category: string): Promise<Asset[]> {
-    // Case-insensitive search using regex
+    // Exact match is significantly faster on indexed fields than regex
     const documents = await this.collection.find({ 
-      category: { $regex: new RegExp(`^${category}$`, 'i') }
+      category: category
     }).toArray();
     return documents.map(doc => this.mapToAsset(doc));
+  }
+
+  async getDistinctCategories(): Promise<string[]> {
+    const categories = await this.collection.distinct('category');
+    return (categories as string[]).sort();
   }
 
   async save(assetData: CreateAssetDTO): Promise<Asset> {

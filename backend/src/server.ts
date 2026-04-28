@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import cors from 'cors';
+import compression from 'compression';
 import dotenv from 'dotenv';
 import database from './config/database';
 import assetRoutes from './routes/assetRoutes';
@@ -17,6 +18,7 @@ const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Middleware
+app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -53,46 +55,44 @@ import authService from './services/authService';
 
 // Start server
 async function startServer() {
+  // 1. Start listening immediately so the frontend can reach the health/status endpoints
+  const server = app.listen(PORT, () => {
+    console.log('');
+    console.log('🚀 PIBIT.AI CMS Server Started');
+    console.log('================================');
+    console.log(`📡 Environment: ${NODE_ENV}`);
+    console.log(`🌐 Server: http://localhost:${PORT}`);
+    console.log(`💚 Health: http://localhost:${PORT}/health`);
+    console.log(`📦 API: http://localhost:${PORT}/api`);
+    console.log('================================');
+    console.log('');
+  });
+
   try {
-    // Connect to database
+    // 2. Connect to database in the background
+    console.log('⏳ Connecting to MongoDB...');
     await database.connect();
     
-    // Initialize admin user if database is empty
+    // 3. Initialize admin user
     await authService.initializeAdmin();
-    
-    // Start listening
-    const server = app.listen(PORT, () => {
-      console.log('');
-      console.log('🚀 PIBIT.AI CMS Server Started');
-      console.log('================================');
-      console.log(`📡 Environment: ${NODE_ENV}`);
-      console.log(`🌐 Server: http://localhost:${PORT}`);
-      console.log(`💚 Health: http://localhost:${PORT}/health`);
-      console.log(`📦 API: http://localhost:${PORT}/api`);
-      console.log('================================');
-      console.log('');
-    });
+    console.log('✅ Background initialization complete.');
 
     // Graceful shutdown
-    process.on('SIGTERM', async () => {
-      console.log('SIGTERM signal received: closing HTTP server');
+    const shutdown = async () => {
+      console.log('\nClosing HTTP server');
       server.close(async () => {
         await database.disconnect();
         process.exit(0);
       });
-    });
+    };
 
-    process.on('SIGINT', async () => {
-      console.log('\nSIGINT signal received: closing HTTP server');
-      server.close(async () => {
-        await database.disconnect();
-        process.exit(0);
-      });
-    });
+    process.on('SIGTERM', shutdown);
+    process.on('SIGINT', shutdown);
 
   } catch (error) {
-    console.error('❌ Failed to start server:', error);
-    process.exit(1);
+    console.error('❌ Background initialization failed:', error);
+    // We don't exit here because the server is already running and serving static/health routes
+    // Any DB-dependent routes will handle the error via database.getDb() throwing
   }
 }
 

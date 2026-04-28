@@ -2,6 +2,12 @@ import { AnalyticsRepository } from '../repositories/analyticsRepository';
 import { AnalyticsSummary, CreateUserActivityDTO } from '../models/analytics';
 
 export class AnalyticsService {
+  private cache: { data: AnalyticsSummary | null; lastUpdated: number } = {
+    data: null,
+    lastUpdated: 0
+  };
+  private CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
   constructor(private repository: AnalyticsRepository) {}
 
   async logActivity(data: CreateUserActivityDTO): Promise<void> {
@@ -22,37 +28,29 @@ export class AnalyticsService {
 
   async getSummary(): Promise<AnalyticsSummary> {
     const now = new Date();
-    
-    const startOfDay = new Date(now);
-    startOfDay.setHours(0, 0, 0, 0);
-    
-    const startOfWeek = new Date(now);
-    startOfWeek.setDate(now.getDate() - 7);
-    
-    const startOfMonth = new Date(now);
-    startOfMonth.setDate(now.getDate() - 30);
+    const currentTime = now.getTime();
 
-    const [dau, wau, mau, totalDownloads, downloadsToday, downloadsThisWeek, downloadsThisMonth, topDownloadedAssets] = await Promise.all([
-      this.repository.getDAU(now),
-      this.repository.getWAU(now),
-      this.repository.getMAU(now),
-      this.repository.getTotalDownloads(),
-      this.repository.getDownloadsInPeriod(startOfDay, now),
-      this.repository.getDownloadsInPeriod(startOfWeek, now),
-      this.repository.getDownloadsInPeriod(startOfMonth, now),
-      this.repository.getTopDownloadedAssets(10)
-    ]);
+    // Return cached data if it's still fresh
+    if (this.cache.data && (currentTime - this.cache.lastUpdated < this.CACHE_DURATION)) {
+      console.log('⚡ Returning cached analytics summary');
+      return this.cache.data;
+    }
 
-    return {
-      dau,
-      wau,
-      mau,
-      totalDownloads,
-      downloadsToday,
-      downloadsThisWeek,
-      downloadsThisMonth,
-      topDownloadedAssets
+    console.log('📊 Fetching fresh analytics summary (aggregated)');
+    const startTime = Date.now();
+    
+    const summary = await this.repository.getSummaryData(now);
+    
+    const duration = Date.now() - startTime;
+    console.log(`✅ Analytics summary fetched in ${duration}ms`);
+
+    // Update cache
+    this.cache = {
+      data: summary,
+      lastUpdated: currentTime
     };
+
+    return summary;
   }
 
   async getDownloadsByAsset(assetId: string): Promise<number> {

@@ -15,7 +15,10 @@ class Database {
     const url = process.env.DATABASE_URL || 'mongodb://localhost:27017/pibit-cms';
     
     try {
-      this.client = new MongoClient(url);
+      this.client = new MongoClient(url, {
+        serverSelectionTimeoutMS: 5000, // 5 seconds timeout
+        connectTimeoutMS: 5000,
+      });
       await this.client.connect();
       this.db = this.client.db();
       

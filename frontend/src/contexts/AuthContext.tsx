@@ -19,6 +19,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
+  // Helper for fetching with a timeout
+  const fetchWithTimeout = async (url: string, options: any = {}, timeout = 8000) => {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal
+      });
+      clearTimeout(id);
+      return response;
+    } catch (error) {
+      clearTimeout(id);
+      throw error;
+    }
+  };
+
   // Check auth status on mount
   useEffect(() => {
     checkAuthStatus();
@@ -27,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const checkAuthStatus = async () => {
     try {
       // Check if auth is enabled
-      const statusResponse = await fetch(`${apiUrl}/api/auth/status`);
+      const statusResponse = await fetchWithTimeout(`${apiUrl}/api/auth/status`, {}, 5000);
       const statusData = await statusResponse.json();
       setIsAuthEnabled(statusData.authEnabled);
 
@@ -44,11 +61,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const savedRole = localStorage.getItem('userRole') as 'admin' | 'user' | null;
       
       if (token && savedRole) {
-        const verifyResponse = await fetch(`${apiUrl}/api/auth/verify`, {
+        const verifyResponse = await fetchWithTimeout(`${apiUrl}/api/auth/verify`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
-        });
+        }, 5000); // 5s timeout for verify
 
         if (verifyResponse.ok) {
           const data = await verifyResponse.json();

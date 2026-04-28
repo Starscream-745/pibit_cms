@@ -26,7 +26,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); 
+    }, 800); 
     
     const handleMouseMove = (e: MouseEvent) => {
       // Calculate normalized mouse position (-1 to 1)
