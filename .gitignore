@@ -49,6 +49,4 @@ coverage/
 *.tmp
 *.temp
 *.md
-!README.md
-!CLAUDE.md
 .cache/
