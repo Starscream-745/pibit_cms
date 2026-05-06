@@ -3,6 +3,10 @@ import assetService from '../services/assetService';
 import { Asset } from '../types/asset';
 import Preloader from '../components/Preloader';
 import SearchBar from '../components/SearchBar';
+import { Trash2 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
+import Modal from '../components/Modal';
 import '../styles/ImagesPage.css';
 
 const ImagesPage: React.FC = () => {
@@ -10,6 +14,15 @@ const ImagesPage: React.FC = () => {
   const [filteredImages, setFilteredImages] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Deletion state
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [assetToDelete, setAssetToDelete] = useState<Asset | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const { userRole } = useAuth();
+  const toast = useToast();
+  const isAdmin = userRole === 'admin';
 
   useEffect(() => {
     loadImages();
@@ -28,6 +41,34 @@ const ImagesPage: React.FC = () => {
       console.error('Error loading images:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteClick = (e: React.MouseEvent, image: Asset) => {
+    e.stopPropagation();
+    setAssetToDelete(image);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!assetToDelete) return;
+    
+    try {
+      setIsDeleting(true);
+      await assetService.delete(assetToDelete.id);
+      
+      const updatedImages = images.filter(img => img.id !== assetToDelete.id);
+      setImages(updatedImages);
+      setFilteredImages(updatedImages);
+      
+      toast.success(`${assetToDelete.name} deleted successfully`);
+      setDeleteModalOpen(false);
+    } catch (err) {
+      toast.error('Failed to delete image. Please try again.');
+      console.error('Error deleting image:', err);
+    } finally {
+      setIsDeleting(false);
+      setAssetToDelete(null);
     }
   };
 
@@ -117,6 +158,15 @@ const ImagesPage: React.FC = () => {
                     (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%23f3f4f6" width="100" height="100"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="40" fill="%239ca3af"%3E🖼️%3C/text%3E%3C/svg%3E';
                   }}
                 />
+                {isAdmin && (
+                  <button 
+                    className="delete-btn"
+                    onClick={(e) => handleDeleteClick(e, image)}
+                    title="Delete image"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                )}
               </div>
               <div className="image-info">
                 <h4>{image.name}</h4>
@@ -129,6 +179,17 @@ const ImagesPage: React.FC = () => {
       <div className="images-footer">
         <p>Click any image to download • All images are property of PIBIT.AI</p>
       </div>
+
+      <Modal
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        title="Delete Image"
+        message={`Are you sure you want to delete "${assetToDelete?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        isLoading={isDeleting}
+        type="danger"
+      />
     </div>
   );
 };

@@ -3,7 +3,10 @@ import assetService from '../services/assetService';
 import { Asset } from '../types/asset';
 import Preloader from '../components/Preloader';
 import SearchBar from '../components/SearchBar';
-import { Presentation, Download } from 'lucide-react';
+import { Presentation, Download, Trash2 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
+import Modal from '../components/Modal';
 import '../styles/PitchDeckPage.css';
 
 const PitchDeckPage: React.FC = () => {
@@ -11,6 +14,15 @@ const PitchDeckPage: React.FC = () => {
   const [filteredDecks, setFilteredDecks] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Deletion state
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [assetToDelete, setAssetToDelete] = useState<Asset | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  
+  const { userRole } = useAuth();
+  const toast = useToast();
+  const isAdmin = userRole === 'admin';
 
   useEffect(() => {
     loadDecks();
@@ -29,6 +41,34 @@ const PitchDeckPage: React.FC = () => {
       console.error('Error loading pitch decks:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteClick = (e: React.MouseEvent, deck: Asset) => {
+    e.stopPropagation();
+    setAssetToDelete(deck);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!assetToDelete) return;
+    
+    try {
+      setIsDeleting(true);
+      await assetService.delete(assetToDelete.id);
+      
+      const updatedDecks = decks.filter(d => d.id !== assetToDelete.id);
+      setDecks(updatedDecks);
+      setFilteredDecks(updatedDecks);
+      
+      toast.success(`${assetToDelete.name} deleted successfully`);
+      setDeleteModalOpen(false);
+    } catch (err) {
+      toast.error('Failed to delete deck. Please try again.');
+      console.error('Error deleting deck:', err);
+    } finally {
+      setIsDeleting(false);
+      setAssetToDelete(null);
     }
   };
 
@@ -117,6 +157,15 @@ const PitchDeckPage: React.FC = () => {
                     <span>Download Deck</span>
                   </div>
                 </div>
+                {isAdmin && (
+                  <button 
+                    className="delete-btn"
+                    onClick={(e) => handleDeleteClick(e, deck)}
+                    title="Delete pitch deck"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                )}
               </div>
               <div className="deck-info">
                 <h4>{deck.name}</h4>
@@ -130,6 +179,17 @@ const PitchDeckPage: React.FC = () => {
       <div className="pitch-deck-footer">
         <p>Click any deck to download • Confidential PIBIT.AI Materials</p>
       </div>
+
+      <Modal
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        title="Delete Pitch Deck"
+        message={`Are you sure you want to delete "${assetToDelete?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        isLoading={isDeleting}
+        type="danger"
+      />
     </div>
   );
 };

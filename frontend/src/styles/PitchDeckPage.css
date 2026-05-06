@@ -165,6 +165,47 @@
   box-shadow: 0 8px 24px var(--card-shadow);
 }
 
+.delete-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 0, 0, 0.1);
+  color: #ff4d4f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(-5px);
+}
+
+.deck-item:hover .delete-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delete-btn:hover {
+  background: #ff4d4f;
+  color: white;
+  border-color: #ff4d4f;
+  box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3);
+}
+
+[data-theme='dark'] .delete-btn {
+  background: rgba(30, 30, 35, 0.8);
+  border-color: rgba(255, 77, 79, 0.2);
+}
+
+[data-theme='dark'] .delete-btn:hover {
+  background: #ff4d4f;
+}
+
 @media (max-width: 768px) {
   .pitch-deck-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

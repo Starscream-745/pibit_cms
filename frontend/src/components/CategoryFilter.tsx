@@ -20,7 +20,14 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategory, onCat
       const data = await assetService.getCategories();
       // Filter out "Logos" and "Logo" categories
       const filteredCategories = data.filter(
-        cat => cat.toLowerCase() !== 'logos' && cat.toLowerCase() !== 'logo'
+        cat => {
+          const lowerCat = cat.toLowerCase();
+          return lowerCat !== 'logos' && 
+                 lowerCat !== 'logo' && 
+                 lowerCat !== 'iconography' && 
+                 lowerCat !== 'pitch decks' &&
+                 lowerCat !== 'pitch deck';
+        }
       );
       setCategories(filteredCategories);
     } catch (error) {

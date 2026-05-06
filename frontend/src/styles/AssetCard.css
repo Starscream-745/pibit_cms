@@ -4,16 +4,14 @@
 
 .asset-card {
   position: relative;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-top: 2px solid var(--tech-blue);
+  border-radius: 4px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 4px 24px var(--card-shadow);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.15s ease, border-color 0.15s ease;
   will-change: transform;
   animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   cursor: default;
@@ -26,8 +24,7 @@
 
 [data-theme='dark'] .asset-card:hover {
   border-color: var(--tech-blue);
-  box-shadow: 0 12px 40px rgba(47, 107, 254, 0.3), 0 0 20px rgba(47, 107, 254, 0.15);
-  background: rgba(13, 17, 23, 0.9);
+  background: var(--bg-secondary);
 }
 
 [data-theme='dark'] .asset-card:hover .preview-icon-wrap::after {
@@ -57,7 +54,7 @@
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--bg-primary);
-  border-radius: 20px 20px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 
 .preview-img {
@@ -76,7 +73,7 @@
   background: linear-gradient(90deg, var(--border-color) 25%, var(--bg-primary) 50%, var(--border-color) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
-  border-radius: 20px 20px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 
 @keyframes shimmer {
@@ -150,13 +147,13 @@
   right: 12px;
   color: white;
   padding: 0.3rem 0.75rem;
-  border-radius: 9999px;
+  border-radius: 4px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background: var(--tech-blue);
+  box-shadow: none;
 }
 
 /* ---- Body ---- */
@@ -203,7 +200,7 @@
   gap: 0.4rem;
   padding: 0.65rem 1rem;
   border: none;
-  border-radius: 12px;
+  border-radius: 4px;
   font-size: 13px;
   font-weight: 600;
   font-family: var(--font-body);
@@ -225,12 +222,12 @@
 .action-btn-download {
   background: var(--btn-color, var(--tech-blue));
   color: white;
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--btn-color, var(--tech-blue)) 40%, transparent);
+  box-shadow: none;
 }
 .action-btn-download:hover {
   filter: brightness(1.1);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px color-mix(in srgb, var(--btn-color, var(--tech-blue)) 50%, transparent);
+  box-shadow: none;
 }
 .action-btn-download:disabled {
   opacity: 0.7;
@@ -252,7 +249,7 @@
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   border-top: 1px solid var(--border-color);
-  background: var(--glass-bg);
+  background: var(--bg-secondary);
 }
 
 .admin-btn {
@@ -265,7 +262,7 @@
   font-size: 12px;
   font-weight: 600;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 4px;
   background: var(--bg-secondary);
   color: var(--text-muted);
   cursor: pointer;

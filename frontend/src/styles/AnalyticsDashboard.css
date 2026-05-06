@@ -28,17 +28,17 @@
   background-color: var(--bg-secondary);
   color: var(--tech-blue);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
   font-family: var(--font-body);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px var(--card-shadow);
+  box-shadow: none;
 }
 
 .btn-refresh:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(47, 107, 254, 0.12);
+  box-shadow: none;
   border-color: var(--tech-blue);
 }
 
@@ -58,26 +58,27 @@
 
 .analytics-card {
   background: var(--bg-secondary);
-  border-radius: 32px;
+  border-radius: 4px;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 1.5rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 12px 32px var(--card-shadow);
+  box-shadow: none;
   border: 1px solid var(--border-color);
+  border-top: 2px solid var(--tech-blue);
   min-height: 200px;
 }
 
 .analytics-card:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 20px 48px var(--card-shadow);
+  transform: translateY(-4px);
+  box-shadow: none;
 }
 
 [data-theme='dark'] .analytics-card:hover {
   border-color: var(--tech-blue);
-  box-shadow: 0 20px 48px rgba(47, 107, 254, 0.2), 0 0 15px rgba(47, 107, 254, 0.1);
+  box-shadow: none;
 }
 
 /* The solid vivid blue cards */
@@ -88,11 +89,11 @@
   grid-column: span 2;
   flex-direction: row;
   align-items: center;
-  box-shadow: 0 16px 40px rgba(47, 107, 254, 0.25);
+  box-shadow: none;
 }
 
 .analytics-card.highlight:hover {
-  box-shadow: 0 24px 50px rgba(47, 107, 254, 0.35);
+  box-shadow: none;
 }
 
 .card-icon {
@@ -155,10 +156,11 @@
 /* Top Downloads Section */
 .top-downloads-section {
   background: var(--bg-secondary);
-  border-radius: 32px;
+  border-radius: 4px;
   padding: 2.5rem;
-  box-shadow: 0 12px 32px var(--card-shadow);
+  box-shadow: none;
   border: 1px solid var(--border-color);
+  border-top: 2px solid var(--tech-blue);
   height: 100%;
 }
 
@@ -182,7 +184,7 @@
   gap: 1.25rem;
   padding: 1.25rem;
   background: var(--bg-primary);
-  border-radius: 20px;
+  border-radius: 4px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid transparent;
 }
@@ -190,14 +192,14 @@
 .top-download-item:hover {
   background: var(--cloud-white);
   transform: translateX(6px);
-  box-shadow: 0 8px 24px rgba(47, 107, 254, 0.08);
+  box-shadow: none;
   border-color: rgba(47, 107, 254, 0.1);
 }
 
 .rank {
   width: 44px;
   height: 44px;
-  border-radius: 14px;
+  border-radius: 4px;
   background: var(--bg-secondary);
   color: var(--tech-blue);
   display: flex;
@@ -206,7 +208,7 @@
   font-weight: 700;
   font-size: 18px;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px var(--card-shadow);
+  box-shadow: none;
   border: 1px solid var(--border-color);
 }
 
@@ -250,10 +252,11 @@
 /* Activity Section */
 .recent-activity-section {
   background: var(--bg-secondary);
-  border-radius: 32px;
+  border-radius: 4px;
   padding: 2.5rem;
-  box-shadow: 0 12px 32px var(--card-shadow);
+  box-shadow: none;
   border: 1px solid var(--border-color);
+  border-top: 2px solid var(--tech-blue);
   margin-top: 24px;
 }
 
@@ -295,13 +298,13 @@
 }
 
 .activity-table tr td:first-child {
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
 .activity-table tr td:last-child {
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .activity-table tr {
@@ -315,7 +318,7 @@
 .activity-type {
   display: inline-block;
   padding: 0.4rem 1rem;
-  border-radius: 9999px;
+  border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -374,7 +377,7 @@
   background: var(--tech-blue);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
@@ -383,7 +386,7 @@
 .btn-primary:hover {
   transform: translateY(-2px);
   background: var(--celestial-blue);
-  box-shadow: 0 8px 24px rgba(47, 107, 254, 0.25);
+  box-shadow: none;
 }
 
 @media (max-width: 1024px) {
@@ -464,6 +467,6 @@
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(47, 107, 254, 0.1);
-  border-radius: 16px;
+  border-radius: 4px;
 }
 
