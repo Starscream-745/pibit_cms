@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import assetService from '../services/assetService';
 import { Asset } from '../types/asset';
+import Preloader from '../components/Preloader';
 import { Trash2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
