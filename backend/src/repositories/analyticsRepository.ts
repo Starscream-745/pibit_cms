@@ -219,4 +219,11 @@ export class AnalyticsRepository {
       topDownloadedAssets: dwn.topAssets || []
     };
   }
+  
+  async clearAnalyticsData(): Promise<void> {
+    await Promise.all([
+      this.activityCollection.deleteMany({}),
+      this.downloadsCollection.deleteMany({})
+    ]);
+  }
 }

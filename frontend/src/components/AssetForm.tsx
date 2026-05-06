@@ -43,11 +43,20 @@ const AssetForm: React.FC<AssetFormProps> = ({ asset, onSubmit, onCancel }) => {
     if (!formData.url.trim()) {
       newErrors.url = 'URL is required';
     } else {
-      // Basic URL validation
-      try {
-        new URL(formData.url);
-      } catch {
-        newErrors.url = 'Please enter a valid URL (e.g., https://example.com)';
+      // Basic URL validation - Allow absolute URLs or relative paths starting with /
+      const isValidAbsoluteUrl = (() => {
+        try {
+          new URL(formData.url);
+          return true;
+        } catch {
+          return false;
+        }
+      })();
+
+      const isRelativePath = formData.url.startsWith('/');
+
+      if (!isValidAbsoluteUrl && !isRelativePath) {
+        newErrors.url = 'Please enter a valid URL (e.g., https://example.com) or a relative path (e.g., /api/files/...)';
       }
     }
 

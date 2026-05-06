@@ -32,4 +32,13 @@ export class AnalyticsController {
       next(error);
     }
   };
+
+  clearAnalytics = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      await this.analyticsService.clearAnalytics();
+      res.status(200).json({ message: 'Analytics data cleared successfully' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }

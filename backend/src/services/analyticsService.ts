@@ -60,4 +60,13 @@ export class AnalyticsService {
   async getRecentActivities(limit: number = 50): Promise<any[]> {
     return await this.repository.getRecentActivities(limit);
   }
+
+  async clearAnalytics(): Promise<void> {
+    await this.repository.clearAnalyticsData();
+    // Clear the local cache
+    this.cache = {
+      data: null,
+      lastUpdated: 0
+    };
+  }
 }

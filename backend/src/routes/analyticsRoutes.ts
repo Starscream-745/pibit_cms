@@ -30,5 +30,6 @@ const withController = (handler: (controller: AnalyticsController) => (req: Requ
 router.get('/analytics/summary', authenticate, requireAdmin, withController(c => c.getSummary));
 router.get('/analytics/downloads/:assetId', authenticate, requireAdmin, withController(c => c.getDownloadsByAsset));
 router.get('/analytics/activity', authenticate, requireAdmin, withController(c => c.getRecentActivities));
+router.delete('/analytics/reset', authenticate, requireAdmin, withController(c => c.clearAnalytics));
 
 export default router;

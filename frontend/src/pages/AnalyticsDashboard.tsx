@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { RefreshCw, Users, Activity, TrendingUp, DownloadCloud } from 'lucide-react';
+import { RefreshCw, Users, Activity, TrendingUp, DownloadCloud, Trash2 } from 'lucide-react';
+import Modal from '../components/Modal';
+import { useToast } from '../contexts/ToastContext';
 import '../styles/AnalyticsDashboard.css';
 
 interface AnalyticsSummary {
@@ -34,10 +36,13 @@ interface ActivityEvent {
 const AnalyticsDashboard: React.FC = () => {
   const { isAuthenticated, userRole } = useAuth();
   const navigate = useNavigate();
+  const toast = useToast();
   const [analytics, setAnalytics] = useState<AnalyticsSummary | null>(null);
   const [activities, setActivities] = useState<ActivityEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [resetModalOpen, setResetModalOpen] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated || userRole !== 'admin') {
@@ -80,6 +85,34 @@ const AnalyticsDashboard: React.FC = () => {
     }
   };
 
+  const handleResetClick = () => {
+    setResetModalOpen(true);
+  };
+
+  const confirmReset = async () => {
+    try {
+      setIsResetting(true);
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      const token = localStorage.getItem('authToken');
+      
+      const response = await fetch(`${apiUrl}/api/analytics/reset`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (!response.ok) throw new Error('Failed to reset analytics');
+
+      toast.success('Analytics data has been reset');
+      setResetModalOpen(false);
+      // Refresh the dashboard
+      fetchAnalytics();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to reset analytics');
+    } finally {
+      setIsResetting(false);
+    }
+  };
+
   if (error) {
     return (
       <div className="analytics-dashboard">
@@ -96,10 +129,16 @@ const AnalyticsDashboard: React.FC = () => {
     <div className="analytics-dashboard">
       <div className="analytics-header">
         <h1>Analytics Dashboard</h1>
-        <button onClick={fetchAnalytics} className="btn btn-refresh" disabled={loading}>
-          <RefreshCw size={16} className={loading ? 'spinning' : ''} />
-          {loading ? 'Refreshing...' : 'Refresh'}
-        </button>
+        <div className="header-actions">
+          <button onClick={handleResetClick} className="btn btn-danger-outline" disabled={loading || isResetting}>
+            <Trash2 size={16} />
+            Reset Data
+          </button>
+          <button onClick={fetchAnalytics} className="btn btn-refresh" disabled={loading}>
+            <RefreshCw size={16} className={loading ? 'spinning' : ''} />
+            {loading ? 'Refreshing...' : 'Refresh'}
+          </button>
+        </div>
       </div>
       
       <div className="bento-container">
@@ -258,6 +297,17 @@ const AnalyticsDashboard: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={resetModalOpen}
+        onClose={() => setResetModalOpen(false)}
+        onConfirm={confirmReset}
+        title="Reset Analytics Data"
+        message="Are you sure you want to reset all analytics data? This will clear all activity logs and download history. This action cannot be undone."
+        confirmText="Reset All Data"
+        isLoading={isResetting}
+        type="danger"
+      />
     </div>
   );
 };
