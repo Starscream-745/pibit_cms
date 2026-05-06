@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { RefreshCw, Users, Activity, TrendingUp, DownloadCloud } from 'lucide-react';
-import Preloader from '../components/Preloader';
 import '../styles/AnalyticsDashboard.css';
 
 interface AnalyticsSummary {
