@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import assetService from '../services/assetService';
 import { Asset } from '../types/asset';
-import Preloader from '../components/Preloader';
+import { Trash2 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
+import Modal from '../components/Modal';
 import '../styles/IconographyPage.css';
 
 const IconographyPage: React.FC = () => {
   const [icons, setIcons] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Deletion state
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [assetToDelete, setAssetToDelete] = useState<Asset | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const { userRole } = useAuth();
+  const toast = useToast();
+  const isAdmin = userRole === 'admin';
 
   useEffect(() => {
     loadIcons();
@@ -25,6 +37,33 @@ const IconographyPage: React.FC = () => {
       console.error('Error loading icons:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteClick = (e: React.MouseEvent, icon: Asset) => {
+    e.stopPropagation();
+    setAssetToDelete(icon);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!assetToDelete) return;
+    
+    try {
+      setIsDeleting(true);
+      await assetService.delete(assetToDelete.id);
+      
+      const updatedIcons = icons.filter(i => i.id !== assetToDelete.id);
+      setIcons(updatedIcons);
+      
+      toast.success(`${assetToDelete.name} deleted successfully`);
+      setDeleteModalOpen(false);
+    } catch (err) {
+      toast.error('Failed to delete icon. Please try again.');
+      console.error('Error deleting icon:', err);
+    } finally {
+      setIsDeleting(false);
+      setAssetToDelete(null);
     }
   };
 
@@ -92,6 +131,15 @@ const IconographyPage: React.FC = () => {
                   (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%23f3f4f6" width="100" height="100"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="40" fill="%239ca3af"%3E🖼️%3C/text%3E%3C/svg%3E';
                 }}
               />
+              {isAdmin && (
+                <button 
+                  className="delete-btn"
+                  onClick={(e) => handleDeleteClick(e, icon)}
+                  title="Delete icon"
+                >
+                  <Trash2 size={18} />
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -100,6 +148,17 @@ const IconographyPage: React.FC = () => {
       <div className="iconography-footer">
         <p>Click any icon to download • All icons are property of PIBIT.AI</p>
       </div>
+
+      <Modal
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        title="Delete Icon"
+        message={`Are you sure you want to delete "${assetToDelete?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        isLoading={isDeleting}
+        type="danger"
+      />
     </div>
   );
 };
