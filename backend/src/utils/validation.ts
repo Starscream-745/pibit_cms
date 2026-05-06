@@ -16,9 +16,14 @@ export function validateUrl(url: string): void {
     throw new ValidationError('INVALID_URL', 'URL cannot be empty');
   }
 
+  // Allow relative paths starting with / (internal API paths)
+  if (trimmedUrl.startsWith('/')) {
+    return;
+  }
+
   // Simple validation: must start with http:// or https://
   if (!trimmedUrl.startsWith('http://') && !trimmedUrl.startsWith('https://')) {
-    throw new ValidationError('INVALID_URL', 'URL must start with http:// or https://');
+    throw new ValidationError('INVALID_URL', 'URL must start with http://, https:// or /');
   }
 
   // Basic URL structure check
