@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { ShieldCheck, User, ChevronDown, ChevronRight, Home, Grid, BookOpen, Mail, PieChart, Users, Plus, Image, Presentation, LayoutGrid, Folders } from 'lucide-react';
+import { ShieldCheck, User, ChevronDown, ChevronRight, Home, BookOpen, Mail, PieChart, Users, Plus, Image, Presentation, LayoutGrid, Folders } from 'lucide-react';
 import '../styles/Layout.css';
 
 interface LayoutProps {
