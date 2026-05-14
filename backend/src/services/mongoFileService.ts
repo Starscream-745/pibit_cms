@@ -76,8 +76,7 @@ class MongoFileService {
       const fileId = uploadStream.id.toString();
 
       // Generate download URL
-      const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
-      const downloadUrl = `${baseUrl}/api/files/${fileId}`;
+      const downloadUrl = `/api/files/${fileId}`;
 
       console.log('✓ File uploaded to MongoDB:', fileName);
 

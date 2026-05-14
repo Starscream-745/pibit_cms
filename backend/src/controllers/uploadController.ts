@@ -90,9 +90,13 @@ class UploadController {
       
       const disposition = forceDownload ? 'attachment' : 'inline';
       const encodedFileName = encodeURIComponent(fileName);
+      
+      // Use a safe ASCII-only filename for the legacy 'filename' parameter
+      const safeFileName = fileName.replace(/[^\x00-\x7F]/g, '_');
+
       res.setHeader(
         'Content-Disposition', 
-        `${disposition}; filename="${encodedFileName}"; filename*=UTF-8''${encodedFileName}`
+        `${disposition}; filename="${safeFileName}"; filename*=UTF-8''${encodedFileName}`
       );
 
       // Handle Partial Content (206) for Range requests

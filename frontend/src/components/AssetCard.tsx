@@ -94,7 +94,11 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
   const handleDeleteClick = () => setShowDeleteConfirm(true);
   const handleConfirmDelete = () => { onDelete(asset.id); setShowDeleteConfirm(false); };
   const handleCancelDelete = () => setShowDeleteConfirm(false);
-  const handleOpen = () => window.open(asset.url, '_blank', 'noopener,noreferrer');
+  const handleOpen = () => {
+    // Sanitize URL: if it accidentally contains localhost:3000, make it relative
+    const sanitizedUrl = asset.url.replace(/^https?:\/\/localhost:3000/, '');
+    window.open(sanitizedUrl, '_blank', 'noopener,noreferrer');
+  };
 
   const handleDownload = () => {
     try {
@@ -220,12 +224,10 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
 
         {/* Actions */}
         <div className="asset-card-actions">
-          {asset.category !== 'Pitch Decks' && (
-            <button onClick={handleOpen} className="action-btn action-btn-open">
-              <ExternalLink size={15} />
-              Open
-            </button>
-          )}
+          <button onClick={handleOpen} className="action-btn action-btn-open">
+            <ExternalLink size={15} />
+            Open
+          </button>
           <button
             onClick={handleDownload}
             className={`action-btn action-btn-download ${isDownloading ? 'loading' : ''}`}
