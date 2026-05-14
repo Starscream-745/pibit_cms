@@ -95,8 +95,11 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
   const handleConfirmDelete = () => { onDelete(asset.id); setShowDeleteConfirm(false); };
   const handleCancelDelete = () => setShowDeleteConfirm(false);
   const handleOpen = () => {
-    // Sanitize URL: if it accidentally contains localhost:3000, make it relative
-    const sanitizedUrl = asset.url.replace(/^https?:\/\/localhost:3000/, '');
+    const apiUrl = import.meta.env.VITE_API_URL || '';
+    // Use absolute URL for production to bypass Vercel proxy timeouts for large media
+    const targetUrl = asset.url.startsWith('/') ? `${apiUrl}${asset.url}` : asset.url;
+    // Also sanitize any accidental localhost:3000 strings
+    const sanitizedUrl = targetUrl.replace(/^https?:\/\/localhost:3000/, apiUrl);
     window.open(sanitizedUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -187,7 +190,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
             <div className="preview-video-wrap">
               <video
                 ref={videoRef}
-                src={asset.url}
+                src={asset.url.startsWith('/') ? `${import.meta.env.VITE_API_URL || ''}${asset.url}` : asset.url}
                 muted
                 loop
                 playsInline

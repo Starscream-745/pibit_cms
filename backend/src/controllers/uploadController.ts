@@ -109,6 +109,14 @@ class UploadController {
         res.setHeader('Content-Length', length);
       }
 
+      // Handle stream errors to prevent server crashes
+      stream.on('error', (err) => {
+        console.error('Download stream error:', err);
+        if (!res.headersSent) {
+          res.status(500).json({ error: 'Failed to stream file' });
+        }
+      });
+
       // Pipe the stream to response
       stream.pipe(res);
     } catch (error) {

@@ -56,7 +56,14 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ asset, onDelete }) => {
   const handleDeleteClick = () => setShowDeleteConfirm(true);
   const handleConfirmDelete = () => { onDelete(asset.id); setShowDeleteConfirm(false); };
   const handleCancelDelete = () => setShowDeleteConfirm(false);
-  const handleOpen = () => window.open(asset.url, '_blank', 'noopener,noreferrer');
+  const handleOpen = () => {
+    const apiUrl = import.meta.env.VITE_API_URL || '';
+    // Use absolute URL for production to bypass Vercel proxy timeouts for large media
+    const targetUrl = asset.url.startsWith('/') ? `${apiUrl}${asset.url}` : asset.url;
+    // Also sanitize any accidental localhost:3000 strings
+    const sanitizedUrl = targetUrl.replace(/^https?:\/\/localhost:3000/, apiUrl);
+    window.open(sanitizedUrl, '_blank', 'noopener,noreferrer');
+  };
 
   const handleDownload = () => {
     try {
@@ -144,13 +151,11 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ asset, onDelete }) => {
           {formattedDate}
         </div>
         
-        <div className="list-item-actions">
-          {asset.category !== 'Pitch Decks' && (
+          <div className="list-item-actions">
             <button onClick={handleOpen} className="list-btn" title="Open">
               <ExternalLink size={16} />
             </button>
-          )}
-          <button onClick={handleDownload} className="list-btn list-btn-download" disabled={isDownloading} title="Download">
+            <button onClick={handleDownload} className="list-btn list-btn-download" disabled={isDownloading} title="Download">
             {isDownloading ? <Loader2 size={16} className="spin" /> : <Download size={16} />}
           </button>
           
