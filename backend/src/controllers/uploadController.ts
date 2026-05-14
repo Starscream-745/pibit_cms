@@ -92,7 +92,7 @@ class UploadController {
       const encodedFileName = encodeURIComponent(fileName);
       
       // Use a safe ASCII-only filename for the legacy 'filename' parameter
-      const safeFileName = fileName.replace(/[^\x00-\x7F]/g, '_');
+      const safeFileName = fileName.replace(/[^\x20-\x7E]/g, '_');
 
       res.setHeader(
         'Content-Disposition', 
