@@ -177,7 +177,7 @@ const PitchDeckPage: React.FC = () => {
       )}
 
       <div className="pitch-deck-footer">
-        <p>Click any deck to download • Confidential PIBIT.AI Materials</p>
+        <p>Click any deck to download • Confidential Pibit.AI Materials</p>
       </div>
 
       <Modal

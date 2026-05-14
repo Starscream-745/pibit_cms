@@ -96,10 +96,11 @@ class MongoFileService {
   /**
    * Download file from MongoDB GridFS
    */
-  async downloadFile(fileId: string): Promise<{
+  async downloadFile(fileId: string, options?: { start?: number; end?: number }): Promise<{
     stream: Readable;
     fileName: string;
     contentType: string;
+    length: number;
   }> {
     try {
       const bucket = await this.initBucket();
@@ -112,12 +113,18 @@ class MongoFileService {
       }
 
       const file = files[0];
-      const downloadStream = bucket.openDownloadStream(objectId);
+      
+      const downloadOptions: any = {};
+      if (options?.start !== undefined) downloadOptions.start = options.start;
+      if (options?.end !== undefined) downloadOptions.end = options.end;
+
+      const downloadStream = bucket.openDownloadStream(objectId, downloadOptions);
 
       return {
         stream: downloadStream,
         fileName: file.filename,
         contentType: file.contentType || 'application/octet-stream',
+        length: file.length,
       };
     } catch (error) {
       console.error('Error downloading from MongoDB:', error);

@@ -106,7 +106,7 @@ const IconographyPage: React.FC = () => {
   return (
     <div className="iconography-page">
       <div className="iconography-header">
-        <h1>PIBIT.AI Iconography</h1>
+        <h1>Pibit.AI Iconography</h1>
         <p className="iconography-count">{icons.length} Icon{icons.length !== 1 ? 's' : ''}</p>
       </div>
 
@@ -147,7 +147,7 @@ const IconographyPage: React.FC = () => {
       )}
 
       <div className="iconography-footer">
-        <p>Click any icon to download • All icons are property of PIBIT.AI</p>
+        <p>Click any icon to download • All icons are property of Pibit.AI</p>
       </div>
 
       <Modal

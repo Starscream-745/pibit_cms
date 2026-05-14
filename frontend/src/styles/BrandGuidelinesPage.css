@@ -1,4 +1,4 @@
-/* BrandGuidelinesPage.css - PIBIT.AI Premium Experience */
+/* BrandGuidelinesPage.css - Pibit.AI Premium Experience */
 /* Uses global theme variables from global.css */
 
 .brand-guidelines-container {
@@ -133,7 +133,7 @@
   color: var(--text-muted);
   font-size: 1.5rem;
   letter-spacing: 4px;
-  text-transform: uppercase;
+  
   opacity: 0.8;
 }
 
@@ -246,7 +246,7 @@
   letter-spacing: -0.5vw;
   line-height: 0.75;
   pointer-events: none;
-  text-transform: uppercase;
+  
   z-index: 1;
 }
 
@@ -429,7 +429,7 @@
   margin-top: 4rem;
   font-family: var(--font-body);
   font-size: 0.9rem;
-  text-transform: uppercase;
+  
   letter-spacing: 2px;
   opacity: 0.5;
 }

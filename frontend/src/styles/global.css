@@ -257,7 +257,7 @@ p, .text-body {
   font-size: 11px;
   font-weight: 500;
   letter-spacing: var(--tracking-cap);
-  text-transform: uppercase;
+  
 }
 
 .text-micro {

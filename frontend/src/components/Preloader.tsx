@@ -11,7 +11,7 @@ const Preloader: React.FC<PreloaderProps> = ({ isLoading, fullScreen = true }) =
     <div className={`preloader-container ${!isLoading ? 'fade-out' : ''} ${fullScreen ? 'fullscreen' : 'inline'}`}>
       <div className="preloader-content">
         <div className="preloader-logo-wrapper">
-          <img src="/logo.png" alt="PIBIT.AI" className="preloader-logo" />
+          <img src="/logo.png" alt="Pibit.AI" className="preloader-logo" />
         </div>
         <div className="loading-bar">
           <div className="loading-bar-progress"></div>

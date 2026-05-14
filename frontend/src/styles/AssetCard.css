@@ -140,6 +140,42 @@
   opacity: 0.8;
 }
 
+/* Video Hover Auto-play */
+.preview-video-wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.preview-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.asset-card:hover .preview-video {
+  opacity: 1;
+}
+
+.video-overlay-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.asset-card:hover .video-overlay-icon {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
 /* Floating category badge */
 .asset-category-badge {
   position: absolute;
@@ -151,7 +187,7 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
+  
   background: var(--tech-blue);
   box-shadow: none;
 }
@@ -220,7 +256,7 @@
 }
 
 .action-btn-download {
-  background: var(--btn-color, var(--tech-blue));
+  background: var(--tech-blue);
   color: white;
   box-shadow: none;
 }

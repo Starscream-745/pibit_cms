@@ -24,15 +24,9 @@ const AssetForm: React.FC<AssetFormProps> = ({ asset, onSubmit, onCancel }) => {
 
   useEffect(() => {
     if (asset) {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-      // Ensure the URL is absolute when loading for editing
-      const absoluteUrl = asset.url.startsWith('/') 
-        ? `${apiUrl}${asset.url}` 
-        : asset.url;
-
       setFormData({
         name: asset.name,
-        url: absoluteUrl,
+        url: asset.url,
         category: asset.category,
         description: asset.description
       });
@@ -107,15 +101,9 @@ const AssetForm: React.FC<AssetFormProps> = ({ asset, onSubmit, onCancel }) => {
   };
 
   const handleUploadSuccess = (downloadUrl: string, fileName: string) => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-    // If the URL is relative (starts with /), prepend the API URL to make it absolute
-    const absoluteUrl = downloadUrl.startsWith('/') 
-      ? `${apiUrl}${downloadUrl}` 
-      : downloadUrl;
-
     setFormData(prev => ({
       ...prev,
-      url: absoluteUrl,
+      url: downloadUrl,
       name: prev.name || fileName.replace(/\.[^/.]+$/, ''), // Use filename as name if empty
     }));
     setUploadSuccess(`✓ File uploaded successfully: ${fileName}`);

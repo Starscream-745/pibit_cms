@@ -53,20 +53,57 @@ class UploadController {
       const { fileId } = req.params;
       const forceDownload = req.query.download === 'true';
 
-      const { stream, fileName, contentType } = await mongoFileService.downloadFile(fileId);
+      const range = req.headers.range;
+      let start: number | undefined;
+      let end: number | undefined;
 
-      // Set headers
+      // First, get the file metadata to know its length
+      // We will call downloadFile without options first to get the total length,
+      // but mongoFileService.downloadFile actually opens the stream immediately.
+      // Wait, let's just parse range, but we need the total length to calculate end.
+      // Fortunately, mongoFileService.downloadFile returns `length`.
+      // We can open the stream, get the length, and if it's a range request, we'll close that stream and open a new one with the range.
+      // Alternatively, we can just pass the parsed start/end from the header and handle defaults.
+      // Let's parse the range header basic values first.
+      if (range) {
+        const parts = range.replace(/bytes=/, '').split('-');
+        if (parts[0]) start = parseInt(parts[0], 10);
+        if (parts[1]) end = parseInt(parts[1], 10);
+      }
+
+      // Fetch the file stream and metadata
+      const { stream, fileName, contentType, length } = await mongoFileService.downloadFile(fileId, { start, end });
+
+      // Fix missing 'end' if it wasn't provided in the Range header
+      if (range && end === undefined) {
+        end = length - 1;
+      }
+      
+      // Calculate chunk size
+      const startByte = start || 0;
+      const endByte = end !== undefined ? end : length - 1;
+      const chunkSize = endByte - startByte + 1;
+
+      // Set basic headers
       res.setHeader('Content-Type', contentType);
+      res.setHeader('Accept-Ranges', 'bytes');
       
-      // Use 'attachment' to force download, 'inline' to display in browser
       const disposition = forceDownload ? 'attachment' : 'inline';
-      
-      // Properly encode filename to prevent header parsing errors in browsers
       const encodedFileName = encodeURIComponent(fileName);
       res.setHeader(
         'Content-Disposition', 
         `${disposition}; filename="${encodedFileName}"; filename*=UTF-8''${encodedFileName}`
       );
+
+      // Handle Partial Content (206) for Range requests
+      if (range) {
+        res.status(206);
+        res.setHeader('Content-Range', `bytes ${startByte}-${endByte}/${length}`);
+        res.setHeader('Content-Length', chunkSize);
+      } else {
+        res.status(200);
+        res.setHeader('Content-Length', length);
+      }
 
       // Pipe the stream to response
       stream.pipe(res);

@@ -51,9 +51,11 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const isAdmin = userRole === 'admin';
   const fileConfig = getFileTypeConfig(asset.url, asset.category);
+  const isVideo = fileConfig.label === 'VIDEO';
 
   // Magnetic tilt effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -70,11 +72,22 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
     card.style.boxShadow = `${-rotateY * 2}px ${rotateX * 2}px 40px rgba(${fileConfig.color.replace('#','').match(/.{2}/g)?.map(h=>parseInt(h,16)).join(',')}, 0.18)`;
   };
 
+  const handleMouseEnter = () => {
+    if (isVideo && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
   const handleMouseLeave = () => {
     const card = cardRef.current;
     if (!card) return;
     card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
     card.style.boxShadow = '';
+    
+    if (isVideo && videoRef.current) {
+      videoRef.current.pause();
+    }
   };
 
   const handleEdit = () => navigate(`/edit/${asset.id}`);
@@ -145,6 +158,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
         ref={cardRef}
         className="asset-card"
         onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         style={{ '--card-color': fileConfig.color, '--card-gradient': fileConfig.gradient } as React.CSSProperties}
       >
@@ -165,6 +179,20 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
                 onError={() => setImageError(true)}
               />
             </>
+          ) : isVideo ? (
+            <div className="preview-video-wrap">
+              <video
+                ref={videoRef}
+                src={asset.url}
+                muted
+                loop
+                playsInline
+                className="preview-video"
+              />
+              <div className="video-overlay-icon">
+                <fileConfig.Icon size={40} style={{ color: fileConfig.color }} />
+              </div>
+            </div>
           ) : (
             <div
               className="preview-icon-wrap"
@@ -202,7 +230,6 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
             onClick={handleDownload}
             className={`action-btn action-btn-download ${isDownloading ? 'loading' : ''}`}
             disabled={isDownloading}
-            style={{ '--btn-color': fileConfig.color } as React.CSSProperties}
           >
             {isDownloading ? <Loader2 size={15} className="spin" /> : <Download size={15} />}
             {isDownloading ? 'Downloading...' : 'Download'}

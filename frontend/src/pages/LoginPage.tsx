@@ -37,7 +37,7 @@ const LoginPage: React.FC = () => {
       <div className="login-container">
         <div className="login-visual-side">
           <div className="login-visual-content">
-            <img src="/logo.png" alt="PIBIT.AI" style={{ height: '60px', width: 'auto', marginBottom: '1rem' }} />
+            <img src="/logo.png" alt="Pibit.AI" style={{ height: '60px', width: 'auto', marginBottom: '1rem' }} />
             <p>ADVANCED CONTENT MANAGEMENT</p>
             <div className="visual-badge">2026 EDITION</div>
           </div>
@@ -101,7 +101,7 @@ const LoginPage: React.FC = () => {
             </button>
           </form>
           <div className="login-footer">
-            <p>© 2026 PIBIT.AI • SECURE ACCESS</p>
+            <p>© 2026 Pibit.AI • SECURE ACCESS</p>
           </div>
         </div>
       </div>

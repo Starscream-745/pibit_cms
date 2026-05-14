@@ -3,12 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Asset } from '../types/asset';
 import assetService from '../services/assetService';
 import AssetCard from './AssetCard';
+import AssetListItem from './AssetListItem';
 import CategoryFilter from './CategoryFilter';
 import Preloader from './Preloader';
 import SearchBar from './SearchBar';
 import SortDropdown, { SortOption } from './SortDropdown';
 import EmptyState from './EmptyState';
 import { useToast } from '../contexts/ToastContext';
+import { LayoutGrid, List } from 'lucide-react';
 import '../styles/AssetList.css';
 
 const AssetList: React.FC = () => {
@@ -18,6 +20,7 @@ const AssetList: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState<SortOption>('date-newest');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [error, setError] = useState<string | null>(null);
   const toast = useToast();
 
@@ -128,14 +131,7 @@ const AssetList: React.FC = () => {
     setSortOption(option);
   };
 
-  // Group assets by category
-  const groupedAssets = filteredAssets.reduce((acc, asset) => {
-    if (!acc[asset.category]) {
-      acc[asset.category] = [];
-    }
-    acc[asset.category].push(asset);
-    return acc;
-  }, {} as Record<string, Asset[]>);
+
 
   if (loading) {
     return (
@@ -167,6 +163,23 @@ const AssetList: React.FC = () => {
         <div className="controls-row">
           <SearchBar onSearch={handleSearch} placeholder="Search by name, description, or category..." />
           <SortDropdown value={sortOption} onChange={handleSortChange} />
+          
+          <div className="view-mode-toggle">
+            <button 
+              className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
+              onClick={() => setViewMode('list')}
+              title="List View"
+            >
+              <List size={20} />
+            </button>
+            <button 
+              className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
+              onClick={() => setViewMode('grid')}
+              title="Grid View"
+            >
+              <LayoutGrid size={20} />
+            </button>
+          </div>
         </div>
 
         <CategoryFilter 
@@ -192,34 +205,56 @@ const AssetList: React.FC = () => {
           />
         )
       ) : (
-        <div className="categories-container">
-          {Object.entries(groupedAssets).map(([category, categoryAssets]) => (
-            <div key={category} className="category-section">
-              <h3 className="category-title">
-                {category}
-                <span className="category-count">{categoryAssets.length}</span>
-              </h3>
-              <motion.div layout className="assets-grid">
+        <div className="unified-grid-container">
+          {viewMode === 'grid' ? (
+            <motion.div layout className="assets-grid">
+              <AnimatePresence>
+              {filteredAssets.map((asset) => (
+                <motion.div 
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.2 }}
+                  key={asset.id}
+                >
+                  <AssetCard 
+                    asset={asset} 
+                    onDelete={handleDelete} 
+                  />
+                </motion.div>
+              ))}
+              </AnimatePresence>
+            </motion.div>
+          ) : (
+            <motion.div layout className="assets-list-view">
+              <div className="list-header-row">
+                <div className="list-header-col list-col-main">Name</div>
+                <div className="list-header-col list-col-category">Category</div>
+                <div className="list-header-col list-col-date">Date modified</div>
+                <div className="list-header-col list-col-actions"></div>
+              </div>
+              <div className="list-items-container">
                 <AnimatePresence>
-                {categoryAssets.map((asset) => (
+                {filteredAssets.map((asset) => (
                   <motion.div 
                     layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.2 }}
                     key={asset.id}
                   >
-                    <AssetCard 
+                    <AssetListItem 
                       asset={asset} 
                       onDelete={handleDelete} 
                     />
                   </motion.div>
                 ))}
                 </AnimatePresence>
-              </motion.div>
-            </div>
-          ))}
+              </div>
+            </motion.div>
+          )}
         </div>
       )}
     </div>

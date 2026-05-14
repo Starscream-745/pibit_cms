@@ -73,7 +73,7 @@ const LogosPage: React.FC = () => {
   return (
     <div className="logos-page">
       <div className="logos-header">
-        <h1>PIBIT.AI Brand Logos</h1>
+        <h1>Pibit.AI Brand Logos</h1>
         <p className="logos-count">{logos.length} Logo{logos.length !== 1 ? 's' : ''}</p>
       </div>
 
@@ -105,7 +105,7 @@ const LogosPage: React.FC = () => {
       )}
 
       <div className="logos-footer">
-        <p>Click any logo to download • All logos are property of PIBIT.AI</p>
+        <p>Click any logo to download • All logos are property of Pibit.AI</p>
       </div>
     </div>
   );

@@ -123,7 +123,7 @@ const ImagesPage: React.FC = () => {
   return (
     <div className="images-page">
       <div className="images-header">
-        <h1>PIBIT.AI Images</h1>
+        <h1>Pibit.AI Images</h1>
         <p className="images-subtitle">Browse and search all brand images</p>
         <div className="images-search-container">
           <SearchBar onSearch={handleSearch} placeholder="Search images by name..." />
@@ -177,7 +177,7 @@ const ImagesPage: React.FC = () => {
       )}
 
       <div className="images-footer">
-        <p>Click any image to download • All images are property of PIBIT.AI</p>
+        <p>Click any image to download • All images are property of Pibit.AI</p>
       </div>
 
       <Modal

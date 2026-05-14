@@ -92,7 +92,7 @@ const BrandGuidelinesPage: React.FC = () => {
           transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="hero-content-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <img src="/logo.png" alt="PIBIT.AI" className="hero-logo" />
+            <img src="/logo.png" alt="Pibit.AI" className="hero-logo" />
           </div>
           <p className="hero-subtitle">Visual Identity Standards 2026</p>
           <motion.div
@@ -287,7 +287,7 @@ const BrandGuidelinesPage: React.FC = () => {
 
       <Section id="download" onInView={setActiveSection}>
         <div className="guidelines-content">
-          <SectionHeader title="Ready to Build?" subtitle="Access the official PIBIT.AI asset library." />
+          <SectionHeader title="Ready to Build?" subtitle="Access the official Pibit.AI asset library." />
           <div className="premium-cta-group">
             <Link to="/iconography" className="btn-premium btn-premium-primary">
               View Iconography
@@ -298,7 +298,7 @@ const BrandGuidelinesPage: React.FC = () => {
           </div>
         </div>
         <footer className="premium-footer">
-          <p>© 2026 PIBIT.AI - All rights reserved</p>
+          <p>© 2026 Pibit.AI - All rights reserved</p>
         </footer>
       </Section>
     </div>

@@ -98,7 +98,7 @@ const ContactPage: React.FC = () => {
         <div className="contact-hero-badge">Get In Touch</div>
         <h1>Let's build something <span className="contact-gradient-text">great together</span></h1>
         <p className="contact-hero-sub">
-          Whether you're exploring PIBIT.AI for your brand, need a demo, or have a technical question — we're here.
+          Whether you're exploring Pibit.AI for your brand, need a demo, or have a technical question — we're here.
         </p>
       </div>
 
@@ -136,7 +136,7 @@ const ContactPage: React.FC = () => {
           </div>
           <div className="channel-info">
             <h3>Book a Demo Call <span className="coming-soon-badge">Coming Soon</span></h3>
-            <p>Schedule a 15-min intro with our sales team. See PIBIT.AI live.</p>
+            <p>Schedule a 15-min intro with our sales team. See Pibit.AI live.</p>
           </div>
         </div>
 
