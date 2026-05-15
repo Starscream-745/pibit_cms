@@ -94,9 +94,9 @@
 }
 
 .toggle-btn.active {
-  background: var(--bg-secondary);
-  color: var(--tech-blue);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: var(--tech-blue);
+  color: white;
+  box-shadow: 0 4px 12px rgba(47, 107, 254, 0.25);
 }
 
 .toggle-btn:hover:not(.active) {
