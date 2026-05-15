@@ -112,7 +112,7 @@ class MongoFileService {
       }
 
       const file = files[0];
-      
+
       const downloadOptions: any = {};
       if (options?.start !== undefined) downloadOptions.start = options.start;
       if (options?.end !== undefined) downloadOptions.end = options.end;

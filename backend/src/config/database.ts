@@ -13,7 +13,7 @@ class Database {
     }
 
     const url = process.env.DATABASE_URL || 'mongodb://localhost:27017/pibit-cms';
-    
+
     try {
       this.client = new MongoClient(url, {
         serverSelectionTimeoutMS: 5000, // 5 seconds timeout
@@ -21,12 +21,12 @@ class Database {
       });
       await this.client.connect();
       this.db = this.client.db();
-      
+
       console.log('✅ Connected to MongoDB');
-      
+
       // Create indexes
       await this.createIndexes();
-      
+
       return this.db;
     } catch (error) {
       console.error('❌ MongoDB connection error:', error);
@@ -36,7 +36,7 @@ class Database {
 
   private async createIndexes(): Promise<void> {
     if (!this.db) return;
-    
+
     try {
       // Create index on category field for better query performance
       await this.db.collection('assets').createIndex({ category: 1 });
