@@ -26,6 +26,11 @@
   --dot-color: #c7d2fe;
   --halo-glow: rgba(47, 107, 254, 0.08);
   --glass-bg-accent: rgba(255, 255, 255, 0.4);
+  
+  /* Additional UI Colors */
+  --cloud-white: #FFFFFF;
+  --charcoal-gray: #4A5568;
+  --border-gray: #E2E8F0;
 
   /* Typography - Pibit.AI DS v3 */
   --font-heading: 'Inter', sans-serif;
