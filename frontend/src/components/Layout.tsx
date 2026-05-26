@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { ShieldCheck, User, ChevronDown, ChevronRight, Home, BookOpen, Mail, PieChart, Users, Plus, Image, Presentation, LayoutGrid, Folders } from 'lucide-react';
+import { ShieldCheck, User, ChevronDown, ChevronRight, Home, BookOpen, Mail, PieChart, Users, Plus, Image, Presentation, LayoutGrid, Folders, LogOut, LogIn } from 'lucide-react';
 import '../styles/Layout.css';
 
 interface LayoutProps {
@@ -133,6 +133,25 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <span>Users</span>
                 </Link>
               </>
+            )}
+
+            <div className="sidebar-divider"></div>
+            {isAuthenticated ? (
+              <button 
+                onClick={handleLogout} 
+                className="sidebar-link" 
+                style={{ width: '100%', background: 'none', border: 'none', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', color: 'inherit' }}
+              >
+                <LogOut size={20} />
+                <span>Logout</span>
+              </button>
+            ) : (
+              isAuthEnabled && (
+                <Link to="/login" className="sidebar-link">
+                  <LogIn size={20} />
+                  <span>Login</span>
+                </Link>
+              )
             )}
           </nav>
         </aside>

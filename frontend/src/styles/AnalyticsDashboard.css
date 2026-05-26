@@ -34,7 +34,7 @@
   background-color: transparent;
   color: var(--coral-red);
   border: 1px solid rgba(239, 68, 68, 0.2);
-  border-radius: 4px;
+  border-radius: 9999px;
   cursor: pointer;
   font-weight: 600;
   font-family: var(--font-body);
@@ -60,7 +60,7 @@
   background-color: var(--bg-secondary);
   color: var(--tech-blue);
   border: 1px solid var(--border-color);
-  border-radius: 4px;
+  border-radius: 9999px;
   cursor: pointer;
   font-weight: 600;
   font-family: var(--font-body);
@@ -89,8 +89,9 @@
 }
 
 .analytics-card {
-  background: var(--bg-secondary);
-  border-radius: 4px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  border-radius: 16px;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -187,8 +188,9 @@
 
 /* Top Downloads Section */
 .top-downloads-section {
-  background: var(--bg-secondary);
-  border-radius: 4px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  border-radius: 16px;
   padding: 2.5rem;
   box-shadow: none;
   border: 1px solid var(--border-color);
@@ -216,7 +218,7 @@
   gap: 1.25rem;
   padding: 1.25rem;
   background: var(--bg-primary);
-  border-radius: 4px;
+  border-radius: 16px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid transparent;
 }
@@ -283,8 +285,9 @@
 
 /* Activity Section */
 .recent-activity-section {
-  background: var(--bg-secondary);
-  border-radius: 4px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  border-radius: 16px;
   padding: 2.5rem;
   box-shadow: none;
   border: 1px solid var(--border-color);
@@ -330,13 +333,13 @@
 }
 
 .activity-table tr td:first-child {
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
 }
 
 .activity-table tr td:last-child {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 
 .activity-table tr {
@@ -350,7 +353,7 @@
 .activity-type {
   display: inline-block;
   padding: 0.4rem 1rem;
-  border-radius: 4px;
+  border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
   
@@ -409,7 +412,7 @@
   background: var(--tech-blue);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 9999px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
@@ -446,7 +449,7 @@
   background: linear-gradient(90deg, rgba(47, 107, 254, 0.05) 25%, rgba(47, 107, 254, 0.1) 50%, rgba(47, 107, 254, 0.05) 75%);
   background-size: 200% 100%;
   animation: skeleton-loading 1.5s infinite;
-  border-radius: 4px;
+  border-radius: 16px;
 }
 
 .skeleton-text {
@@ -499,6 +502,6 @@
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(47, 107, 254, 0.1);
-  border-radius: 4px;
+  border-radius: 16px;
 }
 

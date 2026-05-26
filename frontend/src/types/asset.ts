@@ -4,6 +4,7 @@ export interface Asset {
   url: string;
   category: string;
   description: string;
+  thumbnailUrl?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -13,6 +14,7 @@ export interface CreateAssetDTO {
   url: string;
   category: string;
   description: string;
+  thumbnailUrl?: string;
 }
 
 export interface UpdateAssetDTO {
@@ -20,6 +22,7 @@ export interface UpdateAssetDTO {
   url?: string;
   category?: string;
   description?: string;
+  thumbnailUrl?: string;
 }
 
 export interface ErrorResponse {

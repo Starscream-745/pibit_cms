@@ -14,7 +14,8 @@ const AssetForm: React.FC<AssetFormProps> = ({ asset, onSubmit, onCancel }) => {
     name: '',
     url: '',
     category: '',
-    description: ''
+    description: '',
+    thumbnailUrl: ''
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -28,7 +29,8 @@ const AssetForm: React.FC<AssetFormProps> = ({ asset, onSubmit, onCancel }) => {
         name: asset.name,
         url: asset.url,
         category: asset.category,
-        description: asset.description
+        description: asset.description,
+        thumbnailUrl: asset.thumbnailUrl
       });
     }
   }, [asset]);
@@ -100,10 +102,11 @@ const AssetForm: React.FC<AssetFormProps> = ({ asset, onSubmit, onCancel }) => {
     }
   };
 
-  const handleUploadSuccess = (downloadUrl: string, fileName: string) => {
+  const handleUploadSuccess = (downloadUrl: string, fileName: string, thumbnailUrl?: string) => {
     setFormData(prev => ({
       ...prev,
       url: downloadUrl,
+      thumbnailUrl: thumbnailUrl || prev.thumbnailUrl,
       name: prev.name || fileName.replace(/\.[^/.]+$/, ''), // Use filename as name if empty
     }));
     setUploadSuccess(`✓ File uploaded successfully: ${fileName}`);

@@ -91,6 +91,7 @@ export class AssetRepository {
       url: document.url as string,
       category: document.category as string,
       description: (document.description as string) || '',
+      thumbnailUrl: document.thumbnailUrl as string | undefined,
       createdAt: document.createdAt as Date,
       updatedAt: document.updatedAt as Date
     };

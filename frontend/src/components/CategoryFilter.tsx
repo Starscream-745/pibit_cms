@@ -49,15 +49,21 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategory, onCat
       >
         All Categories
       </button>
-      {categories.map((category) => (
-        <button
-          key={category}
-          className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
-          onClick={() => onCategoryChange(category)}
-        >
-          {category}
-        </button>
-      ))}
+      {categories.map((category) => {
+        const displayLabel = category.toLowerCase() === 'documents' || category.toLowerCase() === 'document' 
+          ? 'Brochure' 
+          : category;
+
+        return (
+          <button
+            key={category}
+            className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
+            onClick={() => onCategoryChange(category)}
+          >
+            {displayLabel}
+          </button>
+        );
+      })}
     </div>
   );
 };

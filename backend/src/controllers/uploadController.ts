@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import mongoFileService from '../services/mongoFileService';
+import thumbnailService from '../services/thumbnailService';
 
 // Extend Express Request type to include file from multer
 interface MulterRequest extends Request {
@@ -27,12 +28,29 @@ class UploadController {
         file.mimetype
       );
 
+      // Check if file is a document that needs a thumbnail
+      let thumbnailUrl: string | undefined;
+      const isDocument = file.mimetype.includes('pdf') || 
+                         file.mimetype.includes('word') || 
+                         file.mimetype.includes('powerpoint') || 
+                         file.mimetype.includes('presentation');
+
+      if (isDocument && thumbnailService.isAvailable()) {
+        const thumbUrl = await thumbnailService.generateThumbnail(
+          file.buffer,
+          file.originalname,
+          file.mimetype
+        );
+        if (thumbUrl) thumbnailUrl = thumbUrl;
+      }
+
       res.status(200).json({
         success: true,
         uploadMethod: 'mongodb',
         fileId: result.fileId,
         fileName: result.fileName,
         downloadUrl: result.downloadUrl,
+        thumbnailUrl: thumbnailUrl,
         contentType: result.contentType,
         size: file.size,
       });

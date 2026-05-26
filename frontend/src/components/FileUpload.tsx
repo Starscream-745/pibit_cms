@@ -3,7 +3,7 @@ import { Image, Video, FileText, UploadCloud } from 'lucide-react';
 import '../styles/FileUpload.css';
 
 interface FileUploadProps {
-  onUploadSuccess: (downloadUrl: string, fileName: string) => void;
+  onUploadSuccess: (downloadUrl: string, fileName: string, thumbnailUrl?: string) => void;
   onUploadError: (error: string) => void;
   accept?: string;
   maxSize?: number; // in MB
@@ -161,8 +161,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
       const data = await response.json();
       setUploadProgress(100);
 
-      // Call success callback with download URL
-      onUploadSuccess(data.downloadUrl, data.fileName);
+      // Call success callback with download URL and optional thumbnail
+      onUploadSuccess(data.downloadUrl, data.fileName, data.thumbnailUrl);
 
       // Reset after short delay
       setTimeout(() => {

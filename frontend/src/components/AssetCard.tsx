@@ -17,30 +17,30 @@ const getFileTypeConfig = (url: string, category: string) => {
   const c = category.toLowerCase();
 
   if (u.match(/\.(jpg|jpeg|png|gif|webp|svg|bmp)/) || c.includes('image') || c.includes('logo') || c.includes('photo') || c.includes('iconography')) {
-    return { color: '#2F6BFE', gradient: 'linear-gradient(135deg, #2F6BFE22, #60a5fa11)', label: 'IMAGE', Icon: Image, isImage: true };
+    return { color: '#2F6BFE', gradient: 'linear-gradient(135deg, #2F6BFE22, #60a5fa11)', label: 'Image', Icon: Image, isImage: true };
   }
   if (u.includes('.pdf') || c.includes('pdf')) {
-    return { color: '#ef4444', gradient: 'linear-gradient(135deg, #ef444422, #f8717111)', label: 'PDF', Icon: FileText, isImage: false };
+    return { color: '#ef4444', gradient: 'linear-gradient(135deg, #ef444422, #f8717111)', label: 'Pdf', Icon: FileText, isImage: false };
   }
   if (u.match(/\.(doc|docx)/) || c.includes('document')) {
-    return { color: '#2563eb', gradient: 'linear-gradient(135deg, #2563eb22, #60a5fa11)', label: 'DOC', Icon: FileText, isImage: false };
+    return { color: '#2563eb', gradient: 'linear-gradient(135deg, #2563eb22, #60a5fa11)', label: 'Doc', Icon: FileText, isImage: false };
   }
   if (u.match(/\.(xls|xlsx|csv)/) || c.includes('spreadsheet') || c.includes('excel')) {
-    return { color: '#16a34a', gradient: 'linear-gradient(135deg, #16a34a22, #4ade8011)', label: 'XLS', Icon: FileSpreadsheet, isImage: false };
+    return { color: '#16a34a', gradient: 'linear-gradient(135deg, #16a34a22, #4ade8011)', label: 'Xls', Icon: FileSpreadsheet, isImage: false };
   }
   if (u.match(/\.(ppt|pptx)/) || c.includes('presentation') || c.includes('pitch')) {
-    return { color: '#f97316', gradient: 'linear-gradient(135deg, #f9731622, #fdba7411)', label: 'PPT', Icon: FileText, isImage: false };
+    return { color: '#f97316', gradient: 'linear-gradient(135deg, #f9731622, #fdba7411)', label: 'Ppt', Icon: FileText, isImage: false };
   }
   if (u.match(/\.(mp4|mov|avi|webm)/) || c.includes('video')) {
-    return { color: '#9333ea', gradient: 'linear-gradient(135deg, #9333ea22, #c084fc11)', label: 'VIDEO', Icon: Video, isImage: false };
+    return { color: '#9333ea', gradient: 'linear-gradient(135deg, #9333ea22, #c084fc11)', label: 'Video', Icon: Video, isImage: false };
   }
   if (u.match(/\.(mp3|wav|aac)/) || c.includes('audio')) {
-    return { color: '#ea580c', gradient: 'linear-gradient(135deg, #ea580c22, #fb923c11)', label: 'AUDIO', Icon: Music, isImage: false };
+    return { color: '#ea580c', gradient: 'linear-gradient(135deg, #ea580c22, #fb923c11)', label: 'Audio', Icon: Music, isImage: false };
   }
   if (u.match(/\.(zip|rar|7z)/) || c.includes('archive')) {
-    return { color: '#ca8a04', gradient: 'linear-gradient(135deg, #ca8a0422, #fbbf2411)', label: 'ZIP', Icon: FileArchive, isImage: false };
+    return { color: '#ca8a04', gradient: 'linear-gradient(135deg, #ca8a0422, #fbbf2411)', label: 'Zip', Icon: FileArchive, isImage: false };
   }
-  return { color: '#6b7280', gradient: 'linear-gradient(135deg, #6b728022, #9ca3af11)', label: 'FILE', Icon: File, isImage: false };
+  return { color: '#6b7280', gradient: 'linear-gradient(135deg, #6b728022, #9ca3af11)', label: 'File', Icon: File, isImage: false };
 };
 
 const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
@@ -55,7 +55,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
 
   const isAdmin = userRole === 'admin';
   const fileConfig = getFileTypeConfig(asset.url, asset.category);
-  const isVideo = fileConfig.label === 'VIDEO';
+  const isVideo = fileConfig.label === 'Video';
 
   // Magnetic tilt effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -147,6 +147,7 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
   };
 
   const showImage = fileConfig.isImage && !imageError;
+  const showThumbnail = asset.thumbnailUrl && !fileConfig.isImage;
 
   return (
     <>
@@ -174,11 +175,11 @@ const AssetCard: React.FC<AssetCardProps> = ({ asset, onDelete }) => {
 
         {/* Preview Area */}
         <div className="asset-preview-area">
-          {showImage ? (
+          {showImage || showThumbnail ? (
             <>
               {!imageLoaded && <div className="preview-skeleton" />}
               <img
-                src={asset.url}
+                src={showThumbnail ? asset.thumbnailUrl : asset.url}
                 alt={asset.name}
                 loading="lazy"
                 className={`preview-img ${imageLoaded ? 'loaded' : ''}`}
